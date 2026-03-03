@@ -64,6 +64,10 @@ export async function GET(request: NextRequest) {
       include: { effects: true },
     });
 
+    // Bám sát Underworld Buff để giảm giá thêm (-20%)
+    let discountMod = 1.0;
+    if (user.hasUnderworldBuff) discountMod = 0.8;
+
     // Random pick items for shop
     const shuffled = rareCards.sort(() => Math.random() - 0.5);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,7 +81,8 @@ export async function GET(request: NextRequest) {
       statStability: card.statStability,
       description: card.description,
       originalCost: card.cost,
-      smugglerPrice: Math.floor(card.cost * SMUGGLER_BUY_DISCOUNT),
+      // Tính giá base sau đó áp dụng discount của thế giới ngầm nếu có
+      smugglerPrice: Math.floor(Math.floor(card.cost * SMUGGLER_BUY_DISCOUNT) * discountMod),
       healthCost: SMUGGLER_BUY_HEALTH_COST,
       effects: card.effects,
     }));
@@ -173,7 +178,10 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      const smugglerPrice = Math.floor(card.cost * SMUGGLER_BUY_DISCOUNT);
+      let discountMod = 1.0;
+      if (user.hasUnderworldBuff) discountMod = 0.8;
+
+      const smugglerPrice = Math.floor(Math.floor(card.cost * SMUGGLER_BUY_DISCOUNT) * discountMod);
 
       // Check gold
       if (Number(user.gold) < smugglerPrice) {
@@ -191,12 +199,13 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Deduct gold + health
+      // Deduct gold + health, and mark as bought today for police event logic
       const updatedUser = await prisma.user.update({
         where: { id: auth.userId },
         data: {
           gold: { decrement: smugglerPrice },
           garageHealth: { decrement: SMUGGLER_BUY_HEALTH_COST },
+          lastSmugglerBuyDay: user.currentDay, // Ghi nhận đã mua hàng trong ngày này
         },
       });
 

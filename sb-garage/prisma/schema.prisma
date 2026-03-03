@@ -28,6 +28,20 @@ model User {
   isFinalRound    Boolean  @default(false) @map("is_final_round")
   totalExplosions Int      @default(0) @map("total_explosions") // Track nổ máy cho Ghost Mechanic
   smugglerPenalty Float    @default(0) @map("smuggler_penalty") // 0.15 = 15% gold reduction từ Tay Buôn Lậu
+  hasDefeatedEP   Boolean  @default(false) @map("has_defeated_ep")
+  shopTaxModifier Float    @default(1.0) @map("shop_tax_modifier")
+  shopTaxExpiresAt Int     @default(0) @map("shop_tax_expires_at")
+  isInNorthKorea  Boolean  @default(false) @map("is_in_north_korea")
+  northKoreaDayCount Int   @default(0) @map("north_korea_day_count")
+  hasKimBuff      Boolean  @default(false) @map("has_kim_buff")
+  hasUnderworldBuff Boolean @default(false) @map("has_underworld_buff")
+  lastSmugglerBuyDay Int   @default(0) @map("last_smuggler_buy_day")
+  isKimAssassinated Boolean  @default(false) @map("is_kim_assassinated")
+  hasDefeatedDonaldTrump Boolean @default(false) @map("has_defeated_donald_trump")
+  hasMoscowBuff     Boolean  @default(false) @map("has_moscow_buff")
+  moscowBuffDay     Int      @default(0) @map("moscow_buff_day")
+  activePerkCode  String?  @db.VarChar(50) @map("active_perk_code")
+  totalShopSpent  BigInt   @default(0) @map("total_shop_spent")
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @updatedAt @map("updated_at")
 
@@ -63,9 +77,10 @@ model DailyQuest {
   dayNumber     Int         @map("day_number")
   isBoss        Boolean     @default(false) @map("is_boss")
   bossConfigId  Int?        @map("boss_config_id")
-  requiredPower Int         @map("required_power")
-  rewardGold    Int         @map("reward_gold")
-  status        QuestStatus @default(PENDING)
+  requiredPower  Int         @map("required_power")
+  rewardGold     Int         @map("reward_gold")
+  customerBudget Int         @default(0) @map("customer_budget")
+  status         QuestStatus @default(PENDING)
 
   // Relations
   user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -281,6 +296,20 @@ model UserAchievement {
   @@map("user_achievements")
 }
 
+/// Bảng starter_perks - Đặc quyền đầu trận
+model StarterPerk {
+  id              Int     @id @default(autoincrement())
+  code            String  @unique @db.VarChar(50)
+  name            String  @db.VarChar(100)
+  description     String? @db.Text
+  effectType      String  @db.VarChar(50) @map("effect_type")
+  effectValue     Float   @map("effect_value")
+  unlockCondition String? @db.VarChar(100) @map("unlock_condition")
+  isDefault       Boolean @default(false) @map("is_default")
+
+  @@map("starter_perks")
+}
+
 // ============================================================
 // ENUMS
 // ============================================================
@@ -327,4 +356,5 @@ enum EndingType {
   PERFECT
   FINAL
   BOSS_HIDDEN
+  BAD
 }

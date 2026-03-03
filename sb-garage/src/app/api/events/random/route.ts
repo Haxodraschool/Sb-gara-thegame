@@ -11,11 +11,44 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Chưa đăng nhập' }, { status: 401 });
     }
 
+    const user = await prisma.user.findUnique({ where: { id: auth.userId } });
+    if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
+
     // Get all possible events
     const events = await prisma.gameEvent.findMany();
 
-    // Roll for each event based on probability
-    const triggeredEvents = events.filter((e) => Math.random() < e.probability);
+    const nkEventNames = ['Camera Ngoại Bang', 'Kiểm Tra Ảnh Cán Bộ', 'Sát Thủ Gọi Mời', 'Cảnh Sát Triều Tiên'];
+    let triggeredEvents = [];
+
+    // North Korea Storyline Event Distribution
+    if (user.isInNorthKorea) {
+       if (user.northKoreaDayCount === 10) {
+          // Ngày 10: 100% ra sát thủ
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          triggeredEvents = events.filter((e: any) => e.name === 'Sát Thủ Gọi Mời');
+       } else {
+          // Camera 40%, Kiểm tra ảnh 50%
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          triggeredEvents = events.filter((e: any) => {
+             if (e.name === 'Camera Ngoại Bang') return Math.random() < 0.4;
+             if (e.name === 'Kiểm Tra Ảnh Cán Bộ') return Math.random() < 0.5;
+             return false;
+          });
+       }
+    } else {
+       // Normal events
+       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       triggeredEvents = events.filter((e: any) => {
+          if (nkEventNames.includes(e.name)) {
+             // Cảnh sát chỉ xuất hiện sau khi hoàn thành Sát thủ (có hasUnderworldBuff) ngoài đời thực
+             if (e.name === 'Cảnh Sát Triều Tiên' && user.hasUnderworldBuff) {
+                return Math.random() < 0.1;
+             }
+             return false;
+          }
+          return Math.random() < e.probability;
+       });
+    }
 
     if (triggeredEvents.length === 0) {
       return NextResponse.json({
@@ -107,10 +140,10 @@ export async function POST(request: NextRequest) {
           }
         }
         else if (event.name === 'Băng Đảng Xăng Dầu') {
-          // Trừ 15% tổng Gold đang có
-          const loss = Math.floor(Number(user.gold) * 0.15);
+          // Trừ 10% tổng Gold đang có
+          const loss = Math.floor(Number(user.gold) * 0.10);
           updates.gold = { decrement: loss };
-          finalMessage = `Bị thu phí bảo kê mất 15% tài sản (-${loss} Gold)!`;
+          finalMessage = `Bị thu phí bảo kê mất 10% tài sản (-${loss} Gold)!`;
         }
         else if (event.name === 'Độ Channel Bốc Phốt') {
           updates.garageHealth = Math.min(100, user.garageHealth + 40);
@@ -136,6 +169,67 @@ export async function POST(request: NextRequest) {
           updates.garageHealth = Math.max(0, user.garageHealth - 10);
           updates.gold = { decrement: 150 };
           finalMessage = 'Bị cơ động kiểm tra ngang! Phạt 150 Gold và mất 10 Uy Tín.';
+        }
+        // ============================================
+        // NORTH KOREA EVENTS
+        // ============================================
+        else if (event.name === 'Camera Ngoại Bang') {
+          if (accepted) {
+             updates.gold = { increment: 1000 };
+             finalMessage = 'Bạn đã lập công lớn! Tố cáo thành công, Chủ Tịch thưởng nóng 1000 Gold!';
+          }
+        }
+        else if (event.name === 'Kiểm Tra Ảnh Cán Bộ') { // PASSIVE
+           let passChance = 0.65;
+           if (user.garageHealth >= 90) passChance = 1.0;
+           
+           if (Math.random() <= passChance) {
+              finalMessage = 'Đoàn kiểm tra gật gù hài lòng với bức ảnh Chủ Tịch Kim treo ở Gara. Bạn an toàn!';
+           } else {
+              // Fail = Bad Ending. Handled via special route or returned here directly.
+              // For a passive event that kills, we can just return a game over response.
+              return NextResponse.json({
+                message: 'Phát hiện quán không treo ảnh Chủ Tịch! Bạn bị khép vào tội phản quốc!',
+                gameOver: true,
+                ending: 'Bị Tiêu Diệt Bởi Chủ Tịch'
+              });
+           }
+        }
+        else if (event.name === 'Sát Thủ Gọi Mời') {
+           if (!accepted) {
+              return NextResponse.json({
+                message: 'Từ chối ám sát Chủ Tịch? Tổ chức ngầm không để kẻ biết chuyện sống sót...',
+                gameOver: true,
+                ending: 'Bị Sát Thủ Tiêu Diệt'
+              });
+           } else {
+              // Roll success chance (lower health = higher chance)
+              // Ví dụ: health 100 -> chance 20%; health 10 -> chance 80%?
+              // Base chance = 100 - health (max 90, min 10)
+              const chance = Math.max(0.1, Math.min(0.9, (100 - user.garageHealth) / 100));
+              if (Math.random() <= chance) {
+                 updates.isInNorthKorea = false;
+                 updates.hasKimBuff = false;
+                 updates.hasUnderworldBuff = true;
+                 updates.isKimAssassinated = true; // Mark Kim as dead
+                 finalMessage = 'Ám sát thành công! Bạn được đưa về nước an toàn và gia nhập Thế Giới Ngầm (+50% lợi nhuận, giảm giá tay buôn lậu)!';
+              } else {
+                 return NextResponse.json({
+                   message: 'Ám sát thất bại! Bạn bị bắt giữ và xử bắn công khai.',
+                   gameOver: true,
+                   ending: 'Bị Tiêu Diệt Bởi Chủ Tịch' // Or 'Bị Sát Thủ Tiêu Diệt'
+                 });
+              }
+           }
+        }
+        else if (event.name === 'Cảnh Sát Triều Tiên') { // PASSIVE meaning police visits you
+           // Kiểm tra xem hôm qua có mua hàng từ buôn lậu không
+           if (user.lastSmugglerBuyDay === user.currentDay - 1) {
+              updates.garageHealth = Math.max(0, user.garageHealth - 80);
+              finalMessage = 'Cảnh sát phát hiện bạn giao dịch phi pháp hôm qua! Bị phạt nặng và điêu đứng mất 80 Uy Tín!';
+           } else {
+              finalMessage = 'Cảnh sát ghé thăm kiểm tra... Mọi thứ hợp pháp! Chúc một ngày tốt lành!';
+           }
         }
         // Fallback for any other events (if any)
         else {

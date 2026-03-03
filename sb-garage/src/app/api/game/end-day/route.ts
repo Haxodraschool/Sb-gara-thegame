@@ -21,9 +21,12 @@ export async function GET(request: NextRequest) {
       where: { userId: auth.userId, dayNumber: user.currentDay },
     });
 
-    const successQuests = quests.filter((q) => q.status === 'SUCCESS');
-    const failedQuests = quests.filter((q) => q.status === 'FAILED');
-    const totalGoldEarned = successQuests.reduce((sum: number, q) => sum + q.rewardGold, 0);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const successQuests = quests.filter((q: any) => q.status === 'SUCCESS');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const failedQuests = quests.filter((q: any) => q.status === 'FAILED');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const totalGoldEarned = successQuests.reduce((sum: number, q: any) => sum + q.rewardGold, 0);
 
     return NextResponse.json({
       daySummary: {
@@ -31,7 +34,8 @@ export async function GET(request: NextRequest) {
         totalCustomers: quests.length,
         success: successQuests.length,
         failed: failedQuests.length,
-        pending: quests.filter((q) => q.status === 'PENDING').length,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        pending: quests.filter((q: any) => q.status === 'PENDING').length,
         goldEarned: totalGoldEarned,
         garageHealth: user.garageHealth,
         currentGold: Number(user.gold),
@@ -116,9 +120,17 @@ export async function POST(request: NextRequest) {
       });
       leveledUp = true;
 
-      // Give level rewards
+      // Gold thưởng khi lên cấp: cấp mới² × 100 → cấp càng cao tiền càng nhiều
+      const newLevel = updatedUser.level + 1;
+      const levelUpGold = newLevel * newLevel * 100;
+      await prisma.user.update({
+        where: { id: auth.userId },
+        data: { gold: { increment: levelUpGold } },
+      });
+
+      // Give level rewards (thẻ bài)
       const rewards = await prisma.levelReward.findMany({
-        where: { level: updatedUser.level + 1 },
+        where: { level: newLevel },
         include: { card: true },
       });
 
@@ -171,7 +183,10 @@ export async function POST(request: NextRequest) {
     if (!ending) {
       await prisma.user.update({
         where: { id: auth.userId },
-        data: { currentDay: nextDay },
+        data: { 
+          currentDay: nextDay,
+          ...(user.isInNorthKorea ? { northKoreaDayCount: { increment: 1 } } : {})
+        },
       });
     }
 
@@ -187,6 +202,7 @@ export async function POST(request: NextRequest) {
       ending,
       leveledUp,
       newLevel: leveledUp ? (updatedUser.level + 1) : updatedUser.level,
+      levelUpGoldReward: leveledUp ? (updatedUser.level + 1) * (updatedUser.level + 1) * 100 : 0,
       techPointsEarned: GAME_CONSTANTS.TECH_POINTS_PER_DAY,
       garageHealth: finalUser?.garageHealth,
       gold: finalUser ? Number(finalUser.gold) : 0,

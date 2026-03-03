@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
       currentDay: user.currentDay,
       garageHealth: user.garageHealth,
       gold: Number(user.gold),
-      quests: quests.map((q) => ({
+      quests: quests.map((q: any) => ({
         id: q.id,
         dayNumber: q.dayNumber,
         isBoss: q.isBoss,
@@ -46,8 +46,8 @@ export async function GET(request: NextRequest) {
         status: q.status,
       })),
       totalShadows: quests.length,
-      completed: quests.filter((q) => q.status !== 'PENDING').length,
-      pending: quests.filter((q) => q.status === 'PENDING').length,
+      completed: quests.filter((q: any) => q.status !== 'PENDING').length,
+      pending: quests.filter((q: any) => q.status === 'PENDING').length,
     });
 
   } catch (error) {
@@ -109,27 +109,67 @@ export async function POST(request: NextRequest) {
 
     const questsData = [];
 
+    // Determine fixed requirements for North Korea customers
+    const nkReqPower = randomInt(150, 300);
+    const nkRewGold = randomInt(50, 150);
+
     // Generate normal customer quests
     for (let i = 0; i < customerCount; i++) {
+      const baseGold = user.isInNorthKorea
+        ? nkRewGold
+        : (questConfig
+          ? randomInt(questConfig.minGoldReward, questConfig.maxGoldReward)
+          : randomInt(50, 200));
+
+      // Ngân sách khách = 2x – 4x tiền thưởng
+      const budgetMultiplier = 2.0 + Math.random() * 2.0; // 2.0 – 4.0
+      const customerBudget = Math.floor(baseGold * budgetMultiplier);
+
       questsData.push({
         userId: auth.userId,
         dayNumber: user.currentDay,
         isBoss: false,
-        requiredPower: questConfig
-          ? randomInt(questConfig.minPowerReq, questConfig.maxPowerReq)
-          : randomInt(100, 300),
-        rewardGold: questConfig
-          ? randomInt(questConfig.minGoldReward, questConfig.maxGoldReward)
-          : randomInt(50, 200),
+        requiredPower: user.isInNorthKorea
+          ? nkReqPower
+          : (questConfig
+            ? randomInt(questConfig.minPowerReq, questConfig.maxPowerReq)
+            : randomInt(100, 300)),
+        rewardGold: baseGold,
+        customerBudget,
         status: 'PENDING' as const,
       });
     }
 
     // Add boss if boss day
     if (isBossDay) {
-      const bosses = await prisma.bossConfig.findMany();
+      let bosses = await prisma.bossConfig.findMany();
+      if (!user.hasDefeatedEP) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        bosses = bosses.filter((b: any) => b.specialCondition !== 'DONALD_TRUMP');
+      }
+      if (user.isKimAssassinated) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        bosses = bosses.filter((b: any) => b.specialCondition !== 'KIM_JONG_UN');
+      }
       if (bosses.length > 0) {
-        const randomBoss = bosses[Math.floor(Math.random() * bosses.length)];
+        // Tăng tỉ lệ xuất hiện của Chủ Tịch Kim 20%
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const bossPool: any[] = [];
+        for (const b of bosses) {
+          bossPool.push(b);
+          if (b.specialCondition === 'KIM_JONG_UN') {
+            const extraTickets = Math.max(1, Math.ceil(bosses.length * 0.2));
+            for (let k = 0; k < extraTickets; k++) bossPool.push(b);
+          }
+          // Tăng tỉ lệ Nga Đại Đế 20% nếu Kim bị ám sát hoặc đã thắng Đỗ Nam Trung
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          if (b.specialCondition === 'RUSSIA_EMPEROR' && ((user as any).isKimAssassinated || (user as any).hasDefeatedDonaldTrump)) {
+            const extraTickets = Math.max(1, Math.ceil(bosses.length * 0.2));
+            for (let k = 0; k < extraTickets; k++) bossPool.push(b);
+          }
+        }
+        
+        const randomBoss = bossPool[Math.floor(Math.random() * bossPool.length)];
         questsData.push({
           userId: auth.userId,
           dayNumber: user.currentDay,

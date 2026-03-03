@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Chưa đăng nhập' }, { status: 401 });
     }
 
-    const { cardIds, questId, crewCardIds } = await request.json();
+    const { cardIds, questId, crewCardIds, epIslandChoice, babyOilChoice, russiaPhase, vodkaChoice } = await request.json();
 
     // Validate 10 cards
     if (!Array.isArray(cardIds) || cardIds.length !== GAME_CONSTANTS.SLOTS_PER_CAR) {
@@ -104,12 +104,19 @@ export async function POST(request: NextRequest) {
       const cardTypes = (cardIds as number[]).map((id: number) => cardMap.get(id)?.type);
       const cardRarities = (cardIds as number[]).map((id: number) => cardMap.get(id)?.rarity);
 
-      // NO_EXHAUST: Cấm thẻ EXHAUST
-      if (condition === 'NO_EXHAUST' && cardTypes.includes('EXHAUST')) {
-        return NextResponse.json(
-          { error: `🚫 Boss "${quest.bossConfig.name}" cấm dùng thẻ Ống Xả (EXHAUST)!` },
-          { status: 400 }
-        );
+      // DRIFT_KING_CHALLENGE: Cấm dùng thẻ SUSPENSION ≥ 3 sao
+      if (condition === 'DRIFT_KING_CHALLENGE') {
+        const invalidSuspension = (cardIds as number[]).find((id: number) => {
+          const card = cardMap.get(id);
+          return card && card.type === 'SUSPENSION' && card.rarity >= 3;
+        });
+        if (invalidSuspension) {
+          const card = cardMap.get(invalidSuspension);
+          return NextResponse.json(
+            { error: `🚫 Boss "${quest.bossConfig.name}" cấm dùng Hệ Thống Treo xịn! Thẻ "${card?.name}" quá cứng (${card?.rarity} sao).` },
+            { status: 400 }
+          );
+        }
       }
 
       // NO_COOLING: Cấm thẻ COOLING
@@ -130,6 +137,48 @@ export async function POST(request: NextRequest) {
           const card = cardMap.get(lowRarityCard);
           return NextResponse.json(
             { error: `🚫 Boss "${quest.bossConfig.name}" yêu cầu thẻ ≥ 3 sao! Thẻ "${card?.name}" chỉ ${card?.rarity} sao.` },
+            { status: 400 }
+          );
+        }
+      }
+
+      // EP_ISLAND_CHOICE (Đảo chủ EP): Pre-run check cho nhánh NO
+      if (condition === 'EP_ISLAND_CHOICE' && epIslandChoice === 'NO') {
+        if (cardTypes.includes('COOLING')) {
+          return NextResponse.json(
+            { error: `🚫 Boss "${quest.bossConfig.name}" nổi giận: Đã từ chối lên đảo thì KHÔNG ĐƯỢC dùng thẻ Làm Mát (COOLING)!` },
+            { status: 400 }
+          );
+        }
+        
+        const has5Star = cardRarities.includes(5);
+        const has4Star = cardRarities.includes(4);
+        if (!has5Star || !has4Star) {
+          return NextResponse.json(
+            { error: `🚫 Boss "${quest.bossConfig.name}" nổi giận: Xe phải có ít nhất 1 thẻ 5 sao và 1 thẻ 4 sao!` },
+            { status: 400 }
+          );
+        }
+      }
+
+      // BABY_OIL_CHOICE (Chúa tể dầu em bé): Pre-run check
+      if (condition === 'BABY_OIL_CHOICE') {
+        if (babyOilChoice === 'YES') {
+          // YES branch: no FUEL allowed
+          if (cardTypes.includes('FUEL')) {
+            return NextResponse.json(
+              { error: `🚫 Boss "${quest.bossConfig.name}" nổi giận: Đã nói YES thì cơ thể phải tự cháy, KHÔNG ĐƯỢC dùng thẻ Nhiên Liệu (FUEL)!` },
+              { status: 400 }
+            );
+          }
+        }
+      }
+
+      // DONALD_TRUMP (Đỗ Nam Trung): Pre-run check
+      if (condition === 'DONALD_TRUMP') {
+        if (cardRarities.includes(5)) {
+          return NextResponse.json(
+            { error: `🚫 Boss "${quest.bossConfig.name}" nổi giận: Mọi thẻ 5 sao đều bị khóa khi tao giám sát!` },
             { status: 400 }
           );
         }
@@ -172,6 +221,46 @@ export async function POST(request: NextRequest) {
     let totalStability = 0;
     let currentHeat = 0;
     let exploded = false;
+    let comboCount = 0;
+
+    // ============================================================
+    // RUSSIA_EMPEROR - Hiệu ứng Gấu (Phase 2 NO branch)
+    // ============================================================
+    let bearBrownActive = false;  // Gấu nâu: 50% giảm 20% power mỗi thẻ
+    let bearPandaActive = false;  // Gấu trúc: 30% xoá thẻ khỏi slot (pre-run)
+    let bearPolarActive = false;  // Gấu trắng: vô hiệu thẻ cao sao nhất
+    const removedSlots: number[] = [];       // Slots bị Gấu trúc xoá
+    let frozenCardId: number | null = null;  // Thẻ bị Gấu trắng đóng băng
+
+    if (quest.bossConfig?.specialCondition === 'RUSSIA_EMPEROR' && russiaPhase === 2 && vodkaChoice === 'NO') {
+      bearBrownActive = true;
+      bearPandaActive = true;
+      bearPolarActive = true;
+
+      // Gấu trúc ngứa mồm: 30% mỗi slot bị xoá thẻ (trước khi chạy)
+      for (let i = 0; i < (cardIds as number[]).length; i++) {
+        if (Math.random() < 0.3) {
+          removedSlots.push(i);
+        }
+      }
+
+      // Gấu trắng gian trá: tìm thẻ cao sao nhất và đóng băng
+      let maxRarity = 0;
+      let maxRarityCardId: number | null = null;
+      for (const cid of cardIds as number[]) {
+        const c = cardMap.get(cid);
+        if (c && c.rarity > maxRarity && !removedSlots.includes((cardIds as number[]).indexOf(cid))) {
+          maxRarity = c.rarity;
+          maxRarityCardId = cid;
+        }
+      }
+      frozenCardId = maxRarityCardId;
+    }
+
+    // Fetch user cho buff Moskva
+    const user = await prisma.user.findUnique({ where: { id: auth.userId } });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const moscowBuffActive = (user as any)?.hasMoscowBuff && (user as any)?.moscowBuffDay === user?.currentDay;
 
     for (let i = 0; i < cardIds.length; i++) {
       const cardId = cardIds[i] as number;
@@ -188,6 +277,38 @@ export async function POST(request: NextRequest) {
       let powerAdded = card.statPower;
       let heatAdded = card.statHeat;
       let stabilityReduced = card.statStability;
+
+      // Buff Hào quang Moskva: +20% power cho tất cả thẻ
+      if (moscowBuffActive) {
+        powerAdded = Math.floor(powerAdded * 1.2);
+      }
+
+      // Gấu trúc: slot bị xoá → thẻ không đóng góp gì
+      if (removedSlots.includes(i)) {
+        const step: TestStep = {
+          slot: i + 1,
+          cardId: cardId,
+          cardName: card.name,
+          cardType: card.type,
+          rarity: card.rarity,
+          powerAdded: 0, heatAdded: 0, stabilityReduced: 0,
+          comboTriggered: false, comboEffect: null, comboValue: 0,
+          effectTriggered: true, effectDescription: '🐼 Gấu trúc ngứa mồm đã nuốt thẻ này!',
+          totalPower, currentHeat, exploded: false,
+        };
+        steps.push(step);
+        continue; // Skip hẳn thẻ này
+      }
+
+      // Gấu trắng: thẻ cao sao nhất bị đóng băng → power = 0
+      if (frozenCardId === cardId) {
+        powerAdded = 0;
+      }
+
+      // Gấu nâu: 50% giảm 20% power
+      if (bearBrownActive && Math.random() < 0.5) {
+        powerAdded = Math.floor(powerAdded * 0.8);
+      }
 
       // Apply crew buffs
       powerAdded += crewBuffs.power;
@@ -208,6 +329,7 @@ export async function POST(request: NextRequest) {
         );
         if (combo) {
           comboTriggered = true;
+          comboCount++;
           comboEffect = combo.effectType;
           comboValue = combo.effectValue;
 
@@ -248,6 +370,30 @@ export async function POST(request: NextRequest) {
         }
       }
 
+      // ============================================================
+      // BOSS ACTIVE-RUN MODIFIERS
+      // ============================================================
+      if (quest.bossConfig?.specialCondition) {
+        const cond = quest.bossConfig.specialCondition;
+
+        // DRIFT_KING_CHALLENGE: Slot chẵn (index lẻ i % 2 !== 0) bị trượt nhẹ
+        if (cond === 'DRIFT_KING_CHALLENGE' && i % 2 !== 0) {
+          powerAdded = Math.floor(powerAdded * 1.15); // +15% power
+          if (heatAdded < 0) {
+            heatAdded = Math.floor(heatAdded / 2); // Giảm một nửa hiệu quả làm mát
+          }
+          effectTriggered = true;
+          effectDescription = (effectDescription ? effectDescription + ' | ' : '') + '🏎️ Trượt ly tâm (Slot Chẵn): +15% Power, Giảm 50% Làm Mát!';
+        }
+
+        // DAREDEVIL_DEATH_WISH: Slot 7 (index 6) thốc ga cực mạnh
+        if (cond === 'DAREDEVIL_DEATH_WISH' && i === 6) {
+          heatAdded += 15;
+          effectTriggered = true;
+          effectDescription = (effectDescription ? effectDescription + ' | ' : '') + '🔥 Đạp lút ga đi! (Slot 7): Tăng đột ngột +15 Nhiệt độ!';
+        }
+      }
+
       // Apply stats
       totalPower += powerAdded;
       totalStability += stabilityReduced;
@@ -263,14 +409,22 @@ export async function POST(request: NextRequest) {
         if (cond === 'MAX_HEAT_50' && currentHeat > 50) {
           currentHeat += 20; // Penalty: heat tăng thêm
         }
-        // MAX_HEAT_30: nhiệt không được quá 30%
-        if (cond === 'MAX_HEAT_30' && currentHeat > 30) {
-          currentHeat += 30; // Penalty nặng hơn
+
+        // RUSSIA_EMPEROR during-run: heat penalty
+        if (cond === 'RUSSIA_EMPEROR') {
+          const maxHeatForPhase = (russiaPhase === 2 && vodkaChoice === 'YES') ? 67 : 36;
+          if (currentHeat > maxHeatForPhase) {
+            currentHeat += 15; // Penalty
+          }
         }
+
       }
 
-      // Check explosion
-      if (currentHeat >= GAME_CONSTANTS.HEAT_THRESHOLD) {
+      // Check explosion — HOT_HANDS perk raises threshold to 115
+      const heatThreshold = (user as any)?.activePerkCode === 'HOT_HANDS'
+        ? GAME_CONSTANTS.HEAT_THRESHOLD + 15
+        : GAME_CONSTANTS.HEAT_THRESHOLD;
+      if (currentHeat >= heatThreshold) {
         exploded = true;
       }
 
@@ -305,10 +459,22 @@ export async function POST(request: NextRequest) {
     if (!exploded && quest.bossConfig?.specialCondition) {
       const cond = quest.bossConfig.specialCondition;
 
-      // MIN_HEAT_70: Heat phải trên 70% cuối run
-      if (cond === 'MIN_HEAT_70' && currentHeat < 70) {
-        conditionFailed = true;
-        conditionMessage = `Boss yêu cầu Heat ≥ 70%! Hiện tại: ${Math.round(currentHeat)}%`;
+      // DAREDEVIL_DEATH_WISH: Heat cuối cùng phải ≥ 85% (hoặc ngưỡng nổ - 15)
+      if (cond === 'DAREDEVIL_DEATH_WISH') {
+        const heatThreshold = (user as any)?.activePerkCode === 'HOT_HANDS' ? GAME_CONSTANTS.HEAT_THRESHOLD + 15 : GAME_CONSTANTS.HEAT_THRESHOLD;
+        const targetHeat = heatThreshold - 15;
+        if (currentHeat < targetHeat) {
+          conditionFailed = true;
+          conditionMessage = `Cô Gái Liều Lĩnh chê xe chưa đủ nóng! Yêu cầu Nhiệt độ ≥ ${targetHeat}%. Hiện tại: ${Math.round(currentHeat)}%`;
+        }
+      }
+
+      // DRIFT_KING_CHALLENGE: Tổng Stability ≥ 150
+      if (cond === 'DRIFT_KING_CHALLENGE') {
+        if (totalStability < 150) {
+          conditionFailed = true;
+          conditionMessage = `Ông Hoàng Drift chê xe không đủ cân bằng để drift! Yêu cầu Stability ≥ 150. Hiện tại: ${totalStability}`;
+        }
       }
 
       // MIN_STABILITY_150: Tổng Stability ≥ 150
@@ -316,10 +482,79 @@ export async function POST(request: NextRequest) {
         conditionFailed = true;
         conditionMessage = `Boss yêu cầu Stability ≥ 150! Hiện tại: ${totalStability}`;
       }
+
+      // EP_ISLAND_CHOICE (Đảo chủ EP) Post-run checks
+      if (cond === 'EP_ISLAND_CHOICE') {
+        // Cả 2 nhánh đều yều cầu Max Heat 69% và ít nhất 1 combo
+        if (currentHeat > 69) {
+          conditionFailed = true;
+          conditionMessage = `Đảo chủ EP yêu cầu Nhiệt độ không quá 69%! Hiện tại: ${Math.round(currentHeat)}%`;
+        } else if (comboCount < 1) {
+          conditionFailed = true;
+          conditionMessage = `Đảo chủ EP yêu cầu phải tạo được ít nhất 1 Combo linh kiện!`;
+        } else {
+          // Check power theo nhánh
+          if (epIslandChoice === 'YES' && totalPower < 500) {
+            conditionFailed = true;
+            conditionMessage = `Lên đảo phải đủ 500 Power! Hiện tại: ${totalPower}`;
+          } else if (epIslandChoice === 'NO' && totalPower < 690) {
+            conditionFailed = true;
+            conditionMessage = `Từ chối lên đảo thì phải đạt 690 Power! Hiện tại: ${totalPower}`;
+          }
+        }
+      }
+
+      // BABY_OIL_CHOICE (Chúa tể dầu em bé) Post-run checks
+      if (cond === 'BABY_OIL_CHOICE') {
+        if (babyOilChoice === 'YES') {
+           // YES branch requires MIN_HEAT_60 and MAX_POWER_400
+           if (currentHeat < 60) {
+             conditionFailed = true;
+             conditionMessage = `Chúa tể dầu em bé yêu cầu Nhiệt độ ít nhất 60%! Hiện tại: ${Math.round(currentHeat)}%`;
+           } else if (totalPower > 400) {
+             conditionFailed = true;
+             conditionMessage = `Chúa tể dầu em bé yêu cầu Power tốn đa là 400! Hiện tại: ${totalPower}`;
+           }
+        }
+        // NO branch has no special stats condition, it automatically fails later if they chose NO. But wait, if they chose NO, do they just auto-fail the quest?
+        // Let's explicitly let them "test" but we will fail it anyway or we can just say success=false if babyOilChoice === 'NO'.
+        // Actually, if NO, they don't even need to test, but if they do, we'll let the standard result happen (or force fail). 
+        // We will force conditionFailed if NO so it counts as a loss.
+        if (babyOilChoice === 'NO') {
+          conditionFailed = true;
+          conditionMessage = `Bạn đã thảnh thừng từ chối Chúa tể dầu em bé...`;
+        }
+      }
+
+      // DONALD_TRUMP (Đỗ Nam Trung) Post-run checks
+      if (cond === 'DONALD_TRUMP') {
+         if (currentHeat <= 47) {
+            conditionFailed = true;
+            conditionMessage = `Đỗ Nam Trung yêu cầu Nhiệt độ phải trên 47%! Hiện tại: ${Math.round(currentHeat)}%`;
+         } else if (totalPower <= 470) {
+            conditionFailed = true;
+            conditionMessage = `Đỗ Nam Trung yêu cầu Power phải trên 470! Hiện tại: ${totalPower}`;
+         }
+      }
+      // RUSSIA_EMPEROR Post-run checks
+      if (cond === 'RUSSIA_EMPEROR') {
+        const maxHeatForPhase = (russiaPhase === 2 && vodkaChoice === 'YES') ? 67 : 36;
+        if (currentHeat > maxHeatForPhase) {
+          conditionFailed = true;
+          conditionMessage = `Nga Đại Đế yêu cầu Nhiệt độ không quá ${maxHeatForPhase}%! Hiện tại: ${Math.round(currentHeat)}%`;
+        }
+        // Power check không cần vì "power càng cao càng tốt" — gold = power
+      }
     }
 
     // Determine result
-    const success = !exploded && !conditionFailed && totalPower >= quest.requiredPower;
+    let success = false;
+    if (quest.bossConfig?.specialCondition === 'EP_ISLAND_CHOICE' || quest.bossConfig?.specialCondition === 'BABY_OIL_CHOICE' || quest.bossConfig?.specialCondition === 'DONALD_TRUMP' || quest.bossConfig?.specialCondition === 'RUSSIA_EMPEROR') {
+      // Nhánh Choice / Dynamic: Power check được xử lý trong Post-run conditionFailed
+      success = !exploded && !conditionFailed;
+    } else {
+      success = !exploded && !conditionFailed && totalPower >= quest.requiredPower;
+    }
 
     return NextResponse.json({
       message: exploded
@@ -347,6 +582,18 @@ export async function POST(request: NextRequest) {
         name: quest.bossConfig.name,
         specialCondition: quest.bossConfig.specialCondition,
       } : null,
+      // Extra info cho Russia boss
+      ...(quest.bossConfig?.specialCondition === 'RUSSIA_EMPEROR' ? {
+        russiaReward: {
+          dynamicGold: russiaPhase === 2 ? totalPower * 2 : totalPower,
+          phase: russiaPhase || 1,
+          bearEffects: bearBrownActive ? {
+            removedSlots: removedSlots.map(s => s + 1),
+            frozenCard: frozenCardId ? cardMap.get(frozenCardId)?.name : null,
+          } : null,
+          moscowBuffActive: !!moscowBuffActive,
+        }
+      } : {}),
     });
 
   } catch (error) {

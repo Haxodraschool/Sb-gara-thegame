@@ -93,8 +93,22 @@ export const GAME_CONSTANTS = {
   BOSS_SUCCESS_EXP: 300,
   TECH_POINTS_PER_DAY: 10,
 
+  // Garage health bonus on success
+  SUCCESS_HEALTH_BONUS: 1,       // +1 uy tín khi thắng quest thường
+  BOSS_SUCCESS_HEALTH_BONUS: 5,  // +5 uy tín khi thắng boss
+
   // Crew slot upgrade cost
-  CREW_SLOT_COSTS: [0, 500, 1500, 3000, 5000] as number[],
+  CREW_SLOT_COSTS: [0, 50, 100, 200, 350] as number[],
+
+  // Starter Perk codes
+  PERK_CODES: {
+    STARTUP_FUND: 'STARTUP_FUND',       // +200 Gold
+    OLD_STASH: 'OLD_STASH',             // 5 thẻ 2-3★
+    HOT_HANDS: 'HOT_HANDS',             // Ngưỡng nổ +15
+    CONNECTIONS: 'CONNECTIONS',           // +1 crew slot
+    VIP_CARD: 'VIP_CARD',               // Shop -20% 10 ngày đầu
+    TECH_GENIUS: 'TECH_GENIUS',          // +100 Tech Points
+  },
 };
 
 // Hàm random theo drop rate

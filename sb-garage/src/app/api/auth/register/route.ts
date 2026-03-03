@@ -41,13 +41,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create user with default values
+    // Create user with default values + STARTUP_FUND perk (+200 Gold)
     const hashedPassword = await hashPassword(password);
     const user = await prisma.user.create({
       data: {
         username,
         password: hashedPassword,
-        gold: 500,
+        gold: 1700, // 1500 base + 200 từ STARTUP_FUND
         level: 1,
         exp: 0,
         currentDay: 1,
@@ -55,22 +55,25 @@ export async function POST(request: NextRequest) {
         techPoints: 0,
         crewSlots: 1,
         isFinalRound: false,
+        activePerkCode: 'STARTUP_FUND', // Đặc quyền mặc định
       },
     });
 
-    // Tặng thẻ mặc định cho người chơi mới (10 thẻ Common)
-    const starterCards = await prisma.card.findMany({
-      where: { rarity: 1 },
-      take: 10,
-    });
+    // Tặng thẻ khởi đầu: 45 thẻ 1★-2★ ngẫu nhiên + 5 thẻ 3★
+    const starter1Stars = await prisma.card.findMany({ where: { rarity: 1 }, take: 30 });
+    const starter2Stars = await prisma.card.findMany({ where: { rarity: 2 }, take: 15 });
+    const starter3Stars = await prisma.card.findMany({ where: { rarity: 3 }, take: 5 });
 
-    if (starterCards.length > 0) {
+    const allStarterCards = [
+      ...starter1Stars.map((c: { id: number }) => ({ userId: user.id, cardId: c.id, quantity: 1 })),
+      ...starter2Stars.map((c: { id: number }) => ({ userId: user.id, cardId: c.id, quantity: 1 })),
+      ...starter3Stars.map((c: { id: number }) => ({ userId: user.id, cardId: c.id, quantity: 1 })),
+    ];
+
+    if (allStarterCards.length > 0) {
       await prisma.userInventory.createMany({
-        data: starterCards.map((card) => ({
-          userId: user.id,
-          cardId: card.id,
-          quantity: 2,
-        })),
+        data: allStarterCards,
+        skipDuplicates: true,
       });
     }
 
