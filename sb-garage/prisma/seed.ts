@@ -30,158 +30,158 @@ async function main() {
 
   const cards = await Promise.all([
     // === FILTER (Lọc gió) - Tổng 18 thẻ ===
-    prisma.card.create({ data: { name: 'Lọc Gió Bằng Giấy', type: 'FILTER', rarity: 1, statPower: 3, statHeat: 4, statStability: 0, cost: 20, description: 'Rất mỏng manh, dễ rách và bám bụi.' } }),
+    prisma.card.create({ data: { name: 'Lọc Gió Bằng Giấy', type: 'FILTER', rarity: 1, statPower: 3, statHeat: 5, statStability: 0, cost: 20, description: 'Rất mỏng manh, dễ rách và bám bụi.' } }),
     prisma.card.create({ data: { name: 'Lọc Gió Xốp Dày', type: 'FILTER', rarity: 1, statPower: 4, statHeat: 3, statStability: 1, cost: 35, description: 'Dày hơn nhưng làm giảm luồng không khí.' } }),
-    prisma.card.create({ data: { name: 'Lọc Gió Lưới Sắt', type: 'FILTER', rarity: 1, statPower: 6, statHeat: 6, statStability: 2, cost: 45, description: 'Luồng gió mạnh nhưng hút cả khí nóng của máy.' } }),
-    prisma.card.create({ data: { name: 'Lọc Gió Tái Chế', type: 'FILTER', rarity: 1, statPower: 4, statHeat: 5, statStability: 0, cost: 25, description: 'Hàng rẻ tiền từ bãi rác, không bền.' } }),
+    prisma.card.create({ data: { name: 'Lọc Gió Lưới Sắt', type: 'FILTER', rarity: 1, statPower: 6, statHeat: 7, statStability: 2, cost: 45, description: 'Luồng gió mạnh nhưng hút cả khí nóng của máy.' } }),
+    prisma.card.create({ data: { name: 'Lọc Gió Tái Chế', type: 'FILTER', rarity: 1, statPower: 4, statHeat: 6, statStability: 0, cost: 25, description: 'Hàng rẻ tiền từ bãi rác, không bền.' } }),
     prisma.card.create({ data: { name: 'Lọc Gió Cơ Bản', type: 'FILTER', rarity: 1, statPower: 5, statHeat: 3, statStability: 1, cost: 50, description: 'Bộ lọc gió tiêu chuẩn, giúp không khí sạch vào động cơ.' } }),
     
-    prisma.card.create({ data: { name: 'Lọc Gió Cotton', type: 'FILTER', rarity: 2, statPower: 9, statHeat: 4, statStability: 2, cost: 85, description: 'Cản bụi tốt, giữ gió sạch và mát.' } }),
-    prisma.card.create({ data: { name: 'Lọc Gió Hình Nón', type: 'FILTER', rarity: 2, statPower: 14, statHeat: 7, statStability: 1, cost: 110, description: 'Cone cone intake - nạp nhanh nhưng nóng máy.' } }),
+    prisma.card.create({ data: { name: 'Lọc Gió Cotton', type: 'FILTER', rarity: 2, statPower: 9, statHeat: 5, statStability: 2, cost: 85, description: 'Cản bụi tốt, giữ gió sạch và mát.' } }),
+    prisma.card.create({ data: { name: 'Lọc Gió Hình Nón', type: 'FILTER', rarity: 2, statPower: 14, statHeat: 8, statStability: 1, cost: 110, description: 'Cone cone intake - nạp nhanh nhưng nóng máy.' } }),
     prisma.card.create({ data: { name: 'Lọc Gió Hộp Kín', type: 'FILTER', rarity: 2, statPower: 10, statHeat: 3, statStability: 4, cost: 130, description: 'Cách nhiệt tốt, hút không khí từ bên ngoài xe.' } }),
-    prisma.card.create({ data: { name: 'Lọc Gió Màng Dầu', type: 'FILTER', rarity: 2, statPower: 11, statHeat: 4, statStability: 3, cost: 140, description: 'Phủ dầu cản bụi siêu bụi, bảo vệ động cơ.' } }),
-    prisma.card.create({ data: { name: 'Lọc Gió Performance', type: 'FILTER', rarity: 2, statPower: 12, statHeat: 5, statStability: 3, cost: 120, description: 'Bộ lọc gió hiệu năng cao, tăng luồng gió đáng kể.' } }),
+    prisma.card.create({ data: { name: 'Lọc Gió Màng Dầu', type: 'FILTER', rarity: 2, statPower: 11, statHeat: 5, statStability: 3, cost: 140, description: 'Phủ dầu cản bụi siêu bụi, bảo vệ động cơ.' } }),
+    prisma.card.create({ data: { name: 'Lọc Gió Performance', type: 'FILTER', rarity: 2, statPower: 12, statHeat: 6, statStability: 3, cost: 120, description: 'Bộ lọc gió hiệu năng cao, tăng luồng gió đáng kể.' } }),
     
-    prisma.card.create({ data: { name: 'Lọc Gió Thể Thao K&N', type: 'FILTER', rarity: 3, statPower: 20, statHeat: 5, statStability: 5, cost: 220, description: 'Thương hiệu uy tín, ngon bổ rẻ cho mọi dòng xe.' } }),
+    prisma.card.create({ data: { name: 'Lọc Gió Thể Thao K&N', type: 'FILTER', rarity: 3, statPower: 20, statHeat: 6, statStability: 5, cost: 220, description: 'Thương hiệu uy tín, ngon bổ rẻ cho mọi dòng xe.' } }),
     prisma.card.create({ data: { name: 'Cold Air Intake', type: 'FILTER', rarity: 3, statPower: 22, statHeat: 2, statStability: 8, cost: 280, description: 'Ống dẫn hút khí lạnh trực tiếp từ gầm xe.' } }),
-    prisma.card.create({ data: { name: 'Lọc Gió Dual Cone', type: 'FILTER', rarity: 3, statPower: 28, statHeat: 8, statStability: 4, cost: 310, description: 'Hai nón hút gió song song, luồng khí dồi dào mãnh liệt.' } }),
-    prisma.card.create({ data: { name: 'Lọc Gió Carbon Fiber', type: 'FILTER', rarity: 3, statPower: 25, statHeat: 4, statStability: 7, cost: 250, description: 'Lọc gió sợi carbon siêu nhẹ, luồng gió cực mạnh.' } }),
+    prisma.card.create({ data: { name: 'Lọc Gió Dual Cone', type: 'FILTER', rarity: 3, statPower: 28, statHeat: 9, statStability: 4, cost: 310, description: 'Hai nón hút gió song song, luồng khí dồi dào mãnh liệt.' } }),
+    prisma.card.create({ data: { name: 'Lọc Gió Carbon Fiber', type: 'FILTER', rarity: 3, statPower: 25, statHeat: 5, statStability: 7, cost: 250, description: 'Lọc gió sợi carbon siêu nhẹ, luồng gió cực mạnh.' } }),
     
-    prisma.card.create({ data: { name: 'Hệ Thống Ram Air', type: 'FILTER', rarity: 4, statPower: 40, statHeat: 6, statStability: 12, cost: 650, description: 'Ép gió tốc độ cao. (Hiệu ứng: Giảm 10 Heat cho xe)' } }),
-    prisma.card.create({ data: { name: 'Bộ Gió Big Bore', type: 'FILTER', rarity: 4, statPower: 45, statHeat: 10, statStability: 8, cost: 720, description: 'Hút khí cưỡng bức. (Hiệu ứng: +15 Power khi chạy thử)' } }),
+    prisma.card.create({ data: { name: 'Hệ Thống Ram Air', type: 'FILTER', rarity: 4, statPower: 40, statHeat: 7, statStability: 12, cost: 650, description: 'Ép gió tốc độ cao. (Hiệu ứng: Giảm 10 Heat cho xe)' } }),
+    prisma.card.create({ data: { name: 'Bộ Gió Big Bore', type: 'FILTER', rarity: 4, statPower: 45, statHeat: 12, statStability: 8, cost: 720, description: 'Hút khí cưỡng bức. (Hiệu ứng: +15 Power khi chạy thử)' } }),
     
-    prisma.card.create({ data: { name: 'Hyper-Flow Titanium', type: 'FILTER', rarity: 5, statPower: 65, statHeat: 5, statStability: 20, cost: 1400, description: 'Khí động học Titan. (Hiệu ứng: +1 Power cho mỗi 1 Stability tổng)' } }),
-    prisma.card.create({ data: { name: 'Quantum Intake', type: 'FILTER', rarity: 5, statPower: 70, statHeat: -5, statStability: 25, cost: 1800, description: 'Hút gió lượng tử khí âm sâu. (Hiệu ứng: Giảm 50% Heat của Engine!)' } }),
+    prisma.card.create({ data: { name: 'Hyper-Flow Titanium', type: 'FILTER', rarity: 5, statPower: 65, statHeat: 6, statStability: 20, cost: 1400, description: 'Khí động học Titan. (Hiệu ứng: +1 Power cho mỗi 1 Stability tổng)' } }),
+    prisma.card.create({ data: { name: 'Quantum Intake', type: 'FILTER', rarity: 5, statPower: 70, statHeat: -4, statStability: 25, cost: 1800, description: 'Hút gió lượng tử khí âm sâu. (Hiệu ứng: Giảm 50% Heat của Engine!)' } }),
 
     // === ENGINE (Động cơ) - Tổng 25 thẻ ===
     prisma.card.create({ data: { name: 'Động Cơ Xe Máy 50cc', type: 'ENGINE', rarity: 1, statPower: 8, statHeat: 2, statStability: 5, cost: 20, description: 'Rất yếu nhưng được cái không nóng.' } }),
-    prisma.card.create({ data: { name: 'Động Cơ Máy Phát Điện', type: 'ENGINE', rarity: 1, statPower: 12, statHeat: 10, statStability: 2, cost: 35, description: 'Yếu, hú to, rung bần bật.' } }),
-    prisma.card.create({ data: { name: 'Động Cơ 1.0L 3 Xy-lanh', type: 'ENGINE', rarity: 1, statPower: 15, statHeat: 8, statStability: 4, cost: 65, description: 'Chỉ dùng chạy siêu thị, tiếng lạch cạch.' } }),
-    prisma.card.create({ data: { name: 'V4 Cũ Nát', type: 'ENGINE', rarity: 1, statPower: 18, statHeat: 15, statStability: 1, cost: 80, description: 'Ăn dầu, lúc nổ lúc xịt.' } }),
-    prisma.card.create({ data: { name: 'Động Cơ 1.5L', type: 'ENGINE', rarity: 1, statPower: 25, statHeat: 12, statStability: 2, cost: 100, description: 'Động cơ 4 xi-lanh 1.5L, đáng tin cậy nhưng công suất thấp.' } }),
+    prisma.card.create({ data: { name: 'Động Cơ Máy Phát Điện', type: 'ENGINE', rarity: 1, statPower: 12, statHeat: 12, statStability: 2, cost: 35, description: 'Yếu, hú to, rung bần bật.' } }),
+    prisma.card.create({ data: { name: 'Động Cơ 1.0L 3 Xy-lanh', type: 'ENGINE', rarity: 1, statPower: 15, statHeat: 9, statStability: 4, cost: 65, description: 'Chỉ dùng chạy siêu thị, tiếng lạch cạch.' } }),
+    prisma.card.create({ data: { name: 'V4 Cũ Nát', type: 'ENGINE', rarity: 1, statPower: 18, statHeat: 17, statStability: 1, cost: 80, description: 'Ăn dầu, lúc nổ lúc xịt.' } }),
+    prisma.card.create({ data: { name: 'Động Cơ 1.5L', type: 'ENGINE', rarity: 1, statPower: 25, statHeat: 14, statStability: 2, cost: 100, description: 'Động cơ 4 xi-lanh 1.5L, đáng tin cậy nhưng công suất thấp.' } }),
 
-    prisma.card.create({ data: { name: 'Động Cơ Dầu 2.5L Cũ', type: 'ENGINE', rarity: 2, statPower: 25, statHeat: 20, statStability: 5, cost: 120, description: 'Khói đen mịt mù nhưng moment xoắn ổn.' } }),
-    prisma.card.create({ data: { name: 'I4 1.8L Bền Bỉ', type: 'ENGINE', rarity: 2, statPower: 28, statHeat: 12, statStability: 15, cost: 160, description: 'Không có gì để hỏng, nồi đồng cối đá.' } }),
-    prisma.card.create({ data: { name: 'Boxer 2.0L Hút Khí Tự Nhiên', type: 'ENGINE', rarity: 2, statPower: 32, statHeat: 18, statStability: 25, cost: 210, description: 'Trọng tâm cực thấp, xe rất thăng bằng.' } }),
-    prisma.card.create({ data: { name: 'V6 2.5L Tiêu Chuẩn', type: 'ENGINE', rarity: 2, statPower: 35, statHeat: 22, statStability: 8, cost: 190, description: 'Mẫu động cơ quốc dân.' } }),
-    prisma.card.create({ data: { name: 'Động Cơ 2.0L Turbo', type: 'ENGINE', rarity: 2, statPower: 50, statHeat: 20, statStability: 5, cost: 200, description: 'Động cơ 2.0L tăng áp, cân bằng nhẹ giữa sức mạnh và nhiệt.' } }),
+    prisma.card.create({ data: { name: 'Động Cơ Dầu 2.5L Cũ', type: 'ENGINE', rarity: 2, statPower: 25, statHeat: 23, statStability: 5, cost: 120, description: 'Khói đen mịt mù nhưng moment xoắn ổn.' } }),
+    prisma.card.create({ data: { name: 'I4 1.8L Bền Bỉ', type: 'ENGINE', rarity: 2, statPower: 28, statHeat: 14, statStability: 15, cost: 160, description: 'Không có gì để hỏng, nồi đồng cối đá.' } }),
+    prisma.card.create({ data: { name: 'Boxer 2.0L Hút Khí Tự Nhiên', type: 'ENGINE', rarity: 2, statPower: 32, statHeat: 21, statStability: 25, cost: 210, description: 'Trọng tâm cực thấp, xe rất thăng bằng.' } }),
+    prisma.card.create({ data: { name: 'V6 2.5L Tiêu Chuẩn', type: 'ENGINE', rarity: 2, statPower: 35, statHeat: 25, statStability: 8, cost: 190, description: 'Mẫu động cơ quốc dân.' } }),
+    prisma.card.create({ data: { name: 'Động Cơ 2.0L Turbo', type: 'ENGINE', rarity: 2, statPower: 50, statHeat: 23, statStability: 5, cost: 200, description: 'Động cơ 2.0L tăng áp, cân bằng nhẹ giữa sức mạnh và nhiệt.' } }),
 
-    prisma.card.create({ data: { name: 'I6 3.0L Cầm Chừng', type: 'ENGINE', rarity: 3, statPower: 55, statHeat: 28, statStability: 12, cost: 280, description: 'Êm ả, mượt mà ở vòng tua cao.' } }),
-    prisma.card.create({ data: { name: 'V6 3.5L Hút Khí Tự Nhiên', type: 'ENGINE', rarity: 3, statPower: 60, statHeat: 30, statStability: 18, cost: 320, description: 'Đủ sức đi tour bạo lực trên cao tốc.' } }),
-    prisma.card.create({ data: { name: 'V8 4.0L Nhỏ', type: 'ENGINE', rarity: 3, statPower: 65, statHeat: 35, statStability: 8, cost: 360, description: 'Sức mạnh cơ bắp của Mỹ đời đầu.' } }),
-    prisma.card.create({ data: { name: 'Rotary Wankel Đúc Xương', type: 'ENGINE', rarity: 3, statPower: 70, statHeat: 45, statStability: 5, cost: 420, description: 'Vòng tua cao ngất ngưởng, tốn nhớt tốn xăng.' } }),
-    prisma.card.create({ data: { name: 'V6 Twin-Turbo', type: 'ENGINE', rarity: 3, statPower: 85, statHeat: 30, statStability: 7, cost: 400, description: 'Động cơ V6 đôi tăng áp, sức mạnh vượt trội.' } }),
+    prisma.card.create({ data: { name: 'I6 3.0L Cầm Chừng', type: 'ENGINE', rarity: 3, statPower: 55, statHeat: 32, statStability: 12, cost: 280, description: 'Êm ả, mượt mà ở vòng tua cao.' } }),
+    prisma.card.create({ data: { name: 'V6 3.5L Hút Khí Tự Nhiên', type: 'ENGINE', rarity: 3, statPower: 60, statHeat: 35, statStability: 18, cost: 320, description: 'Đủ sức đi tour bạo lực trên cao tốc.' } }),
+    prisma.card.create({ data: { name: 'V8 4.0L Nhỏ', type: 'ENGINE', rarity: 3, statPower: 65, statHeat: 40, statStability: 8, cost: 360, description: 'Sức mạnh cơ bắp của Mỹ đời đầu.' } }),
+    prisma.card.create({ data: { name: 'Rotary Wankel Đúc Xương', type: 'ENGINE', rarity: 3, statPower: 70, statHeat: 52, statStability: 5, cost: 420, description: 'Vòng tua cao ngất ngưởng, tốn nhớt tốn xăng.' } }),
+    prisma.card.create({ data: { name: 'V6 Twin-Turbo', type: 'ENGINE', rarity: 3, statPower: 85, statHeat: 35, statStability: 7, cost: 400, description: 'Động cơ V6 đôi tăng áp, sức mạnh vượt trội.' } }),
 
-    prisma.card.create({ data: { name: 'Động Cơ Inline-6 2JZ', type: 'ENGINE', rarity: 4, statPower: 85, statHeat: 30, statStability: 40, cost: 850, description: 'Quái vật độ xe huyền thoại. (Hiệu ứng: Chịu Đựng - Trừ 15 Heat cho tất cả Turbo)' } }),
-    prisma.card.create({ data: { name: 'V8 5.0L N/A', type: 'ENGINE', rarity: 4, statPower: 90, statHeat: 40, statStability: 15, cost: 700, description: 'Sức mạnh thuần túy, tiếng gầm đã tai. (Thuần sức mạnh)' } }),
-    prisma.card.create({ data: { name: 'Động Cơ Điện Dual-Motor', type: 'ENGINE', rarity: 4, statPower: 100, statHeat: 50, statStability: 35, cost: 750, description: 'Đáp ứng momen xoắn tức thời. (Chỉ số thuần túy)' } }),
-    prisma.card.create({ data: { name: 'V10 5.2L Screamer', type: 'ENGINE', rarity: 4, statPower: 110, statHeat: 60, statStability: 20, cost: 950, description: 'Tua máy 9000rpm chọc lủng màng nhĩ. (Hiệu ứng: V10 Screamer - +20 Power On-Test)' } }),
-    prisma.card.create({ data: { name: 'V8 Supercharged', type: 'ENGINE', rarity: 4, statPower: 180, statHeat: 55, statStability: 12, cost: 800, description: 'Quái vật V8 siêu nạp! Công suất khổng lồ nhưng rất nóng.' } }),
+    prisma.card.create({ data: { name: 'Động Cơ Inline-6 2JZ', type: 'ENGINE', rarity: 4, statPower: 85, statHeat: 35, statStability: 40, cost: 850, description: 'Quái vật độ xe huyền thoại. (Hiệu ứng: Chịu Đựng - Trừ 15 Heat cho tất cả Turbo)' } }),
+    prisma.card.create({ data: { name: 'V8 5.0L N/A', type: 'ENGINE', rarity: 4, statPower: 90, statHeat: 46, statStability: 15, cost: 700, description: 'Sức mạnh thuần túy, tiếng gầm đã tai. (Thuần sức mạnh)' } }),
+    prisma.card.create({ data: { name: 'Động Cơ Điện Dual-Motor', type: 'ENGINE', rarity: 4, statPower: 100, statHeat: 57, statStability: 35, cost: 750, description: 'Đáp ứng momen xoắn tức thời. (Chỉ số thuần túy)' } }),
+    prisma.card.create({ data: { name: 'V10 5.2L Screamer', type: 'ENGINE', rarity: 4, statPower: 110, statHeat: 69, statStability: 20, cost: 950, description: 'Tua máy 9000rpm chọc lủng màng nhĩ. (Hiệu ứng: V10 Screamer - +20 Power On-Test)' } }),
+    prisma.card.create({ data: { name: 'V8 Supercharged', type: 'ENGINE', rarity: 4, statPower: 180, statHeat: 63, statStability: 12, cost: 800, description: 'Quái vật V8 siêu nạp! Công suất khổng lồ nhưng rất nóng.' } }),
 
-    prisma.card.create({ data: { name: 'I4 F1 Turbo-Hybrid 1.6L', type: 'ENGINE', rarity: 5, statPower: 140, statHeat: 70, statStability: 50, cost: 1800, description: 'Công nghệ đường đua F1 tân tiến nhất! (Hiệu ứng: KERS Hệ Thống)' } }),
-    prisma.card.create({ data: { name: 'Động Cơ V12 6.5L Ý', type: 'ENGINE', rarity: 5, statPower: 150, statHeat: 80, statStability: 25, cost: 1500, description: 'Tác phẩm nghệ thuật cơ khí đỉnh cao. (Chỉ số khổng lồ)' } }),
-    prisma.card.create({ data: { name: 'Động Cơ Điện Quad-Motor TriMax', type: 'ENGINE', rarity: 5, statPower: 180, statHeat: 100, statStability: 60, cost: 2200, description: 'Gia tốc 0-100km/h trong 1.9s! Nhiệt từ pin siêu cao. (Hiệu ứng: Tương Lai - Tự động x2 Stability)' } }),
-    prisma.card.create({ data: { name: 'W16 Quad-Turbo', type: 'ENGINE', rarity: 5, statPower: 250, statHeat: 45, statStability: 20, cost: 2000, description: 'Động cơ W16 huyền thoại - đỉnh cao kỹ thuật cơ khí. (Hiệu ứng đặc biệt!)' } }),
-    prisma.card.create({ data: { name: 'Động Cơ Phản Lực J58', type: 'ENGINE', rarity: 5, statPower: 250, statHeat: 150, statStability: 0, cost: 1900, description: 'SR-71 Blackbird nhét vào ô tô. Rất dễ nổ! (Thuần sát thương diện rộng)' } }),
+    prisma.card.create({ data: { name: 'I4 F1 Turbo-Hybrid 1.6L', type: 'ENGINE', rarity: 5, statPower: 140, statHeat: 81, statStability: 50, cost: 1800, description: 'Công nghệ đường đua F1 tân tiến nhất! (Hiệu ứng: KERS Hệ Thống)' } }),
+    prisma.card.create({ data: { name: 'Động Cơ V12 6.5L Ý', type: 'ENGINE', rarity: 5, statPower: 150, statHeat: 92, statStability: 25, cost: 1500, description: 'Tác phẩm nghệ thuật cơ khí đỉnh cao. (Chỉ số khổng lồ)' } }),
+    prisma.card.create({ data: { name: 'Động Cơ Điện Quad-Motor TriMax', type: 'ENGINE', rarity: 5, statPower: 180, statHeat: 115, statStability: 60, cost: 2200, description: 'Gia tốc 0-100km/h trong 1.9s! Nhiệt từ pin siêu cao. (Hiệu ứng: Tương Lai - Tự động x2 Stability)' } }),
+    prisma.card.create({ data: { name: 'W16 Quad-Turbo', type: 'ENGINE', rarity: 5, statPower: 250, statHeat: 52, statStability: 20, cost: 2000, description: 'Động cơ W16 huyền thoại - đỉnh cao kỹ thuật cơ khí. (Hiệu ứng đặc biệt!)' } }),
+    prisma.card.create({ data: { name: 'Động Cơ Phản Lực J58', type: 'ENGINE', rarity: 5, statPower: 250, statHeat: 173, statStability: 0, cost: 1900, description: 'SR-71 Blackbird nhét vào ô tô. Rất dễ nổ! (Thuần sát thương diện rộng)' } }),
 
 
     // === TURBO - Tổng 18 thẻ ===
-    prisma.card.create({ data: { name: 'Turbo Cũ Phế Liệu', type: 'TURBO', rarity: 1, statPower: 8, statHeat: 15, statStability: 0, cost: 30, description: 'Nhặt từ bãi rác, chạy được là may, cực nóng!' } }),
-    prisma.card.create({ data: { name: 'Turbo Rỉ Sét', type: 'TURBO', rarity: 1, statPower: 10, statHeat: 12, statStability: 0, cost: 40, description: 'Kêu cót két nhưng vẫn ép gió tạm.' } }),
-    prisma.card.create({ data: { name: 'Turbo Đơn Cỡ Nhỏ', type: 'TURBO', rarity: 1, statPower: 14, statHeat: 11, statStability: 2, cost: 65, description: 'Loại thông dụng gắn sẵn trên các dòng xe gia đình.' } }),
+    prisma.card.create({ data: { name: 'Turbo Cũ Phế Liệu', type: 'TURBO', rarity: 1, statPower: 8, statHeat: 17, statStability: 0, cost: 30, description: 'Nhặt từ bãi rác, chạy được là may, cực nóng!' } }),
+    prisma.card.create({ data: { name: 'Turbo Rỉ Sét', type: 'TURBO', rarity: 1, statPower: 10, statHeat: 14, statStability: 0, cost: 40, description: 'Kêu cót két nhưng vẫn ép gió tạm.' } }),
+    prisma.card.create({ data: { name: 'Turbo Đơn Cỡ Nhỏ', type: 'TURBO', rarity: 1, statPower: 14, statHeat: 13, statStability: 2, cost: 65, description: 'Loại thông dụng gắn sẵn trên các dòng xe gia đình.' } }),
     prisma.card.create({ data: { name: 'Chông Gió Giả Turbo', type: 'TURBO', rarity: 1, statPower: 5, statHeat: 2, statStability: 5, cost: 25, description: 'Gắn bô xả tạo tiếng giả turbo, rẻ tiền ít nóng.' } }),
-    prisma.card.create({ data: { name: 'Turbo Nhỏ', type: 'TURBO', rarity: 1, statPower: 12, statHeat: 10, statStability: 1, cost: 80, description: 'Turbo nhỏ tăng áp nhẹ cho động cơ.' } }),
+    prisma.card.create({ data: { name: 'Turbo Nhỏ', type: 'TURBO', rarity: 1, statPower: 12, statHeat: 12, statStability: 1, cost: 80, description: 'Turbo nhỏ tăng áp nhẹ cho động cơ.' } }),
 
-    prisma.card.create({ data: { name: 'Turbo Máy Kéo', type: 'TURBO', rarity: 2, statPower: 20, statHeat: 18, statStability: 1, cost: 130, description: 'Tháo từ máy cày, trâu bò nhưng độ trễ kinh hồn.' } }),
-    prisma.card.create({ data: { name: 'Turbo Cánh Khế', type: 'TURBO', rarity: 2, statPower: 25, statHeat: 15, statStability: 3, cost: 170, description: 'Billet compressor - trọng lượng nhẹ, xoay nhanh.' } }),
-    prisma.card.create({ data: { name: 'Turbo Ổ Bi', type: 'TURBO', rarity: 2, statPower: 22, statHeat: 12, statStability: 5, cost: 210, description: 'Ball bearing quay siêu mượt, giảm ma sát tạo nhiệt.' } }),
-    prisma.card.create({ data: { name: 'Turbo Tăng Áp Dầu', type: 'TURBO', rarity: 2, statPower: 28, statHeat: 20, statStability: 2, cost: 190, description: 'Bốc mạnh ở dải vòng tua cao, cần nhiều nhớt.' } }),
+    prisma.card.create({ data: { name: 'Turbo Máy Kéo', type: 'TURBO', rarity: 2, statPower: 20, statHeat: 21, statStability: 1, cost: 130, description: 'Tháo từ máy cày, trâu bò nhưng độ trễ kinh hồn.' } }),
+    prisma.card.create({ data: { name: 'Turbo Cánh Khế', type: 'TURBO', rarity: 2, statPower: 25, statHeat: 17, statStability: 3, cost: 170, description: 'Billet compressor - trọng lượng nhẹ, xoay nhanh.' } }),
+    prisma.card.create({ data: { name: 'Turbo Ổ Bi', type: 'TURBO', rarity: 2, statPower: 22, statHeat: 14, statStability: 5, cost: 210, description: 'Ball bearing quay siêu mượt, giảm ma sát tạo nhiệt.' } }),
+    prisma.card.create({ data: { name: 'Turbo Tăng Áp Dầu', type: 'TURBO', rarity: 2, statPower: 28, statHeat: 23, statStability: 2, cost: 190, description: 'Bốc mạnh ở dải vòng tua cao, cần nhiều nhớt.' } }),
 
-    prisma.card.create({ data: { name: 'Turbo Bi-Turbo Nhỏ', type: 'TURBO', rarity: 3, statPower: 35, statHeat: 16, statStability: 4, cost: 310, description: 'Đáp ứng cực nhanh trong phố lẫn đường trường.' } }),
-    prisma.card.create({ data: { name: 'Supercharger Yếu', type: 'TURBO', rarity: 3, statPower: 38, statHeat: 20, statStability: 2, cost: 360, description: 'Dây đai truyền động trục tiếp, không độ trễ nhưng ồn.' } }),
-    prisma.card.create({ data: { name: 'Turbo Biến Thiên', type: 'TURBO', rarity: 3, statPower: 32, statHeat: 12, statStability: 8, cost: 400, description: 'VNT Turbo điều chỉnh khe hở gió, giữ mát tốt.' } }),
-    prisma.card.create({ data: { name: 'Turbo Tăng Áp Đôi', type: 'TURBO', rarity: 3, statPower: 42, statHeat: 18, statStability: 3, cost: 350, description: 'Hệ thống tăng áp kép, boost mạnh mẽ!' } }),
+    prisma.card.create({ data: { name: 'Turbo Bi-Turbo Nhỏ', type: 'TURBO', rarity: 3, statPower: 35, statHeat: 18, statStability: 4, cost: 310, description: 'Đáp ứng cực nhanh trong phố lẫn đường trường.' } }),
+    prisma.card.create({ data: { name: 'Supercharger Yếu', type: 'TURBO', rarity: 3, statPower: 38, statHeat: 23, statStability: 2, cost: 360, description: 'Dây đai truyền động trục tiếp, không độ trễ nhưng ồn.' } }),
+    prisma.card.create({ data: { name: 'Turbo Biến Thiên', type: 'TURBO', rarity: 3, statPower: 32, statHeat: 14, statStability: 8, cost: 400, description: 'VNT Turbo điều chỉnh khe hở gió, giữ mát tốt.' } }),
+    prisma.card.create({ data: { name: 'Turbo Tăng Áp Đôi', type: 'TURBO', rarity: 3, statPower: 42, statHeat: 21, statStability: 3, cost: 350, description: 'Hệ thống tăng áp kép, boost mạnh mẽ!' } }),
 
-    prisma.card.create({ data: { name: 'Turbo Twin-Scroll', type: 'TURBO', rarity: 4, statPower: 55, statHeat: 25, statStability: 10, cost: 750, description: 'Đường xoắn kép nạp max hiệu suất. (Hiệu ứng: +20 Power ON_TEST)' } }),
-    prisma.card.create({ data: { name: 'Supercharger Roots', type: 'TURBO', rarity: 4, statPower: 65, statHeat: 35, statStability: 5, cost: 850, description: 'Siêu nạp khổng lồ nắp capo. (Hiệu ứng: x1.5 Power bản thân)' } }),
+    prisma.card.create({ data: { name: 'Turbo Twin-Scroll', type: 'TURBO', rarity: 4, statPower: 55, statHeat: 29, statStability: 10, cost: 750, description: 'Đường xoắn kép nạp max hiệu suất. (Hiệu ứng: +20 Power ON_TEST)' } }),
+    prisma.card.create({ data: { name: 'Supercharger Roots', type: 'TURBO', rarity: 4, statPower: 65, statHeat: 40, statStability: 5, cost: 850, description: 'Siêu nạp khổng lồ nắp capo. (Hiệu ứng: x1.5 Power bản thân)' } }),
 
-    prisma.card.create({ data: { name: 'Vortex Hố Đen', type: 'TURBO', rarity: 5, statPower: 120, statHeat: 40, statStability: 0, cost: 1900, description: 'Hút cả ánh sáng! (Hiệu ứng: Hút 50% Power từ Engine làm của mình, tăng 30 Heat)' } }),
-    prisma.card.create({ data: { name: 'Anti-Lag System', type: 'TURBO', rarity: 5, statPower: 90, statHeat: 15, statStability: 30, cost: 2200, description: 'Bang-bang nổ pô liên thanh. (Hiệu ứng: Engine +50 Power, Ống Xả -20 Heat)' } }),
-    prisma.card.create({ data: { name: 'Turbo Titan X', type: 'TURBO', rarity: 5, statPower: 100, statHeat: 20, statStability: 15, cost: 1500, description: 'Turbo cấp huyền thoại! Combo cùng Lọc Gió = nhân đôi Power.' } }),
+    prisma.card.create({ data: { name: 'Vortex Hố Đen', type: 'TURBO', rarity: 5, statPower: 120, statHeat: 46, statStability: 0, cost: 1900, description: 'Hút cả ánh sáng! (Hiệu ứng: Hút 50% Power từ Engine làm của mình, tăng 30 Heat)' } }),
+    prisma.card.create({ data: { name: 'Anti-Lag System', type: 'TURBO', rarity: 5, statPower: 90, statHeat: 17, statStability: 30, cost: 2200, description: 'Bang-bang nổ pô liên thanh. (Hiệu ứng: Engine +50 Power, Ống Xả -20 Heat)' } }),
+    prisma.card.create({ data: { name: 'Turbo Titan X', type: 'TURBO', rarity: 5, statPower: 100, statHeat: 23, statStability: 15, cost: 1500, description: 'Turbo cấp huyền thoại! (Hiệu ứng: Titan Boost - +30 Power khi chạy thử, không tăng Heat)' } }),
 
     // === EXHAUST (Ống xả) - Tổng 18 thẻ ===
     prisma.card.create({ data: { name: 'Ống Bơ Hài Hước', type: 'EXHAUST', rarity: 1, statPower: 1, statHeat: 0, statStability: 1, cost: 15, description: 'Chế từ ống bơ, kêu như bò rống, khách chê.' } }),
     prisma.card.create({ data: { name: 'Ống Xả Gỉ Sét', type: 'EXHAUST', rarity: 1, statPower: 3, statHeat: -1, statStability: 2, cost: 25, description: 'Thoát khí kém, xả nhiệt ít, sắp rụng.' } }),
     prisma.card.create({ data: { name: 'Ống Xả Xe Máy', type: 'EXHAUST', rarity: 1, statPower: 4, statHeat: -2, statStability: 3, cost: 40, description: 'Cố nhét pô xe máy vào ô tô, bí hơi.' } }),
-    prisma.card.create({ data: { name: 'Ống Xả Cắt Ngắn', type: 'EXHAUST', rarity: 1, statPower: 12, statHeat: -5, statStability: 0, cost: 50, description: 'Cắt thẳng cổ xả ra ngoài, ồn ào và rung lắc.' } }),
+    prisma.card.create({ data: { name: 'Ống Xả Cắt Ngắn', type: 'EXHAUST', rarity: 1, statPower: 12, statHeat: -4, statStability: 0, cost: 50, description: 'Cắt thẳng cổ xả ra ngoài, ồn ào và rung lắc.' } }),
     prisma.card.create({ data: { name: 'Ống Xả Tiêu Chuẩn', type: 'EXHAUST', rarity: 1, statPower: 8, statHeat: -3, statStability: 4, cost: 60, description: 'Ống xả mặc định, thoát khí ổn định.' } }),
 
-    prisma.card.create({ data: { name: 'Ống Xả Inox 304', type: 'EXHAUST', rarity: 2, statPower: 10, statHeat: -7, statStability: 8, cost: 110, description: 'Bền bỉ, sáng bóng, chống rỉ sét rạn nứt tuyệt đối.' } }),
-    prisma.card.create({ data: { name: 'Ống Xả Cat-back', type: 'EXHAUST', rarity: 2, statPower: 12, statHeat: -5, statStability: 5, cost: 130, description: 'Giữ lại bầu lọc khí thải nhưng ống to hơn.' } }),
-    prisma.card.create({ data: { name: 'Ống Xả Kép Dạng Y', type: 'EXHAUST', rarity: 2, statPower: 15, statHeat: -8, statStability: 4, cost: 145, description: 'Phân luồng khí xả hai bên, tản nhiệt tốt.' } }),
-    prisma.card.create({ data: { name: 'Header Thép Cuộn', type: 'EXHAUST', rarity: 2, statPower: 20, statHeat: -4, statStability: 3, cost: 160, description: 'Cổ pô uốn cong tối ưu hóa dòng khí xả.' } }),
-    prisma.card.create({ data: { name: 'Ống Xả Performance', type: 'EXHAUST', rarity: 2, statPower: 18, statHeat: -6, statStability: 7, cost: 150, description: 'Ống xả thể thao, thoát khí nhanh giảm nhiệt.' } }),
+    prisma.card.create({ data: { name: 'Ống Xả Inox 304', type: 'EXHAUST', rarity: 2, statPower: 10, statHeat: -6, statStability: 8, cost: 110, description: 'Bền bỉ, sáng bóng, chống rỉ sét rạn nứt tuyệt đối.' } }),
+    prisma.card.create({ data: { name: 'Ống Xả Cat-back', type: 'EXHAUST', rarity: 2, statPower: 12, statHeat: -4, statStability: 5, cost: 130, description: 'Giữ lại bầu lọc khí thải nhưng ống to hơn.' } }),
+    prisma.card.create({ data: { name: 'Ống Xả Kép Dạng Y', type: 'EXHAUST', rarity: 2, statPower: 15, statHeat: -7, statStability: 4, cost: 145, description: 'Phân luồng khí xả hai bên, tản nhiệt tốt.' } }),
+    prisma.card.create({ data: { name: 'Header Thép Cuộn', type: 'EXHAUST', rarity: 2, statPower: 20, statHeat: -3, statStability: 3, cost: 160, description: 'Cổ pô uốn cong tối ưu hóa dòng khí xả.' } }),
+    prisma.card.create({ data: { name: 'Ống Xả Performance', type: 'EXHAUST', rarity: 2, statPower: 18, statHeat: -5, statStability: 7, cost: 150, description: 'Ống xả thể thao, thoát khí nhanh giảm nhiệt.' } }),
 
-    prisma.card.create({ data: { name: 'Ống Xả Trị Liệu Âm', type: 'EXHAUST', rarity: 3, statPower: 15, statHeat: -10, statStability: 15, cost: 250, description: 'Âm thanh trầm ấm êm tai, cấu trúc vững chãi.' } }),
-    prisma.card.create({ data: { name: 'Titanium Nhiệt Tiêu', type: 'EXHAUST', rarity: 3, statPower: 25, statHeat: -15, statStability: 8, cost: 350, description: 'Mỏng nhẹ tản nhiệt cực nhanh vì chế tác bằng Titan.' } }),
-    prisma.card.create({ data: { name: 'Header Chéo Racing', type: 'EXHAUST', rarity: 3, statPower: 30, statHeat: -12, statStability: 6, cost: 380, description: 'Cổ xả phức tạp đồng bộ nhịp nổ của xi-lanh.' } }),
+    prisma.card.create({ data: { name: 'Ống Xả Trị Liệu Âm', type: 'EXHAUST', rarity: 3, statPower: 15, statHeat: -8, statStability: 15, cost: 250, description: 'Âm thanh trầm ấm êm tai, cấu trúc vững chãi.' } }),
+    prisma.card.create({ data: { name: 'Titanium Nhiệt Tiêu', type: 'EXHAUST', rarity: 3, statPower: 25, statHeat: -13, statStability: 8, cost: 350, description: 'Mỏng nhẹ tản nhiệt cực nhanh vì chế tác bằng Titan.' } }),
+    prisma.card.create({ data: { name: 'Header Chéo Racing', type: 'EXHAUST', rarity: 3, statPower: 30, statHeat: -10, statStability: 6, cost: 380, description: 'Cổ xả phức tạp đồng bộ nhịp nổ của xi-lanh.' } }),
     
-    prisma.card.create({ data: { name: 'Hệ Thống Side-Exit', type: 'EXHAUST', rarity: 4, statPower: 45, statHeat: -18, statStability: 10, cost: 650, description: 'Pô hông xe phong cách JDM! (Hiệu ứng: Lan tỏa - giảm 10 Heat cho thẻ ngay sau lưng)' } }),
-    prisma.card.create({ data: { name: 'Catless Downpipe', type: 'EXHAUST', rarity: 4, statPower: 60, statHeat: -10, statStability: 5, cost: 720, description: 'Khạc lửa ầm ầm! (Hiệu ứng: Xả nhiệt toàn bộ xe -2 Heat mọi thẻ)' } }),
-    prisma.card.create({ data: { name: 'Ống Xả Titan Racing', type: 'EXHAUST', rarity: 4, statPower: 50, statHeat: -20, statStability: 18, cost: 600, description: 'Ống xả titanium racing! Giảm nhiệt mạnh + tăng power.' } }),
+    prisma.card.create({ data: { name: 'Hệ Thống Side-Exit', type: 'EXHAUST', rarity: 4, statPower: 45, statHeat: -15, statStability: 10, cost: 650, description: 'Pô hông xe phong cách JDM! (Hiệu ứng: Lan tỏa - giảm 10 Heat cho thẻ ngay sau lưng)' } }),
+    prisma.card.create({ data: { name: 'Catless Downpipe', type: 'EXHAUST', rarity: 4, statPower: 60, statHeat: -8, statStability: 5, cost: 720, description: 'Khạc lửa ầm ầm! (Hiệu ứng: Xả nhiệt toàn bộ xe -2 Heat mọi thẻ)' } }),
+    prisma.card.create({ data: { name: 'Ống Xả Titan Racing', type: 'EXHAUST', rarity: 4, statPower: 50, statHeat: -17, statStability: 18, cost: 600, description: 'Ống xả titanium racing! Giảm nhiệt mạnh + tăng power.' } }),
 
-    prisma.card.create({ data: { name: 'Ghost Exhaust', type: 'EXHAUST', rarity: 5, statPower: 55, statHeat: -45, statStability: 40, cost: 1600, description: 'Công nghệ tàng hình âm thanh. (Hiệu ứng: Bypass "NO_EXHAUST", nhân đôi Stability gốc)' } }),
-    prisma.card.create({ data: { name: 'Plasma Đỏ Lửa', type: 'EXHAUST', rarity: 5, statPower: 80, statHeat: -30, statStability: 25, cost: 2100, description: 'Pô gốm vũ trụ plasma. (Hiệu ứng: Nhân đôi Heat âm thành -60 Heat!)' } }),
+    prisma.card.create({ data: { name: 'Ghost Exhaust', type: 'EXHAUST', rarity: 5, statPower: 55, statHeat: -38, statStability: 40, cost: 1600, description: 'Công nghệ tàng hình âm thanh. (Hiệu ứng: Bypass "NO_EXHAUST", nhân đôi Stability gốc)' } }),
+    prisma.card.create({ data: { name: 'Plasma Đỏ Lửa', type: 'EXHAUST', rarity: 5, statPower: 80, statHeat: -25, statStability: 25, cost: 2100, description: 'Pô gốm vũ trụ plasma. (Hiệu ứng: Nhân đôi Heat âm thành -60 Heat!)' } }),
 
     // === COOLING (Hệ thống làm mát) - Tổng 19 thẻ ===
     prisma.card.create({ data: { name: 'Nước Lã Cây Xăng', type: 'COOLING', rarity: 1, statPower: 0, statHeat: -1, statStability: 0, cost: 10, description: 'Đổ nước máy cho két nước rỉ sét.' } }),
     prisma.card.create({ data: { name: 'Quạt Chĩa Điều Hòa', type: 'COOLING', rarity: 1, statPower: 0, statHeat: -2, statStability: 2, cost: 25, description: 'Cột quạt điện vào lưới tản nhiệt.' } }),
-    prisma.card.create({ data: { name: 'Két Nước Nhựa', type: 'COOLING', rarity: 1, statPower: 0, statHeat: -4, statStability: 0, cost: 45, description: 'Dễ bung mối nối khi vòng tua cao.' } }),
-    prisma.card.create({ data: { name: 'Quạt Làm Mát', type: 'COOLING', rarity: 1, statPower: 0, statHeat: -5, statStability: 8, cost: 70, description: 'Quạt tản nhiệt cơ bản, giúp hạ nhiệt động cơ.' } }),
+    prisma.card.create({ data: { name: 'Két Nước Nhựa', type: 'COOLING', rarity: 1, statPower: 0, statHeat: -3, statStability: 0, cost: 45, description: 'Dễ bung mối nối khi vòng tua cao.' } }),
+    prisma.card.create({ data: { name: 'Quạt Làm Mát', type: 'COOLING', rarity: 1, statPower: 0, statHeat: -4, statStability: 8, cost: 70, description: 'Quạt tản nhiệt cơ bản, giúp hạ nhiệt động cơ.' } }),
 
-    prisma.card.create({ data: { name: 'Nước Làm Mát Pha Loãng', type: 'COOLING', rarity: 2, statPower: 0, statHeat: -6, statStability: 4, cost: 80, description: 'Xanh lè nhưng nhiều cặn.' } }),
-    prisma.card.create({ data: { name: 'Ống Dẫn Nhiệt Silicon', type: 'COOLING', rarity: 2, statPower: 0, statHeat: -8, statStability: 8, cost: 110, description: 'Tản nhiệt mạch máu bền bỉ.' } }),
-    prisma.card.create({ data: { name: 'Két Nước Đôi Nhôm Lớn', type: 'COOLING', rarity: 2, statPower: 2, statHeat: -12, statStability: 6, cost: 140, description: 'Nặng nhưng khá mát.' } }),
-    prisma.card.create({ data: { name: 'Két Nước Racing', type: 'COOLING', rarity: 2, statPower: 3, statHeat: -9, statStability: 12, cost: 160, description: 'Két nước cỡ lớn cho xe đua.' } }),
+    prisma.card.create({ data: { name: 'Nước Làm Mát Pha Loãng', type: 'COOLING', rarity: 2, statPower: 0, statHeat: -5, statStability: 4, cost: 80, description: 'Xanh lè nhưng nhiều cặn.' } }),
+    prisma.card.create({ data: { name: 'Ống Dẫn Nhiệt Silicon', type: 'COOLING', rarity: 2, statPower: 0, statHeat: -7, statStability: 8, cost: 110, description: 'Tản nhiệt mạch máu bền bỉ.' } }),
+    prisma.card.create({ data: { name: 'Két Nước Đôi Nhôm Lớn', type: 'COOLING', rarity: 2, statPower: 2, statHeat: -10, statStability: 6, cost: 140, description: 'Nặng nhưng khá mát.' } }),
+    prisma.card.create({ data: { name: 'Két Nước Racing', type: 'COOLING', rarity: 2, statPower: 3, statHeat: -8, statStability: 12, cost: 160, description: 'Két nước cỡ lớn cho xe đua.' } }),
 
-    prisma.card.create({ data: { name: 'Quạt Điện Đôi Hiệu Năng', type: 'COOLING', rarity: 3, statPower: 3, statHeat: -18, statStability: 10, cost: 260, description: 'Giải nhiệt tức thì khi kẹt xe.' } }),
-    prisma.card.create({ data: { name: 'Dung Dịch Nước Đá', type: 'COOLING', rarity: 3, statPower: 5, statHeat: -22, statStability: 8, cost: 320, description: 'Chất lỏng đặc biệt siêu sủi bọt.' } }),
-    prisma.card.create({ data: { name: 'Bộ Két Nhôm CNC 3 Lõi', type: 'COOLING', rarity: 3, statPower: 4, statHeat: -25, statStability: 15, cost: 390, description: 'Hút gió đỉnh, chịu áp lực cao.' } }),
-    prisma.card.create({ data: { name: 'Intercooler Carbon', type: 'COOLING', rarity: 3, statPower: 7, statHeat: -18, statStability: 18, cost: 380, description: 'Bộ tản nhiệt trung gian carbon, giảm nhiệt cực mạnh.' } }),
+    prisma.card.create({ data: { name: 'Quạt Điện Đôi Hiệu Năng', type: 'COOLING', rarity: 3, statPower: 3, statHeat: -15, statStability: 10, cost: 260, description: 'Giải nhiệt tức thì khi kẹt xe.' } }),
+    prisma.card.create({ data: { name: 'Dung Dịch Nước Đá', type: 'COOLING', rarity: 3, statPower: 5, statHeat: -19, statStability: 8, cost: 320, description: 'Chất lỏng đặc biệt siêu sủi bọt.' } }),
+    prisma.card.create({ data: { name: 'Bộ Két Nhôm CNC 3 Lõi', type: 'COOLING', rarity: 3, statPower: 4, statHeat: -21, statStability: 15, cost: 390, description: 'Hút gió đỉnh, chịu áp lực cao.' } }),
+    prisma.card.create({ data: { name: 'Intercooler Carbon', type: 'COOLING', rarity: 3, statPower: 7, statHeat: -15, statStability: 18, cost: 380, description: 'Bộ tản nhiệt trung gian carbon, giảm nhiệt cực mạnh.' } }),
 
-    prisma.card.create({ data: { name: 'Nước Làm Mát Ngoại Cỡ', type: 'COOLING', rarity: 4, statPower: 5, statHeat: -40, statStability: 20, cost: 650, description: 'Sôi ở 190 độ C, không bao giờ trào.' } }),
-    prisma.card.create({ data: { name: 'Bộ Làm Mát Bằng Cồn Methanol', type: 'COOLING', rarity: 4, statPower: 15, statHeat: -35, statStability: 5, cost: 800, description: 'Phun Methanol! (Hiệu ứng: Bốc Hơi Ác Liệt - +10 Power nhờ nạp khí lạnh)' } }),
-    prisma.card.create({ data: { name: 'Két Nước Khổng Lồ Tích Hợp', type: 'COOLING', rarity: 4, statPower: 0, statHeat: -50, statStability: 25, cost: 850, description: 'Nhìn như chiếc khiên che hết đầu xe.' } }),
+    prisma.card.create({ data: { name: 'Nước Làm Mát Ngoại Cỡ', type: 'COOLING', rarity: 4, statPower: 5, statHeat: -34, statStability: 20, cost: 650, description: 'Sôi ở 190 độ C, không bao giờ trào.' } }),
+    prisma.card.create({ data: { name: 'Bộ Làm Mát Bằng Cồn Methanol', type: 'COOLING', rarity: 4, statPower: 15, statHeat: -30, statStability: 5, cost: 800, description: 'Phun Methanol! (Hiệu ứng: Bốc Hơi Ác Liệt - +10 Power nhờ nạp khí lạnh)' } }),
+    prisma.card.create({ data: { name: 'Két Nước Khổng Lồ Tích Hợp', type: 'COOLING', rarity: 4, statPower: 0, statHeat: -42, statStability: 25, cost: 850, description: 'Nhìn như chiếc khiên che hết đầu xe.' } }),
 
-    prisma.card.create({ data: { name: 'Khí Nito Lỏng Làm Mát Trực Tiếp', type: 'COOLING', rarity: 5, statPower: 20, statHeat: -80, statStability: 10, cost: 1900, description: 'Sương giá bủa vây động cơ! (Hiệu ứng: Deep Freeze - Bất bạo động Boss nhiệt)' } }),
-    prisma.card.create({ data: { name: 'Bộ Tản Nhiệt Graphene', type: 'COOLING', rarity: 5, statPower: 10, statHeat: -70, statStability: 40, cost: 1800, description: 'Siêu vật liệu dẫn nhiệt tuyệt đối.' } }),
-    prisma.card.create({ data: { name: 'Hệ Thống Từ Trường Lượng Tử', type: 'COOLING', rarity: 5, statPower: 0, statHeat: -100, statStability: 50, cost: 2300, description: 'Công nghệ ngoài vũ trụ. (Hiệu ứng: Không Độ Tuyệt Đối - Ép Heat toàn xe bằng 0)' } }),
-    prisma.card.create({ data: { name: 'Cryo Cooling System', type: 'COOLING', rarity: 5, statPower: 15, statHeat: -35, statStability: 35, cost: 1800, description: 'Hệ thống đóng băng mọi nhiệt độ. (Giảm 10 Heat toàn xe bằng Passive)' } }),
+    prisma.card.create({ data: { name: 'Khí Nito Lỏng Làm Mát Trực Tiếp', type: 'COOLING', rarity: 5, statPower: 20, statHeat: -68, statStability: 10, cost: 1900, description: 'Sương giá bủa vây động cơ! (Hiệu ứng: Deep Freeze - Bất bạo động Boss nhiệt)' } }),
+    prisma.card.create({ data: { name: 'Bộ Tản Nhiệt Graphene', type: 'COOLING', rarity: 5, statPower: 10, statHeat: -59, statStability: 40, cost: 1800, description: 'Siêu vật liệu dẫn nhiệt tuyệt đối.' } }),
+    prisma.card.create({ data: { name: 'Hệ Thống Từ Trường Lượng Tử', type: 'COOLING', rarity: 5, statPower: 0, statHeat: -85, statStability: 50, cost: 2300, description: 'Công nghệ ngoài vũ trụ. (Hiệu ứng: Không Độ Tuyệt Đối - Ép Heat toàn xe bằng 0)' } }),
+    prisma.card.create({ data: { name: 'Cryo Cooling System', type: 'COOLING', rarity: 5, statPower: 15, statHeat: -30, statStability: 35, cost: 1800, description: 'Hệ thống đóng băng mọi nhiệt độ. (Giảm 10 Heat toàn xe bằng Passive)' } }),
 
 
     // === FUEL (Nhiên liệu) - Tổng 18 thẻ ===
-    prisma.card.create({ data: { name: 'Xăng Pha Nước', type: 'FUEL', rarity: 1, statPower: 2, statHeat: 10, statStability: -5, cost: 15, description: 'Xe giật cục, đánh lửa lỗi liên tục.' } }),
-    prisma.card.create({ data: { name: 'Nhiên Liệu Tái Chế Cặn', type: 'FUEL', rarity: 1, statPower: 5, statHeat: 8, statStability: -2, cost: 25, description: 'Lấy từ ống xả lò đốt rác.' } }),
-    prisma.card.create({ data: { name: 'Xăng A92 Giá Rẻ', type: 'FUEL', rarity: 1, statPower: 8, statHeat: 5, statStability: 0, cost: 35, description: 'Tạm xài được qua ngày.' } }),
-    prisma.card.create({ data: { name: 'Xăng RON 95', type: 'FUEL', rarity: 1, statPower: 10, statHeat: 6, statStability: 2, cost: 50, description: 'Nhiên liệu tiêu chuẩn.' } }),
+    prisma.card.create({ data: { name: 'Xăng Pha Nước', type: 'FUEL', rarity: 1, statPower: 2, statHeat: 12, statStability: -5, cost: 15, description: 'Xe giật cục, đánh lửa lỗi liên tục.' } }),
+    prisma.card.create({ data: { name: 'Nhiên Liệu Tái Chế Cặn', type: 'FUEL', rarity: 1, statPower: 5, statHeat: 9, statStability: -2, cost: 25, description: 'Lấy từ ống xả lò đốt rác.' } }),
+    prisma.card.create({ data: { name: 'Xăng A92 Giá Rẻ', type: 'FUEL', rarity: 1, statPower: 8, statHeat: 6, statStability: 0, cost: 35, description: 'Tạm xài được qua ngày.' } }),
+    prisma.card.create({ data: { name: 'Xăng RON 95', type: 'FUEL', rarity: 1, statPower: 10, statHeat: 7, statStability: 2, cost: 50, description: 'Nhiên liệu tiêu chuẩn.' } }),
 
-    prisma.card.create({ data: { name: 'Dầu Diesel Dân Dụng', type: 'FUEL', rarity: 2, statPower: 12, statHeat: 10, statStability: 5, cost: 65, description: 'Chậm chạp nhưng mô-men xoắn đều.' } }),
-    prisma.card.create({ data: { name: 'Xăng Sinh Học E5', type: 'FUEL', rarity: 2, statPower: 10, statHeat: 4, statStability: 6, cost: 70, description: 'Bảo vệ môi trường, xe chạy êm.' } }),
-    prisma.card.create({ data: { name: 'Phụ Gia Xăng Thập Cẩm', type: 'FUEL', rarity: 2, statPower: 15, statHeat: 12, statStability: 2, cost: 90, description: 'Bỏ lọ làm sạch kim phun tăng chút bốc.' } }),
+    prisma.card.create({ data: { name: 'Dầu Diesel Dân Dụng', type: 'FUEL', rarity: 2, statPower: 12, statHeat: 12, statStability: 5, cost: 65, description: 'Chậm chạp nhưng mô-men xoắn đều.' } }),
+    prisma.card.create({ data: { name: 'Xăng Sinh Học E5', type: 'FUEL', rarity: 2, statPower: 10, statHeat: 5, statStability: 6, cost: 70, description: 'Bảo vệ môi trường, xe chạy êm.' } }),
+    prisma.card.create({ data: { name: 'Phụ Gia Xăng Thập Cẩm', type: 'FUEL', rarity: 2, statPower: 15, statHeat: 14, statStability: 2, cost: 90, description: 'Bỏ lọ làm sạch kim phun tăng chút bốc.' } }),
 
-    prisma.card.create({ data: { name: 'Xăng RON 97', type: 'FUEL', rarity: 3, statPower: 22, statHeat: 8, statStability: 5, cost: 180, description: 'Xịn hơn 95, đánh lửa ngọt ngào.' } }),
-    prisma.card.create({ data: { name: 'Xăng Hàng Không AvGas', type: 'FUEL', rarity: 3, statPower: 35, statHeat: 18, statStability: -5, cost: 250, description: 'Trộn ít chì từ sân bay, cẩn thận tắc pô.' } }),
-    prisma.card.create({ data: { name: 'Nhiên Liệu Cồn Ethanol E85', type: 'FUEL', rarity: 3, statPower: 40, statHeat: 15, statStability: 8, cost: 290, description: 'Cồn sinh học cháy lạnh, lấy Power cực cao!' } }),
-    prisma.card.create({ data: { name: 'Xăng Racing 100', type: 'FUEL', rarity: 3, statPower: 32, statHeat: 10, statStability: 5, cost: 300, description: 'Xăng cao cấp cho xe đua, cháy sạch hơn.' } }),
+    prisma.card.create({ data: { name: 'Xăng RON 97', type: 'FUEL', rarity: 3, statPower: 22, statHeat: 9, statStability: 5, cost: 180, description: 'Xịn hơn 95, đánh lửa ngọt ngào.' } }),
+    prisma.card.create({ data: { name: 'Xăng Hàng Không AvGas', type: 'FUEL', rarity: 3, statPower: 35, statHeat: 21, statStability: -5, cost: 250, description: 'Trộn ít chì từ sân bay, cẩn thận tắc pô.' } }),
+    prisma.card.create({ data: { name: 'Nhiên Liệu Cồn Ethanol E85', type: 'FUEL', rarity: 3, statPower: 40, statHeat: 17, statStability: 8, cost: 290, description: 'Cồn sinh học cháy lạnh, lấy Power cực cao!' } }),
+    prisma.card.create({ data: { name: 'Xăng Racing 100', type: 'FUEL', rarity: 3, statPower: 32, statHeat: 12, statStability: 5, cost: 300, description: 'Xăng cao cấp cho xe đua, cháy sạch hơn.' } }),
 
-    prisma.card.create({ data: { name: 'Diesel Tàu Biển Rút Rọn', type: 'FUEL', rarity: 4, statPower: 50, statHeat: 30, statStability: 15, cost: 550, description: 'Khói mù mịt, lực kéo đẩy cả xe lu.' } }),
-    prisma.card.create({ data: { name: 'Hỗn Hợp Nitromethane', type: 'FUEL', rarity: 4, statPower: 75, statHeat: 45, statStability: -10, cost: 850, description: 'Chỉ dùng cho xe đua Top Fuel kéo sập đường. (Hiệu ứng: Tốc độ đếm giờ nổ trừ 1 giây)' } }),
-    prisma.card.create({ data: { name: 'Phụ Gia Đua Hexane Tinh Khiết', type: 'FUEL', rarity: 4, statPower: 60, statHeat: 25, statStability: 20, cost: 680, description: 'Đánh lửa siêu hoàn hảo.' } }),
-    prisma.card.create({ data: { name: 'Nhiên Liệu Tên Lửa', type: 'FUEL', rarity: 4, statPower: 70, statHeat: 30, statStability: 5, cost: 700, description: 'Nhiên liệu quân sự! (+20 Heat On-Test cực nguy hiểm)' } }),
+    prisma.card.create({ data: { name: 'Diesel Tàu Biển Rút Rọn', type: 'FUEL', rarity: 4, statPower: 50, statHeat: 35, statStability: 15, cost: 550, description: 'Khói mù mịt, lực kéo đẩy cả xe lu.' } }),
+    prisma.card.create({ data: { name: 'Hỗn Hợp Nitromethane', type: 'FUEL', rarity: 4, statPower: 75, statHeat: 52, statStability: -10, cost: 850, description: 'Chỉ dùng cho xe đua Top Fuel kéo sập đường. (Hiệu ứng: Cháy Kiệt Cực - Slot 1-3: +25 Power. Slot 8-10: +15 Heat)' } }),
+    prisma.card.create({ data: { name: 'Phụ Gia Đua Hexane Tinh Khiết', type: 'FUEL', rarity: 4, statPower: 60, statHeat: 29, statStability: 20, cost: 680, description: 'Đánh lửa siêu hoàn hảo.' } }),
+    prisma.card.create({ data: { name: 'Nhiên Liệu Tên Lửa', type: 'FUEL', rarity: 4, statPower: 70, statHeat: 35, statStability: 5, cost: 700, description: 'Nhiên liệu quân sự! (+20 Heat On-Test cực nguy hiểm)' } }),
 
-    prisma.card.create({ data: { name: 'Nhiên Liệu Ion Phản Tích Tụ', type: 'FUEL', rarity: 5, statPower: 100, statHeat: 20, statStability: 50, cost: 1800, description: 'Đóng gói Power cực cao mà ít nhiệt dư thừa!' } }),
-    prisma.card.create({ data: { name: 'Xăng Nhựa Thông Cực Đoan', type: 'FUEL', rarity: 5, statPower: 130, statHeat: 80, statStability: -20, cost: 2000, description: 'Khét lẹt! (Hiệu ứng: Khi Heat vượt 90%, nhân đôi Power toàn xe!)' } }),
-    prisma.card.create({ data: { name: 'Hoạt Chất Lõi Mặt Trời', type: 'FUEL', rarity: 5, statPower: 200, statHeat: 120, statStability: 0, cost: 2500, description: 'Lõi Plasma. (Hiệu ứng: Mặt Trời Thu Nhỏ - Trừ sạch Stability toàn xe về 0)' } }),
+    prisma.card.create({ data: { name: 'Nhiên Liệu Ion Phản Tích Tụ', type: 'FUEL', rarity: 5, statPower: 100, statHeat: 23, statStability: 50, cost: 1800, description: 'Đóng gói Power cực cao mà ít nhiệt dư thừa!' } }),
+    prisma.card.create({ data: { name: 'Xăng Nhựa Thông Cực Đoan', type: 'FUEL', rarity: 5, statPower: 130, statHeat: 92, statStability: -20, cost: 2000, description: 'Khét lẹt! (Hiệu ứng: Khi Heat vượt 90%, nhân đôi Power toàn xe!)' } }),
+    prisma.card.create({ data: { name: 'Hoạt Chất Lõi Mặt Trời', type: 'FUEL', rarity: 5, statPower: 200, statHeat: 138, statStability: 0, cost: 2500, description: 'Lõi Plasma. (Hiệu ứng: Mặt Trời Thu Nhỏ - Giảm 80% Stability tổng toàn xe)' } }),
 
 
     // === SUSPENSION (Hệ thống treo) - Tổng 17 thẻ ===
@@ -200,11 +200,11 @@ async function main() {
     prisma.card.create({ data: { name: 'Coilover Racing', type: 'SUSPENSION', rarity: 3, statPower: 10, statHeat: 0, statStability: 15, cost: 350, description: 'Hệ thống treo có thể chỉnh độ cao và độ cứng.' } }),
 
     prisma.card.create({ data: { name: 'Coilover Trục Lồng Replica', type: 'SUSPENSION', rarity: 4, statPower: 12, statHeat: 0, statStability: 45, cost: 650, description: 'Chất lượng Thụy Điển nhưng bản sao, ôm đường chuẩn.' } }),
-    prisma.card.create({ data: { name: 'Khí Nén Tự Động Phân Bổ', type: 'SUSPENSION', rarity: 4, statPower: 0, statHeat: -5, statStability: 55, cost: 850, description: 'Bơm AI tự phân bổ lực. (Hiệu ứng: Xóa sạch mọi yếu tố trừ điểm Stability trên xe)' } }),
+    prisma.card.create({ data: { name: 'Khí Nén Tự Động Phân Bổ', type: 'SUSPENSION', rarity: 4, statPower: 0, statHeat: -4, statStability: 55, cost: 850, description: 'Bơm AI tự phân bổ lực. (Hiệu ứng: Xóa sạch mọi yếu tố trừ điểm Stability trên xe)' } }),
     prisma.card.create({ data: { name: 'Giảm Xóc Thanh Xoắn Track-Use', type: 'SUSPENSION', rarity: 4, statPower: 15, statHeat: 0, statStability: 50, cost: 720, description: 'Cực kì xóc, bám đường như keo 502.' } }),
 
-    prisma.card.create({ data: { name: 'Treo Thủy Lực Nhảy Múa', type: 'SUSPENSION', rarity: 5, statPower: 0, statHeat: 10, statStability: 70, cost: 1600, description: 'Lowrider bơm nhảy nhót! (Hiệu ứng: Trình Diễn Thu Hút - Cuối màn x2 Gold)' } }),
-    prisma.card.create({ data: { name: 'Treo Điện Từ MagneRide', type: 'SUSPENSION', rarity: 5, statPower: 25, statHeat: 5, statStability: 80, cost: 1850, description: 'Vật chất từ tính biến thiên độ cứng từng mili-giây.' } }),
+    prisma.card.create({ data: { name: 'Treo Thủy Lực Nhảy Múa', type: 'SUSPENSION', rarity: 5, statPower: 0, statHeat: 12, statStability: 70, cost: 1600, description: 'Lowrider bơm nhảy nhót! (Hiệu ứng: Trình Diễn Thu Hút - Cuối màn x2 Gold)' } }),
+    prisma.card.create({ data: { name: 'Treo Điện Từ MagneRide', type: 'SUSPENSION', rarity: 5, statPower: 25, statHeat: 6, statStability: 80, cost: 1850, description: 'Vật chất từ tính biến thiên độ cứng từng mili-giây.' } }),
     prisma.card.create({ data: { name: 'Cân Bằng Lực Hấp Dẫn Anti-G', type: 'SUSPENSION', rarity: 5, statPower: 50, statHeat: 0, statStability: 120, cost: 2400, description: 'Phi thuyền UFO bám đất dẫu chạy ở 500km/h. (Hiệu ứng: Không lật xe, x1.5 Stability gốc)' } }),
 
     // === TIRE (15 Thẻ Mới) ===
@@ -217,34 +217,34 @@ async function main() {
     prisma.card.create({ data: { name: 'Lốp All-Season Bền', type: 'TIRE', rarity: 2, statPower: 0, statHeat: 0, statStability: 10, cost: 120, description: 'Đi được bốn mùa, an toàn.' } }),
     prisma.card.create({ data: { name: 'Lốp Semi-Slick', type: 'TIRE', rarity: 2, statPower: 8, statHeat: 2, statStability: 16, cost: 180, description: 'Lốp bán chuyên, độ bám tốt trên mặt khô.' } }),
     prisma.card.create({ data: { name: 'Lốp Performance Trơn', type: 'TIRE', rarity: 3, statPower: 5, statHeat: 2, statStability: 15, cost: 250, description: 'Bám dính nhè nhẹ ở tốc độ cao.' } }),
-    prisma.card.create({ data: { name: 'Lốp Drifting Khói Mù', type: 'TIRE', rarity: 3, statPower: 2, statHeat: 8, statStability: 12, cost: 220, description: 'Sinh ma sát cao để tạo khói nghệ thuật.' } }),
+    prisma.card.create({ data: { name: 'Lốp Drifting Khói Mù', type: 'TIRE', rarity: 3, statPower: 2, statHeat: 9, statStability: 12, cost: 220, description: 'Sinh ma sát cao để tạo khói nghệ thuật.' } }),
     prisma.card.create({ data: { name: 'Lốp Off-Road Gai To', type: 'TIRE', rarity: 3, statPower: -5, statHeat: 0, statStability: 22, cost: 280, description: 'Không lún bùn, bò trên đá.' } }),
-    prisma.card.create({ data: { name: 'Lốp Track-Day Bán Chuyên', type: 'TIRE', rarity: 4, statPower: 10, statHeat: 5, statStability: 28, cost: 500, description: 'Cao su mềm bám đường đua. (Không có hiệu ứng)' } }),
-    prisma.card.create({ data: { name: 'Lốp Mùa Đông Đinh Tán', type: 'TIRE', rarity: 4, statPower: -5, statHeat: -10, statStability: 25, cost: 480, description: 'Đinh tản nhiệt truyền băng giá lên xe. (Hiệu ứng: Giới hạn -10 Heat)' } }),
+    prisma.card.create({ data: { name: 'Lốp Track-Day Bán Chuyên', type: 'TIRE', rarity: 4, statPower: 10, statHeat: 6, statStability: 28, cost: 500, description: 'Cao su mềm bám đường đua. (Không có hiệu ứng)' } }),
+    prisma.card.create({ data: { name: 'Lốp Mùa Đông Đinh Tán', type: 'TIRE', rarity: 4, statPower: -5, statHeat: -8, statStability: 25, cost: 480, description: 'Đinh tản nhiệt truyền băng giá lên xe. (Hiệu ứng: Giới hạn -10 Heat)' } }),
     prisma.card.create({ data: { name: 'Lốp Compound Bề Mặt Kép', type: 'TIRE', rarity: 4, statPower: 8, statHeat: 2, statStability: 32, cost: 550, description: 'Chuyên dụng góc cua gắt. (Không có hiệu ứng)' } }),
-    prisma.card.create({ data: { name: 'Lốp Racing Slick', type: 'TIRE', rarity: 4, statPower: 25, statHeat: 5, statStability: 35, cost: 650, description: 'Lốp đua chuyên nghiệp! Bám cực tốt nhưng nóng nhẹ.' } }),
-    prisma.card.create({ data: { name: 'Lốp Cao Su Chảy Siêu Bám', type: 'TIRE', rarity: 5, statPower: 15, statHeat: 10, statStability: 42, cost: 1200, description: 'Ma sát nung chảy lốp. (Hiệu ứng: Đốt Lốp - Thêm 15 Power khi On-Test)' } }),
+    prisma.card.create({ data: { name: 'Lốp Racing Slick', type: 'TIRE', rarity: 4, statPower: 25, statHeat: 6, statStability: 35, cost: 650, description: 'Lốp đua chuyên nghiệp! Bám cực tốt nhưng nóng nhẹ.' } }),
+    prisma.card.create({ data: { name: 'Lốp Cao Su Chảy Siêu Bám', type: 'TIRE', rarity: 5, statPower: 15, statHeat: 12, statStability: 42, cost: 1200, description: 'Ma sát nung chảy lốp. (Hiệu ứng: Đốt Lốp - Thêm 15 Power khi On-Test)' } }),
     prisma.card.create({ data: { name: 'Lốp Thủy Tinh Khí Động Học', type: 'TIRE', rarity: 5, statPower: 20, statHeat: 0, statStability: 28, cost: 1500, description: 'Triệt tiêu lực cản gió hoàn toàn. (Không có hiệu ứng)' } }),
     prisma.card.create({ data: { name: 'Lốp Từ Tính Nam Châm Điện', type: 'TIRE', rarity: 5, statPower: 5, statHeat: 0, statStability: 65, cost: 2000, description: 'Bám dính mặt đường. (Hiệu ứng: Lực Từ Tính - Nhân đôi Stability gốc)' } }),
 
     // === NITROUS (15 Thẻ Mới) ===
-    prisma.card.create({ data: { name: 'Bình Xịt Phanh', type: 'NITROUS', rarity: 1, statPower: 2, statHeat: 5, statStability: -1, cost: 20, description: 'Đốt cháy dung môi kém.' } }),
-    prisma.card.create({ data: { name: 'Lon Khí Bơm Bóng', type: 'NITROUS', rarity: 1, statPower: 3, statHeat: 5, statStability: -2, cost: 25, description: 'Khí rác làm xe nổ rát nghẹt.' } }),
+    prisma.card.create({ data: { name: 'Bình Xịt Phanh', type: 'NITROUS', rarity: 1, statPower: 2, statHeat: 6, statStability: -1, cost: 20, description: 'Đốt cháy dung môi kém.' } }),
+    prisma.card.create({ data: { name: 'Lon Khí Bơm Bóng', type: 'NITROUS', rarity: 1, statPower: 3, statHeat: 6, statStability: -2, cost: 25, description: 'Khí rác làm xe nổ rát nghẹt.' } }),
     prisma.card.create({ data: { name: 'Hút Khí Y Tế', type: 'NITROUS', rarity: 1, statPower: 4, statHeat: 2, statStability: -1, cost: 35, description: 'Bình Oxy mini bệnh viện, mang lại tý khí tươi.' } }),
-    prisma.card.create({ data: { name: 'Bình Găng-tay Rẻ Tiền', type: 'NITROUS', rarity: 1, statPower: 5, statHeat: 8, statStability: -4, cost: 40, description: 'Chế tạo chui lủi, dễ xì khí.' } }),
-    prisma.card.create({ data: { name: 'Bộ Nén Khí Bằng Tay', type: 'NITROUS', rarity: 2, statPower: 10, statHeat: 15, statStability: -5, cost: 80, description: 'Gắn van xe đạp xì hơi vào buồng đốt.' } }),
-    prisma.card.create({ data: { name: 'NOS Chợ Đen Rỉ Sét', type: 'NITROUS', rarity: 2, statPower: 15, statHeat: 20, statStability: -8, cost: 120, description: 'Vỏ bình rỉ sét, uy hiếp nổ tung.' } }),
-    prisma.card.create({ data: { name: 'NOS Dỏm Tự Pha', type: 'NITROUS', rarity: 2, statPower: 18, statHeat: 25, statStability: -10, cost: 140, description: 'Pha tạp chất chạy cực sốc.' } }),
-    prisma.card.create({ data: { name: 'NOS Nhỏ', type: 'NITROUS', rarity: 2, statPower: 25, statHeat: 18, statStability: -5, cost: 180, description: 'Bình NOS nhỏ, tăng sức mạnh tức thì!' } }),
-    prisma.card.create({ data: { name: 'Hệ Thống Phun Khô Cũ', type: 'NITROUS', rarity: 3, statPower: 20, statHeat: 10, statStability: -2, cost: 250, description: 'Phun không cầu kỳ, cực cháy.' } }),
-    prisma.card.create({ data: { name: 'Hệ Thống Phun Ướt Đi Phố', type: 'NITROUS', rarity: 3, statPower: 25, statHeat: 15, statStability: -5, cost: 320, description: 'Đục đường xăng trộn chung NOS.' } }),
-    prisma.card.create({ data: { name: 'NOS Dual-Stage Tiêu Chuẩn', type: 'NITROUS', rarity: 4, statPower: 35, statHeat: 20, statStability: -5, cost: 500, description: 'Xịt hai giai đoạn chuẩn thi đấu. (Không có hiệu ứng)' } }),
-    prisma.card.create({ data: { name: 'Bình NOS Sợi Carbon', type: 'NITROUS', rarity: 4, statPower: 30, statHeat: 10, statStability: 0, cost: 580, description: 'Nhẹ nhàng điều tốc an toàn. (Hiệu ứng: Bình Ổn - Không bị trừ Stability)' } }),
-    prisma.card.create({ data: { name: 'NOS Tri-Stage Xịt Liên Tục', type: 'NITROUS', rarity: 4, statPower: 45, statHeat: 35, statStability: -15, cost: 750, description: 'Liên hoàn xịt ba nấc đầy bạo lực. (Không có hiệu ứng)' } }),
-    prisma.card.create({ data: { name: 'NOS Mega', type: 'NITROUS', rarity: 4, statPower: 80, statHeat: 40, statStability: -20, cost: 650, description: 'Bình NOS cỡ lớn! Bùng nổ cực đoan.' } }),
-    prisma.card.create({ data: { name: 'NOS Hỗn Hợp Oxy Lỏng', type: 'NITROUS', rarity: 5, statPower: 60, statHeat: 30, statStability: -10, cost: 1300, description: 'Biến buồng đốt thành dung nham. (Hiệu ứng: Hút 10 Stability thành 40 Power)' } }),
-    prisma.card.create({ data: { name: 'Nitro Kích Quang Pha Lê', type: 'NITROUS', rarity: 5, statPower: 85, statHeat: 45, statStability: -20, cost: 1800, description: 'Khoa học viễn tưởng siêu tưởng. (Không có hiệu ứng)' } }),
-    prisma.card.create({ data: { name: 'Lõi Phản Vật Chất Xịt Cấp Tốc', type: 'NITROUS', rarity: 5, statPower: 120, statHeat: 90, statStability: -40, cost: 2500, description: 'Chạm là nổ, tốc độ ánh sáng! (Hiệu ứng: Đỉnh Điểm - +100 Power rủi ro cực lớn)' } }),
+    prisma.card.create({ data: { name: 'Bình Găng-tay Rẻ Tiền', type: 'NITROUS', rarity: 1, statPower: 5, statHeat: 9, statStability: -4, cost: 40, description: 'Chế tạo chui lủi, dễ xì khí.' } }),
+    prisma.card.create({ data: { name: 'Bộ Nén Khí Bằng Tay', type: 'NITROUS', rarity: 2, statPower: 10, statHeat: 17, statStability: -5, cost: 80, description: 'Gắn van xe đạp xì hơi vào buồng đốt.' } }),
+    prisma.card.create({ data: { name: 'NOS Chợ Đen Rỉ Sét', type: 'NITROUS', rarity: 2, statPower: 15, statHeat: 23, statStability: -8, cost: 120, description: 'Vỏ bình rỉ sét, uy hiếp nổ tung.' } }),
+    prisma.card.create({ data: { name: 'NOS Dỏm Tự Pha', type: 'NITROUS', rarity: 2, statPower: 18, statHeat: 29, statStability: -10, cost: 140, description: 'Pha tạp chất chạy cực sốc.' } }),
+    prisma.card.create({ data: { name: 'NOS Nhỏ', type: 'NITROUS', rarity: 2, statPower: 25, statHeat: 21, statStability: -5, cost: 180, description: 'Bình NOS nhỏ, tăng sức mạnh tức thì!' } }),
+    prisma.card.create({ data: { name: 'Hệ Thống Phun Khô Cũ', type: 'NITROUS', rarity: 3, statPower: 20, statHeat: 12, statStability: -2, cost: 250, description: 'Phun không cầu kỳ, cực cháy.' } }),
+    prisma.card.create({ data: { name: 'Hệ Thống Phun Ướt Đi Phố', type: 'NITROUS', rarity: 3, statPower: 25, statHeat: 17, statStability: -5, cost: 320, description: 'Đục đường xăng trộn chung NOS.' } }),
+    prisma.card.create({ data: { name: 'NOS Dual-Stage Tiêu Chuẩn', type: 'NITROUS', rarity: 4, statPower: 35, statHeat: 23, statStability: -5, cost: 500, description: 'Xịt hai giai đoạn chuẩn thi đấu. (Không có hiệu ứng)' } }),
+    prisma.card.create({ data: { name: 'Bình NOS Sợi Carbon', type: 'NITROUS', rarity: 4, statPower: 30, statHeat: 12, statStability: 0, cost: 580, description: 'Nhẹ nhàng điều tốc an toàn. (Hiệu ứng: Bình Ổn - Không bị trừ Stability)' } }),
+    prisma.card.create({ data: { name: 'NOS Tri-Stage Xịt Liên Tục', type: 'NITROUS', rarity: 4, statPower: 45, statHeat: 40, statStability: -15, cost: 750, description: 'Liên hoàn xịt ba nấc đầy bạo lực. (Không có hiệu ứng)' } }),
+    prisma.card.create({ data: { name: 'NOS Mega', type: 'NITROUS', rarity: 4, statPower: 80, statHeat: 46, statStability: -20, cost: 650, description: 'Bình NOS cỡ lớn! Bùng nổ cực đoan.' } }),
+    prisma.card.create({ data: { name: 'NOS Hỗn Hợp Oxy Lỏng', type: 'NITROUS', rarity: 5, statPower: 60, statHeat: 35, statStability: -10, cost: 1300, description: 'Biến buồng đốt thành dung nham. (Hiệu ứng: Hút 10 Stability thành 40 Power)' } }),
+    prisma.card.create({ data: { name: 'Nitro Kích Quang Pha Lê', type: 'NITROUS', rarity: 5, statPower: 85, statHeat: 52, statStability: -20, cost: 1800, description: 'Khoa học viễn tưởng siêu tưởng. (Không có hiệu ứng)' } }),
+    prisma.card.create({ data: { name: 'Lõi Phản Vật Chất Xịt Cấp Tốc', type: 'NITROUS', rarity: 5, statPower: 120, statHeat: 103, statStability: -40, cost: 2500, description: 'Chạm là nổ, tốc độ ánh sáng! (Hiệu ứng: Đỉnh Điểm - +100 Power rủi ro cực lớn)' } }),
 
     // === TOOL (15 Thẻ Mới) ===
     prisma.card.create({ data: { name: 'Cờ Lê Rỉ Trượt Ốc', type: 'TOOL', rarity: 1, statPower: -2, statHeat: 0, statStability: -2, cost: 5, description: 'Làm lỏng thêm chi tiết xe.' } }),
@@ -253,17 +253,17 @@ async function main() {
     prisma.card.create({ data: { name: 'Bộ Cờ Lê', type: 'TOOL', rarity: 1, statPower: 2, statHeat: 0, statStability: 5, cost: 40, description: 'Bộ cờ lê cơ bản, lắp ráp chắc chắn.' } }),
     prisma.card.create({ data: { name: 'Dây Rút Nhựa Trắng', type: 'TOOL', rarity: 2, statPower: 0, statHeat: 0, statStability: 8, cost: 50, description: 'Cố định ống xả rơi rụng.' } }),
     prisma.card.create({ data: { name: 'Súng Bắn Ốc Pin Yếu', type: 'TOOL', rarity: 2, statPower: 2, statHeat: 0, statStability: 2, cost: 65, description: 'Thêm chút khí động học.' } }),
-    prisma.card.create({ data: { name: 'Kìm Chết Gãy Mỏ', type: 'TOOL', rarity: 2, statPower: 0, statHeat: -5, statStability: 0, cost: 85, description: 'Bóp gãy van xả nhiệt thừa.' } }),
+    prisma.card.create({ data: { name: 'Kìm Chết Gãy Mỏ', type: 'TOOL', rarity: 2, statPower: 0, statHeat: -4, statStability: 0, cost: 85, description: 'Bóp gãy van xả nhiệt thừa.' } }),
     prisma.card.create({ data: { name: 'Máy Chẩn Đoán OBD2', type: 'TOOL', rarity: 2, statPower: 6, statHeat: -3, statStability: 9, cost: 130, description: 'Máy quét lỗi, an tâm vặn ga.' } }),
     prisma.card.create({ data: { name: 'Keo Dán AB Đa Dụng', type: 'TOOL', rarity: 3, statPower: 0, statHeat: -2, statStability: 15, cost: 200, description: 'Khóa cứng các lỗ hổng nhiệt.' } }),
-    prisma.card.create({ data: { name: 'Súng Đo Nhiệt', type: 'TOOL', rarity: 3, statPower: 0, statHeat: -15, statStability: 0, cost: 300, description: 'Tránh điểm mù nhiệt.' } }),
-    prisma.card.create({ data: { name: 'Bộ Chỉnh ECU Bỏ Túi', type: 'TOOL', rarity: 3, statPower: 10, statHeat: 5, statStability: 5, cost: 380, description: 'Hack map engine nhẹ.' } }),
+    prisma.card.create({ data: { name: 'Súng Đo Nhiệt', type: 'TOOL', rarity: 3, statPower: 0, statHeat: -13, statStability: 0, cost: 300, description: 'Tránh điểm mù nhiệt.' } }),
+    prisma.card.create({ data: { name: 'Bộ Chỉnh ECU Bỏ Túi', type: 'TOOL', rarity: 3, statPower: 10, statHeat: 6, statStability: 5, cost: 380, description: 'Hack map engine nhẹ.' } }),
     prisma.card.create({ data: { name: 'Cánh Gió Gắn Tạm (Canards)', type: 'TOOL', rarity: 4, statPower: 0, statHeat: 0, statStability: 25, cost: 450, description: 'Lắp canard 3M. (Không có hiệu ứng)' } }),
     prisma.card.create({ data: { name: 'Bản Đồ Mạch Điện Tử', type: 'TOOL', rarity: 4, statPower: 18, statHeat: 0, statStability: 0, cost: 550, description: 'Khơi thông dòng đánh lửa. (Không có hiệu ứng)' } }),
     prisma.card.create({ data: { name: 'Hệ Thống Đo Lường Từ Xa', type: 'TOOL', rarity: 4, statPower: 5, statHeat: 0, statStability: 20, cost: 680, description: 'Telemetry xe đua. (Hiệu ứng: Hoàn thành màn thưởng 15% Vàng)' } }),
-    prisma.card.create({ data: { name: 'Drone Phân Tích Đường Đua', type: 'TOOL', rarity: 5, statPower: 10, statHeat: -10, statStability: 30, cost: 1200, description: 'Drone bay soi đường. (Không có hiệu ứng)' } }),
-    prisma.card.create({ data: { name: 'Hộp Đồ Nghề Dát Vàng', type: 'TOOL', rarity: 5, statPower: 0, statHeat: -20, statStability: 45, cost: 4000, description: 'Snap-On Gold. (Hiệu ứng: Hoàn trả 100% Gold mua sắm)' } }),
-    prisma.card.create({ data: { name: 'Thiết Bị Hack Trụ Trạm', type: 'TOOL', rarity: 5, statPower: 50, statHeat: 50, statStability: -10, cost: 3500, description: 'Cướp quyền trạm xăng, thay luật đỏ. (Hiệu ứng: Cướp Quyền Boss)' } }),
+    prisma.card.create({ data: { name: 'Drone Phân Tích Đường Đua', type: 'TOOL', rarity: 5, statPower: 10, statHeat: -8, statStability: 30, cost: 1200, description: 'Drone bay soi đường. (Không có hiệu ứng)' } }),
+    prisma.card.create({ data: { name: 'Hộp Đồ Nghề Dát Vàng', type: 'TOOL', rarity: 5, statPower: 0, statHeat: -17, statStability: 45, cost: 4000, description: 'Snap-On Gold. (Hiệu ứng: Hoàn trả 100% Gold mua sắm)' } }),
+    prisma.card.create({ data: { name: 'Thiết Bị Hack Trụ Trạm', type: 'TOOL', rarity: 5, statPower: 50, statHeat: 57, statStability: -10, cost: 3500, description: 'Cướp quyền trạm xăng, thay luật đỏ. (Hiệu ứng: Cướp Quyền Boss)' } }),
 
     // === CREW: 6 Normal (Mua tại Shop) ===
     prisma.card.create({
@@ -273,7 +273,7 @@ async function main() {
       data: { name: 'Chuyên Gia Ống Xả (The Flow)', type: 'CREW', rarity: 3, statPower: 0, statHeat: 0, statStability: 0, cost: 800, unlockType: 'SHOP', description: '"Luồng khí mượt mà": Thẻ Ống xả +15 Power, không tăng thêm Heat.' },
     }),
     prisma.card.create({
-      data: { name: 'Tay Lái Thử (The Stuntman)', type: 'CREW', rarity: 3, statPower: 0, statHeat: 0, statStability: 0, cost: 1000, unlockType: 'SHOP', description: '"Kiểm soát giới hạn": Khi Heat đạt 95%, thời gian đếm ngược nổ máy chậm lại 2 giây.' },
+      data: { name: 'Tay Lái Thử (The Stuntman)', type: 'CREW', rarity: 3, statPower: 0, statHeat: 0, statStability: 0, cost: 1000, unlockType: 'SHOP', description: '"Kiểm soát giới hạn": Ngưỡng nổ máy tăng thêm +5 điểm (105 thay vì 100) khi Heat vượt 95%.' },
     }),
     prisma.card.create({
       data: { name: 'Kế Toán Trưởng (The Accountant)', type: 'CREW', rarity: 2, statPower: 0, statHeat: 0, statStability: 0, cost: 500, unlockType: 'SHOP', description: '"Tối ưu ngân sách": Hoàn trả 10% tiền mua linh kiện sau mỗi màn thắng.' },
@@ -313,7 +313,7 @@ async function main() {
       data: { name: 'Chủ Tịch Tập Đoàn (The CEO)', type: 'CREW', rarity: 4, statPower: 0, statHeat: 0, statStability: 0, cost: 0, unlockType: 'ACHIEVEMENT', description: '"Đầu tư mạo hiểm": Mượn 1 linh kiện Legendary (5 sao) dùng thử 1 màn.' },
     }),
     prisma.card.create({
-      data: { name: 'Hacker Mũ Đen (Black-Hat)', type: 'CREW', rarity: 5, statPower: 0, statHeat: 0, statStability: 0, cost: 0, unlockType: 'ACHIEVEMENT', description: '"Chỉnh sửa mã nguồn": Đổi vị trí 2 lá bài ngay khi xe đang chạy thử.' },
+      data: { name: 'Hacker Mũ Đen (Black-Hat)', type: 'CREW', rarity: 5, statPower: 0, statHeat: 0, statStability: 0, cost: 0, unlockType: 'ACHIEVEMENT', description: '"Chỉnh sửa mã nguồn": Đảo ngược chỉ số Heat ↔ Stability của mọi thẻ trên xe. (VD: 100 Heat + 50 Stability → 50 Heat + 100 Stability)' },
     }),
     prisma.card.create({
       data: { name: 'Huyền Thoại Giải Nghệ (The Legend)', type: 'CREW', rarity: 5, statPower: 0, statHeat: 0, statStability: 0, cost: 0, unlockType: 'ACHIEVEMENT', description: '"Bàn tay vàng": Common/Uncommon tự động nâng chỉ số lên ngang Rare.' },
@@ -397,7 +397,7 @@ async function main() {
     }),
     // Turbo Titan X (rarity 5, index 60)
     prisma.cardEffect.create({
-      data: { cardId: cards[60].id, effectType: 'BUFF', triggerCondition: 'ADJACENT', targetStat: 'POWER', effectValue: 2.0, description: 'Titan Boost: x2 Power khi cạnh Lọc Gió!' },
+      data: { cardId: cards[60].id, effectType: 'BUFF', triggerCondition: 'ON_TEST', targetStat: 'POWER', effectValue: 30, description: 'Titan Boost: +30 Power khi chạy thử, không tăng Heat.' },
     }),
 
     // === 4. EXHAUST EFFECTS ===
@@ -443,7 +443,7 @@ async function main() {
     // === 6. FUEL EFFECTS ===
     // Hỗn Hợp Nitromethane (rarity 4, index 110)
     prisma.cardEffect.create({
-      data: { cardId: cards[110].id, effectType: 'BUFF', triggerCondition: 'PASSIVE', targetStat: 'HEAT', effectValue: -1, description: 'Sóng Xung Kích Rút Đi: Tốc độ đếm giờ trừ 1 giây.' },
+      data: { cardId: cards[110].id, effectType: 'BUFF', triggerCondition: 'ON_TEST', targetStat: 'POWER', effectValue: 25, description: 'Cháy Kiệt Cực: Nếu ở Slot 1-3, +25 Power. Nếu ở Slot 8-10, +15 Heat thêm.' },
     }),
     // Nhiên Liệu Tên Lửa (rarity 4, index 112)
     prisma.cardEffect.create({
@@ -455,7 +455,7 @@ async function main() {
     }),
     // Hoạt Chất Lõi Mặt Trời (rarity 5, index 115)
     prisma.cardEffect.create({
-      data: { cardId: cards[115].id, effectType: 'DEBUFF', triggerCondition: 'PASSIVE', targetStat: 'STABILITY', effectValue: 0, description: 'Mặt Trời Thu Nhỏ: Trừ sạch Stability toàn xe về 0.' },
+      data: { cardId: cards[115].id, effectType: 'DEBUFF', triggerCondition: 'PASSIVE', targetStat: 'STABILITY', effectValue: 0.2, description: 'Mặt Trời Thu Nhỏ: Giảm 80% Stability tổng toàn xe (chỉ giữ lại 20%).' },
     }),
 
     // === 7. SUSPENSION EFFECTS ===
@@ -576,9 +576,9 @@ async function main() {
     prisma.cardEffect.create({
       data: { cardId: cards[153].id, effectType: 'UTILITY', triggerCondition: 'PASSIVE', targetStat: 'POWER', effectValue: 0, description: 'Đầu tư mạo hiểm: Mượn 1 Legendary miễn phí.' },
     }),
-    // index 154: Black-Hat - Swap 2 cards mid-test (frontend flag)
+    // index 154: Black-Hat - Đảo ngược Heat ↔ Stability
     prisma.cardEffect.create({
-      data: { cardId: cards[154].id, effectType: 'UTILITY', triggerCondition: 'PASSIVE', targetStat: 'POWER', effectValue: 0, description: 'Chỉnh sửa mã nguồn: Đổi vị trí 2 thẻ khi đang test.' },
+      data: { cardId: cards[154].id, effectType: 'UTILITY', triggerCondition: 'PASSIVE', targetStat: 'HEAT_STABILITY_SWAP', effectValue: 1, description: 'Chỉnh sửa mã nguồn: Đảo ngược chỉ số Heat ↔ Stability của mọi thẻ trên xe.' },
     }),
     // index 155: The Legend - Common/Uncommon → Rare stats
     prisma.cardEffect.create({

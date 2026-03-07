@@ -119,7 +119,7 @@ Có 3 loại hiệu ứng: `BUFF`, `DEBUFF`, `UTILITY`
 - **Quantum Intake** (Filter 5★): Giảm 50% Heat của Engine
 - **Hệ Thống Từ Trường Lượng Tử** (Cooling 5★): Ép Heat toàn xe = 0
 - **Ghost Exhaust** (Exhaust 5★): x2 Stability, Bypass luật NO_EXHAUST
-- **Hoạt Chất Lõi Mặt Trời** (Fuel 5★): +200 Power, +120 Heat, Trừ sạch Stability = 0
+- **Hoạt Chất Lõi Mặt Trời** (Fuel 5★): +200 Power, +138 Heat, Giảm 80% Stability toàn xe
 
 ---
 
@@ -421,20 +421,20 @@ Boss Kim Jong Un xuất hiện (ngày chia hết 5)
 | Kế Toán Trưởng (The Accountant) | 2★     | 500  | Hoàn trả 10% tiền mua linh kiện                   |
 | Chuyên Gia Ống Xả (The Flow)    | 3★     | 800  | Ống xả +15 Power                                  |
 | Bác Sĩ Xăng (Fuel Doctor)       | 3★     | 900  | FUEL x2 Power, Heat x1.5                          |
-| Tay Lái Thử (The Stuntman)      | 3★     | 1000 | Ngưỡng nổ +5% khi Heat > 95%                      |
+| Tay Lái Thử (The Stuntman)      | 3★     | 1000 | Ngưỡng nổ +5 điểm (105) khi Heat > 95%            |
 | Chuyên Gia Lốp (The Grip)       | 3★     | 1200 | +20 Stability cho xe > 400 HP                     |
 | Thợ Điện Ngầm (Wireman)         | 4★     | 1800 | NITROUS xoá trừ Stability                         |
 | Chiến Binh Đêm (Night Rider)    | 4★     | 2500 | Ngày 25+: TIRE & TURBO +15 Power                  |
 
 ### 9.3 Crew ẩn (5 crew, unlockType = 'ACHIEVEMENT')
 
-| Crew                               | Rarity | Achievement cần              | Hiệu ứng                     |
-| ---------------------------------- | ------ | ---------------------------- | ---------------------------- |
-| Kẻ Đào Tẩu (The Fugitive)          | 4★     | Kẻ Sống Sót Trong Lửa        | Bypass mọi điều kiện Boss    |
-| Linh Hồn Gara (Ghost Mechanic)     | 5★     | Bậc Thầy Nổ Máy (10 lần nổ)  | 1 lần/màn cứu xe khi nổ      |
-| Chủ Tịch Tập Đoàn (The CEO)        | 4★     | Chiến Thắng Với Giá 0 Đồng   | Mượn 1 Legendary/màn         |
-| Hacker Mũ Đen (Black-Hat)          | 5★     | Click đồng hồ 13 lần nửa đêm | Đổi vị trí 2 thẻ khi test    |
-| Huyền Thoại Giải Nghệ (The Legend) | 5★     | Hiến Tế Huyền Thoại          | Common/Uncommon → Rare stats |
+| Crew                               | Rarity | Achievement cần              | Hiệu ứng                           |
+| ---------------------------------- | ------ | ---------------------------- | ---------------------------------- |
+| Kẻ Đào Tẩu (The Fugitive)          | 4★     | Kẻ Sống Sót Trong Lửa        | Bypass mọi điều kiện Boss          |
+| Linh Hồn Gara (Ghost Mechanic)     | 5★     | Bậc Thầy Nổ Máy (10 lần nổ)  | 1 lần/màn cứu xe khi nổ            |
+| Chủ Tịch Tập Đoàn (The CEO)        | 4★     | Chiến Thắng Với Giá 0 Đồng   | Mượn 1 Legendary/màn               |
+| Hacker Mũ Đen (Black-Hat)          | 5★     | Click đồng hồ 13 lần nửa đêm | Đảo ngược Heat ↔ Stability mọi thẻ |
+| Huyền Thoại Giải Nghệ (The Legend) | 5★     | Hiến Tế Huyền Thoại          | Common/Uncommon → Rare stats       |
 
 ---
 
@@ -695,3 +695,21 @@ Khi bắt đầu một vòng chơi mới (hoặc đăng ký người dùng mới
 | 6   | ⚙️ **Thiên Tài Cơ Khí** | Khởi đầu với **+100 Tech Points** miễn phí.                              | Từng đạt **Level 10** trong một vòng chơi bất kỳ |
 
 > **Ghi chú**: Starter Perks cộng dồn trực tiếp với tiến trình Roguelite. Ví dụ: Bạn đã mở khóa 2 Crew Slots vĩnh viễn, chọn perk "Mối Quan Hệ" → Bạn có 3 Crew Slots ngay Ngày 1! Tài khoản tạo mới mặc định dùng perk "Quỹ Khởi Nghiệp".
+
+---
+
+## 17. Hướng Dẫn Chạy Lệnh (Commands)
+
+### Chạy Seed (cập nhật dữ liệu vào DB)
+
+> **Lưu ý:** Trên Windows PowerShell có thể bị lỗi `UnauthorizedAccess` do Execution Policy chặn script `.ps1`. Dùng `cmd /c` để bypass:
+
+```bash
+# ❌ Lỗi trên PowerShell:
+npx prisma db seed
+
+# ✅ Cách chạy đúng (dùng cmd /c):
+cmd /c "npx prisma db seed"
+```
+
+⚠️ **Cảnh báo:** Seed sẽ **xóa toàn bộ dữ liệu cũ** (cards, combos, bosses, events...) và tạo lại từ đầu. User data (users, inventory, quests) cũng có thể bị ảnh hưởng. Backup trước khi chạy.
