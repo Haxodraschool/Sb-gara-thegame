@@ -294,22 +294,56 @@ Mỗi slot:
 
 ## 6. Shop & Kinh Tế
 
-### 6.1 Shop chính (GET /api/shop/items)
+### 6.1 Cơ chế xuất hiện Shop
+
+- **Không có nút Shop ở sảnh** — Shop tự động mở sau khi:
+  1. Người chơi bấm "Kết Thúc Ngày"
+  2. Event ngẫu nhiên xuất hiện trước (nếu có)
+  3. Shop mở ra (Ngày 2+)
+  4. Người chơi mua hàng hoặc đóng Shop → Shop biến mất
+  5. Ngày mới bắt đầu → Vòng lặp tiếp tục
+- `POST /api/game/end-day` response trả `shopPhase: true` để frontend biết mở Shop
+
+### 6.2 Shop chính (GET /api/shop/items)
 
 - **Mở khóa từ Ngày 2** (`SHOP_UNLOCK_DAY = 2`)
-- **6 slot** mỗi lần vào shop (random mỗi lần):
-  - 60% chance: Random card (theo drop rate, **KHÔNG có CREW**)
-  - 40% chance: **Gói Thẻ Bí Ẩn** (5 thẻ random)
+- **6 slot** random mỗi lần (tối đa 6 cụm thẻ):
+
+**Ưu tiên loại thẻ thiếu:**
+
+- 50% slot ưu tiên pick từ **top 3 loại thẻ** player sở hữu ít nhất
+- 50% slot random bình thường
+
+**Các loại item trong slot:**
+
+| Loại             | Chance          | Chi tiết                                                    |
+| ---------------- | --------------- | ----------------------------------------------------------- |
+| **x2 Pack Deal** | 0.5%            | Mua giá 1 Pack, nhận 10 thẻ (gấp đôi). Cực hiếm!            |
+| **Pack thường**  | 40%             | Gói Thẻ Bí Ẩn: 5 thẻ random. Giá scale 350g→1000g theo ngày |
+| **Cụm thẻ 1★**   | 20% (1/3 × 60%) | 3 thẻ giống nhau, giảm 10% tổng giá                         |
+| **Cụm thẻ 2★**   | ~7% (1/3 × 20%) | 2 thẻ giống nhau, giảm 10% tổng giá                         |
+| **Thẻ lẻ**       | Còn lại         | Theo drop rate gốc (không CREW)                             |
+
 - **1 slot CREW riêng**: Random 1 crew chưa sở hữu (unlockType = 'SHOP')
-- **Giá Pack**: Scale theo ngày (350g Ngày 2 → 1000g Ngày 20+)
-- **Tax modifier**: Giá nhân với `shopTaxModifier` (bị ảnh hưởng bởi boss Đỗ Nam Trung)
+- **Tax modifier**: `shopTaxModifier` (boss Đỗ Nam Trung), Perk VIP_CARD (-20% 10 ngày đầu)
 
-### 6.2 Mua thẻ (POST /api/shop/items)
+### 6.3 Pity System (Pack thứ 8)
 
-- Trừ Gold, thêm vào inventory
-- Pack: Mở ra 5 thẻ random (theo drop rate, không CREW)
+- Field `totalPacksOpened` trong bảng users, đếm tổng pack đã mở
+- **Mỗi pack thứ 8** (modulo 8) → thẻ đầu tiên trong pack **đảm bảo 4★ hoặc 5★** (50/50)
+- x2 Pack cũng đếm 2 lần vào pity counter
+- Response GET shop trả `pityCounter` và `nextPityAt` để frontend hiển thị
 
-### 6.3 Smuggler — Tay Buôn Lậu (GET/POST /api/events/smuggler)
+### 6.4 Mua thẻ (POST /api/shop/items)
+
+Hỗ trợ 4 type:
+
+- `CARD`: Mua thẻ lẻ → trừ Gold, thêm 1 thẻ inventory
+- `BUNDLE`: Mua cụm → trừ Gold, thêm bundleQuantity thẻ cùng loại
+- `PACK`: Mở pack 5 thẻ (có pity check)
+- `X2_PACK`: Mở x2 pack = 10 thẻ (có pity check, đếm 2 lần)
+
+### 6.5 Smuggler — Tay Buôn Lậu (GET/POST /api/events/smuggler)
 
 Chỉ khi event "Tay Buôn Lậu Gõ Cửa" đang active:
 
@@ -321,7 +355,7 @@ Chỉ khi event "Tay Buôn Lậu Gõ Cửa" đang active:
 | **Underworld Buff** | Nếu có `hasUnderworldBuff` → giảm giá mua thêm 20%                        |
 | **Rủi ro**          | Ngày sau có thể bị "Cảnh Sát Triều Tiên" kiểm tra (-80 Uy tín nếu bị bắt) |
 
-### 6.4 Nguồn thu nhập Gold
+### 6.6 Nguồn thu nhập Gold
 
 | Nguồn           | Chi tiết                                 |
 | --------------- | ---------------------------------------- |
@@ -636,28 +670,44 @@ GAME_CONSTANTS = {
 - `level_rewards` — Thẻ thưởng khi lên cấp
 - `achievements` — 5 thành tựu ẩn
 
-### 15.3 API Endpoints — 18 Routes
+### 15.3 API Endpoints — 34 Endpoints (26 Routes)
 
-| Route                      | Method   | Mô tả                    |
-| -------------------------- | -------- | ------------------------ |
-| `/api/auth/register`       | POST     | Đăng ký                  |
-| `/api/auth/login`          | POST     | Đăng nhập                |
-| `/api/user/profile`        | GET      | Thông tin user           |
-| `/api/user/inventory`      | GET      | Kho đồ                   |
-| `/api/cards`               | GET      | Danh sách thẻ            |
-| `/api/cards/[id]`          | GET      | Chi tiết thẻ             |
-| `/api/quest/daily`         | GET/POST | Lấy/Sinh quest hàng ngày |
-| `/api/quest/[id]/complete` | POST     | Hoàn thành quest         |
-| `/api/shop/items`          | GET/POST | Xem/Mua shop             |
-| `/api/workshop/test`       | POST     | Chạy thử xe (core)       |
-| `/api/game/end-day`        | GET/POST | Tổng kết/Kết thúc ngày   |
-| `/api/game/upgrade`        | POST     | Nâng cấp crew slot       |
-| `/api/game/final-round`    | GET/POST | Endings/Final Round      |
-| `/api/game/reset`          | POST     | Reset game               |
-| `/api/events/random`       | GET/POST | Roll/Respond event       |
-| `/api/events/smuggler`     | GET/POST | Smuggler shop            |
-| `/api/achievements`        | GET/POST | Achievements             |
-| `/api/achievements/secret` | POST     | Easter egg               |
+| Route                      | Method | Mô tả                    |
+| -------------------------- | ------ | ------------------------ |
+| `/api/auth/register`       | POST   | Đăng ký tài khoản        |
+| `/api/auth/login`          | POST   | Đăng nhập                |
+| `/api/user/profile`        | GET    | Thông tin user           |
+| `/api/user/inventory`      | GET    | Kho đồ (tất cả thẻ)      |
+| `/api/user/crew`           | GET    | Crew đang sở hữu + slots |
+| `/api/cards`               | GET    | Danh sách thẻ (filter)   |
+| `/api/cards/[id]`          | GET    | Chi tiết thẻ             |
+| `/api/cards/combos`        | GET    | Danh sách 25 combo       |
+| `/api/quest/daily`         | GET    | Lấy quest hàng ngày      |
+| `/api/quest/daily`         | POST   | Sinh quest mới           |
+| `/api/quest/[id]/complete` | POST   | Hoàn thành quest         |
+| `/api/shop/items`          | GET    | Xem shop (6 slot)        |
+| `/api/shop/items`          | POST   | Mua thẻ/pack             |
+| `/api/workshop/test`       | POST   | Chạy thử xe (core)       |
+| `/api/boss/configs`        | GET    | Danh sách/chi tiết Boss  |
+| `/api/game/end-day`        | GET    | Xem tổng kết ngày        |
+| `/api/game/end-day`        | POST   | Kết thúc ngày            |
+| `/api/game/upgrade`        | POST   | Nâng cấp crew slot       |
+| `/api/game/final-round`    | GET    | Xem trạng thái Final     |
+| `/api/game/final-round`    | POST   | Bắt đầu Final Round      |
+| `/api/game/reset`          | POST   | Reset game               |
+| `/api/game/perks`          | GET    | Danh sách starter perks  |
+| `/api/game/perks`          | POST   | Chọn perk cho vòng chơi  |
+| `/api/game/stats`          | GET    | Thống kê tổng hợp        |
+| `/api/game/leaderboard`    | GET    | Bảng xếp hạng            |
+| `/api/game/endings`        | GET    | Bộ sưu tập kết cục       |
+| `/api/game/config`         | GET    | Game constants & configs |
+| `/api/events/random`       | GET    | Roll sự kiện ngẫu nhiên  |
+| `/api/events/random`       | POST   | Phản hồi sự kiện         |
+| `/api/events/smuggler`     | GET    | Xem Smuggler shop        |
+| `/api/events/smuggler`     | POST   | Mua/Bán tại Smuggler     |
+| `/api/achievements`        | GET    | Xem achievements         |
+| `/api/achievements`        | POST   | Kiểm tra & mở khóa       |
+| `/api/achievements/secret` | POST   | Easter egg (midnight)    |
 
 ### 15.4 User Flags quan trọng (trong bảng users)
 

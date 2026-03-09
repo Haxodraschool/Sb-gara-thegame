@@ -1,0 +1,186 @@
+# Kế Hoạch 10 Công Đoạn Frontend — SB-GARAGE
+
+## Thư viện đề xuất
+
+| Thư viện                              | Mục đích                                                                                      | Dùng ở công đoạn |
+| ------------------------------------- | --------------------------------------------------------------------------------------------- | ---------------- |
+| **phaser**                            | Game engine 2D: particle effects, sprite animation, canvas rendering (nổ, lửa, khói, tia sét) | 5, 6, 8, 9       |
+| **framer-motion**                     | Animation chuyên nghiệp (slide, fade, spring, keyframes, layout animation)                    | 1–10             |
+| **@dnd-kit/core + @dnd-kit/sortable** | Drag & Drop thẻ bài vào slot xe                                                               | 4                |
+| **zustand**                           | State management nhẹ (Gold, inventory, quest, game state)                                     | 1–10             |
+| **canvas-confetti**                   | Pháo hoa confetti (level up, legendary card, ending)                                          | 5, 6, 8          |
+| **howler.js**                         | Quản lý audio/SFX (khi bạn có file âm thanh)                                                  | 1–10             |
+| **sonner**                            | Toast notifications đẹp, nhẹ                                                                  | 1–10             |
+| **next-themes**                       | Dark/light mode theo đồng hồ thời gian thật                                                   | 1, 2, 3          |
+| **react-use**                         | Hooks tiện ích (useInterval, useKeyPress, useLocalStorage)                                    | 1, 3, 10         |
+
+---
+
+## Công Đoạn 1 — Nền Tảng & Design System
+
+> **Mục tiêu:** Dựng khung app, cài thư viện, tạo hệ thống thiết kế chung
+
+- [ ] Cài thư viện: `framer-motion`, `zustand`, `sonner`, `howler.js`, `next-themes`, `react-use`
+- [ ] Tạo `globals.css`: CSS variables (màu rarity, font, spacing, gradient)
+- [ ] Tạo Zustand stores: `useGameStore` (user profile, gold, day), `useInventoryStore` (thẻ bài)
+- [ ] Component: `<Toast />` wrapper (sonner), `<LoadingScreen />` (cờ lê vặn ốc)
+- [ ] Layout chính `app/layout.tsx`: Font, theme provider, toast container
+- [ ] API helper: `lib/api.ts` — fetch wrapper có JWT header
+
+**Output:** App chạy được, có loading screen, toast hoạt động.
+
+---
+
+## Công Đoạn 2 — Màn Hình Đăng Nhập
+
+> **Mục tiêu:** Login/Register + animation cửa cuốn gara
+
+- [ ] Background: Con hẻm tối, biển neon "SB-GARAGE" flicker (CSS keyframes)
+- [ ] Hiệu ứng sương/khói trôi ngang (CSS translateX loop)
+- [ ] Nút "GÕ CỬA" → ánh sáng khe cửa → form slide-up (framer-motion)
+- [ ] Đăng nhập thành công → cửa cuốn kéo lên (translateY) → fade vào Sảnh
+- [ ] Đăng nhập thất bại → cửa rung lắc (shake), neon nhấp nháy
+- [ ] Kết nối: `POST /api/auth/login` + `POST /api/auth/register`
+
+**Output:** Đăng nhập xong → vào Sảnh Chờ.
+
+---
+
+## Công Đoạn 3 — Sảnh Chờ (The Office)
+
+> **Mục tiêu:** Màn hình chính với Shadow, NPC, đồng hồ thời gian thật
+
+- [ ] Layout: HUD (Gold, Uy tín bar, Level, Đồng hồ, Ngày X/50)
+- [ ] Đồng hồ thời gian thật: `useInterval` + `new Date()`, đổi theme theo giờ
+- [ ] Background sảnh (ảnh tĩnh AI generate hoặc placeholder)
+- [ ] Shadow animation: bóng đi vào → tách N bóng → ngồi sofa (framer-motion variants)
+- [ ] Tương tác Shadow: hover glow → click zoom → NPC reveal → speech bubble → nút Nhận/Từ chối
+- [ ] Nút "KẾT THÚC NGÀY" (pulse khi hết khách)
+- [ ] Nút "BỘ BÀI" → modal xem inventory
+- [ ] Biển Neon phản ứng uy tín (4 state CSS)
+- [ ] Kết nối: `GET /api/user/profile`, `GET /api/quest/daily`, `POST /api/quest/daily`
+
+**Output:** Nhận quest → chuyển sang Workshop.
+
+---
+
+## Công Đoạn 4 — Workshop (Lắp Ráp Xe)
+
+> **Mục tiêu:** Drag & drop thẻ bài, combo, Heat Bar — Màn chơi cốt lõi
+
+- [ ] Cài `@dnd-kit/core` + `@dnd-kit/sortable`
+- [ ] Layout 3 vùng: Kho thẻ (trái) | 10 Slot xe (giữa) | Crew slots (trên)
+- [ ] Kho thẻ: 10 tab icon, carousel trượt ngang, viền rarity
+- [ ] Drag thẻ: scale 1.1, opacity 0.8, trail effect
+- [ ] Drop vào slot: snap spring animation + flash trắng + SFX hook
+- [ ] Combo detection: glow vàng pulse + đường SVG nối 2 slot
+- [ ] Heat Bar: gradient 4 cấp (xanh→vàng→cam→đỏ), shake ở 80%+
+- [ ] Preview stats: hover thẻ lên slot → chỉ số nhảy (xanh = tốt, đỏ = nguy)
+- [ ] Crew slots: ô khóa/mở, tooltip hiệu ứng
+- [ ] Hình xe thay đổi theo tổng power (5 mức pixel art)
+- [ ] Nút "KHỞI ĐỘNG" (glow khi đủ 10 thẻ), "XÓA TẤT CẢ"
+- [ ] Kết nối: `GET /api/user/inventory`, `GET /api/cards/combos`, `GET /api/user/crew`
+
+**Output:** Xếp 10 thẻ + crew → bấm Khởi Động → sang Chạy Thử.
+
+---
+
+## Công Đoạn 5 — Chạy Thử Xe (Test Run Animation)
+
+> **Mục tiêu:** Animation tuần tự 10 slot + 3 kịch bản kết quả
+
+- [ ] Phase 1 — Khởi động: Nút nổ tung, background tối 30%, spotlight slot 1
+- [ ] Phase 2 — Quét slot 1→10: Spotlight di chuyển, thẻ glow + scale 1.2x
+- [ ] Mỗi slot: pop-up text (+Power xanh, +Heat đỏ, +Stability xanh dương) → fade
+- [ ] Heat Bar transition smooth, Power counter nhảy số (typewriter)
+- [ ] Combo: tia sáng SVG nối 2 thẻ, text combo bay ra
+- [ ] Phase 3A — Thành công: 10 slot glow xanh, "SUCCESS ✓" bounce, bảng thưởng slide-up
+- [ ] Phase 3B — Nổ máy: slot đỏ rực + shake, Heat Bar vỡ, flash trắng→khói→tia lửa, stamp "NỔ MÁY"
+- [ ] Phase 3C — Thiếu power: Xe rơi (translateY), text xám, NPC lắc đầu
+- [ ] canvas-confetti cho Thành Công
+- [ ] Kết nối: `POST /api/workshop/test` → parse mảng `steps[]` → animate tuần tự
+
+**Output:** Xem kết quả → quay về Sảnh nhận khách tiếp.
+
+---
+
+## Công Đoạn 6 — Shop & Mở Pack
+
+> **Mục tiêu:** Shop slide-down tự động + Loot Box Vali animation
+
+- [ ] Shop slide-down sau End Day (framer-motion AnimatePresence)
+- [ ] Layout kệ gỗ: 6 slot + 1 crew slot, price tag lắc nhẹ
+- [ ] Bundle: dây ruy-băng đỏ, x2 Pack: hào quang vàng
+- [ ] Click thẻ → modal preview slide-up → MUA / HỦY
+- [ ] MUA: thẻ bay vào túi (translate + scale), gold đếm ngược
+- [ ] Mở Pack — Vali: rung lắc → khóa bật → nắp trượt lên → thẻ bay ra fan-spread
+- [ ] Lật thẻ: scaleX flip 2D, viền sáng theo rarity
+- [ ] Legendary: explosion particles (canvas-confetti), camera shake, text flash
+- [ ] x2 Pack Deal: vali to 1.3x, 10 thẻ 2 hàng, "DOUBLE DEAL!" text
+- [ ] Pity counter hiển thị ("Pack đến pity: 3/8")
+- [ ] Kết nối: `GET /api/shop/items`, `POST /api/shop/items`
+
+**Output:** Mua xong → đóng Shop → Ngày mới.
+
+---
+
+## Công Đoạn 7 — Sự Kiện Ngẫu Nhiên
+
+> **Mục tiêu:** Pop-up event với VFX riêng từng loại
+
+- [ ] Buôn lậu: fade-to-black → gõ cửa 3 tiếng → đèn pin → NPC hiện → 2 nút
+- [ ] Đua ngầm: TV sáng lên CRT scanline → news ticker chạy
+- [ ] Kim Jong Un: background đỏ, cờ NK phấp phới CSS
+- [ ] Event PASSIVE: auto-apply, notification toast
+- [ ] Event CHOICE: 2 nút Chấp nhận/Từ chối
+- [ ] Smuggler Shop (nếu accepted): giao diện riêng 4 slot, mua/bán
+- [ ] Kết nối: `GET /api/events/random`, `POST /api/events/random`, `GET/POST /api/events/smuggler`
+
+**Output:** Xử lý event → Shop mở (nếu Ngày 2+).
+
+---
+
+## Công Đoạn 8 — End Day & Endings
+
+> **Mục tiêu:** Tổng kết ngày + 4 màn hình kết thúc game
+
+- [ ] Overlay sunset gradient (cam→tím→đen)
+- [ ] Bảng tổng kết slide-down: Gold counter, uy tín bar, tick/X từng khách, EXP fill
+- [ ] Level Up: flash vàng + confetti
+- [ ] Nút "NGÀY MỚI →" → đèn tắt → fade black → ngày mới
+- [ ] Ending screens (4 loại): slideshow/crumble/lửa/text mờ (framer-motion + CSS)
+- [ ] Kết nối: `GET /api/game/end-day`, `POST /api/game/end-day`, `GET /api/game/endings`
+
+**Output:** End Day → Event → Shop → Ngày mới hoặc Ending.
+
+---
+
+## Công Đoạn 9 — Tính Năng Phụ & Easter Egg
+
+> **Mục tiêu:** Hoàn thiện chi tiết độc đáo
+
+- [ ] Custom Cursor: pixel art (sảnh), cờ lê (workshop), grab (kéo thẻ), đỏ (nguy hiểm)
+- [ ] Keyboard shortcuts: Space, 1-0, R, Esc, Enter (react-use `useKeyPress`)
+- [ ] Easter Egg 13 click đồng hồ → unlock Hacker Mũ Đen
+- [ ] Inventory modal: xem toàn bộ thẻ, lọc theo type/rarity
+- [ ] Leaderboard modal
+- [ ] Achievements list
+- [ ] Tích hợp Howler.js: hook `useSound()` cho tất cả SFX slots (placeholder cho file audio)
+- [ ] Kết nối: `GET /api/achievements`, `GET /api/game/leaderboard`, `GET /api/game/config`
+
+---
+
+## Công Đoạn 10 — Polish, Responsive & QA
+
+> **Mục tiêu:** Đánh bóng, responsive, fix bug
+
+- [ ] Responsive: Desktop-first → tablet (≥768px) → mobile (touch drag-drop, bottom drawer)
+- [ ] Performance: lazy load components, image optimization (next/image)
+- [ ] Accessibility: aria-labels, focus states
+- [ ] Cross-browser test: Chrome, Firefox, Edge
+- [ ] Fix bugs tổng hợp
+- [ ] Loading states cho mọi API call
+- [ ] Error handling toàn diện (mất kết nối, token hết hạn)
+- [ ] Build production + test
+
+**Output:** Game hoàn chỉnh, chạy mượt trên mọi thiết bị.

@@ -42,6 +42,7 @@ model User {
   moscowBuffDay     Int      @default(0) @map("moscow_buff_day")
   activePerkCode  String?  @db.VarChar(50) @map("active_perk_code")
   totalShopSpent  BigInt   @default(0) @map("total_shop_spent")
+  totalPacksOpened Int     @default(0) @map("total_packs_opened")
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @updatedAt @map("updated_at")
 

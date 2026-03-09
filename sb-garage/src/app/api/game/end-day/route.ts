@@ -207,6 +207,8 @@ export async function POST(request: NextRequest) {
       garageHealth: finalUser?.garageHealth,
       gold: finalUser ? Number(finalUser.gold) : 0,
       showFinalRoundChoice: ending === 'Good Ending',
+      // Shop tự động mở sau event (Ngày 2+ và chưa ending)
+      shopPhase: !ending && (nextDay ?? 0) >= GAME_CONSTANTS.SHOP_UNLOCK_DAY,
     });
 
   } catch (error) {

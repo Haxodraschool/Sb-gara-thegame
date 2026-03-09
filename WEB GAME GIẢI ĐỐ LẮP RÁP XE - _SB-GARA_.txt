@@ -1,636 +1,870 @@
 ﻿TÊN ĐỀ TÀI: WEB GAME GIẢI ĐỐ LẮP RÁP XE - "SB-GARAGE"
-1. Lý do chọn đề tài (Tại sao tôi lại muốn làm cái này?)
+
+═══════════════════════════════════════════════════════════════
+1. LÝ DO CHỌN ĐỀ TÀI
+═══════════════════════════════════════════════════════════════
+
 * Nhu cầu muốn "đổi gió": Bây giờ nhìn quanh thấy game đua xe thì nhiều quá rồi, ai cũng chỉ biết cầm vô lăng lái trái lái phải. Nhưng tôi thấy rất nhiều người (trong đó có tôi) tò mò muốn biết bên trong cái xe nó có gì, tại sao nó chạy nhanh được? Tôi muốn làm một cái gì đó khác đi, không phải đua xe, mà là làm xe.
-* Sở thích "lắp ghép" của con người: Ai cũng thích chơi xếp hình (Lego) hoặc sửa chữa đồ đạc. Cảm giác tự tay làm món này lắp vào món kia để tạo ra một cỗ máy hoàn chỉnh.Nhưng không phải ai cũng có tiền mua xe thật về để tháo ra lắp vào.
+* Sở thích "lắp ghép" của con người: Ai cũng thích chơi xếp hình (Lego) hoặc sửa chữa đồ đạc. Cảm giác tự tay làm món này lắp vào món kia để tạo ra một cỗ máy hoàn chỉnh. Nhưng không phải ai cũng có tiền mua xe thật về để tháo ra lắp vào.
 * Giải quyết vấn đề "ngon - bổ - rẻ": Độ xe ngoài đời thật tốn cả đống tiền, lại còn nguy hiểm, lỡ làm sai là nổ máy cháy xe. Nên tôi muốn tạo ra một nơi để mọi người thỏa sức nghịch ngợm, phá phách, thử nghiệm các kiểu lắp ráp điên rồ nhất mà không tốn một xu.
-*  Tính mới mẻ và độc đáo của sản phẩm. Hiện nay các đề tài về quản lý bán hàng, quản lý sinh viên đã quá cũ kỹ và bão hòa. Đề tài là sự kết hợp giữa tư duy kỹ thuật cơ khí và giải trí số. Nó là một hướng đi mới
-2. Mô Tả Bài Toán (Trò Chơi Này Cụ Thể Làm Gì?)
-Trò chơi là một "Cửa hàng độ xe online" nơi người chơi đóng vai ông chủ gara. Nhiệm vụ chính: Khách hàng mang đến khung xe cũ và đưa ra yêu cầu cụ thể, ví dụ: "Làm cho xe đạt 500 mã lực với chi phí thấp nhất". Người chơi phải lắp ráp phụ tùng để đáp ứng yêu cầu mà không làm xe "nổ máy".
+* Tính mới mẻ và độc đáo của sản phẩm: Hiện nay các đề tài về quản lý bán hàng, quản lý sinh viên đã quá cũ kỹ và bão hòa. Đề tài là sự kết hợp giữa tư duy kỹ thuật cơ khí và giải trí số. Nó là một hướng đi mới.
+
+═══════════════════════════════════════════════════════════════
+2. MÔ TẢ BÀI TOÁN
+═══════════════════════════════════════════════════════════════
+
+SB-GARAGE là game quản lý garage sửa xe theo lượt (turn-based), nơi người chơi lắp ráp linh kiện lên khung xe 10 slot, hoàn thành quest cho khách hàng, đối mặt với Boss, sống sót qua 50 ngày để mở kết cục.
+
 Cách chơi cốt lõi (Gameplay): Sử dụng hệ thống thẻ bài thay vì công cụ thực tế. Mỗi thẻ đại diện cho một linh kiện hoặc yếu tố hỗ trợ:
-* Thẻ linh kiện: Bao gồm động cơ, turbo, ống xả, bình xăng, v.v.
-* Cơ chế lắp ghép: Xếp thẻ theo thứ tự logic (như lắp đoàn tàu), ví dụ: Lọc gió → Động cơ → Ống xả. Xếp sai sẽ khiến xe không chạy.
-* Cân bằng rủi ro: Lắp nhiều linh kiện mạnh tăng sức mạnh xe nhưng cũng tăng nguy cơ "nổ máy" (game over). Người chơi phải cân nhắc giữa mạo hiểm và an toàn.
+   * Thẻ linh kiện: 10 loại — Động cơ (ENGINE), Tăng áp (TURBO), Ống xả (EXHAUST), Làm mát (COOLING), Lọc gió (FILTER), Nhiên liệu (FUEL), Hệ thống treo (SUSPENSION), Lốp xe (TIRE), NOS (NITROUS), Dụng cụ (TOOL).
+   * Thẻ đội ngũ: 1 loại — CREW (Đội ngũ), không lắp lên xe, cho buff passive.
+   * Cơ chế lắp ghép: Xếp đúng 10 thẻ linh kiện lên 10 slot xe, hệ thống duyệt tuần tự Slot 1→10.
+   * Cân bằng rủi ro: Lắp nhiều linh kiện mạnh tăng sức mạnh xe (Power) nhưng cũng tăng nguy cơ "nổ máy" (Heat ≥ 100). Cần dùng Stability để bù trừ Heat.
+
 Các tính năng đặc sắc:
-1. Chạy thử (Testing): Sau khi lắp xong, bấm nút để mô phỏng xe chạy, với tiếng động cơ, hiệu ứng hình ảnh và đồng hồ đo công suất. Đạt yêu cầu thì thắng, không đạt hoặc nổ máy thì thua.
-2. Đội ngũ hỗ trợ (The Crew): Các thẻ nhân vật phụ như thợ hàn, nhà tài trợ, chuyên gia máy tính để tăng chỉ số gián tiếp hoặc kiếm thưởng thêm.
-3. Phản ứng dây chuyền: Một số thẻ tương tác, ví dụ: Lọc gió cạnh turbo nhân đôi chỉ số turbo. Vị trí đặt thẻ và tương tác với crew ảnh hưởng đến kết quả.
-4. Đối thủ khó tính (Boss): Màn chơi đặc biệt với điều kiện ngặt nghèo, như cấm ống xả ồn ào hoặc xe dễ nóng máy.
+   1. Chạy thử (Testing): Duyệt tuần tự Slot 1→10, chỉ số cộng dồn realtime, Heat vượt 100% = nổ máy ngay.
+   2. Đội ngũ hỗ trợ (Crew): 16 thẻ crew (11 mua tại Shop + 5 ẩn cần Achievement), buff passive lên toàn xe.
+   3. Phản ứng dây chuyền (Combo): 25 combo khi đặt 2 thẻ cạnh nhau, nhân/cộng chỉ số mạnh mẽ.
+   4. Hệ thống Boss: 10 Boss với điều kiện đặc biệt, mỗi 5 ngày xuất hiện 1 Boss.
+   5. Tuyến truyện Triều Tiên: Nhánh story ẩn với Boss Kim Jong Un, sống 10 ngày ở Triều Tiên.
+   6. Đa kết cục: 9 Endings (Standard, Perfect, Final, Bad, Boss Hidden).
+   7. Starter Perks: 6 đặc quyền đầu trận kiểu Roguelite.
+   8. Thành tựu ẩn: 5 achievements mở khóa 5 crew đặc biệt.
 
+═══════════════════════════════════════════════════════════════
+3. VÒNG LẶP TRÒ CHƠI (CORE LOOP - THEO NGÀY)
+═══════════════════════════════════════════════════════════════
 
-1. Vòng Lặp Trò Chơi (Core Loop - Theo Ngày)
-Game diễn ra theo tiến trình Ngày (Day). Mục tiêu: Sống sót qua càng nhiều ngày càng tốt và xây dựng Gara huyền thoại.
+Game diễn ra theo tiến trình 50 Ngày. Mỗi ngày bao gồm:
+
+   1. Bắt đầu ngày → Sinh quest cho khách hàng
+   2. Sự kiện ngẫu nhiên (nếu có)
+   3. Vào Shop mua thẻ/pack (mở khóa từ Ngày 2)
+   4. Lắp xe (10 slot) + Chạy thử
+   5. Xác nhận kết quả → Thắng/Thua
+   6. Lặp lại bước 4-5 cho mỗi khách hàng
+   7. Kết thúc ngày: Trừ uy tín quest pending, +10 Tech Points, check level up
+   8. Kiểm tra kết cục (Ngày 50 hoặc uy tín = 0)
+
+Tiến trình theo ngày:
+   * Ngày 1–5 (Vỡ lòng): Số khách cố định (1→4 khách), không có Boss.
+   * Ngày 6–49 (Phát triển): Số khách random theo level, Boss mỗi 5 ngày.
+   * Ngày 50 (Kết thúc): Ngày cuối → Good Ending hoặc chọn Final Round.
+   * Ngày 51 (Final Round): 10 Boss liên tiếp, thưởng x2 Gold.
+
 Số lượng khách & Boss:
-* Ngày 1 đến Ngày 5: Số lượng khách cố định (cấu hình sẵn trong DB).
-* Sau Ngày 5 (Ngày 6 trở đi): Số lượng khách mỗi ngày là ngẫu nhiên (Random).
-* Cơ chế Boss: Cứ mỗi 5 ngày (Ngày 5, 10, 15, 20...), sẽ xuất hiện 1 Boss ngẫu nhiên làm khách hàng.
-Hiệu ứng đầu ngày (Shadow Animation):
-1. Bắt đầu ngày mới, camera hướng ra sảnh chờ.
-2. Một "Shadow" (bóng đen) bước từ ngoài cửa vào khu vực sofa.
-3. Shadow ngồi xuống sofa, ngay sau đó phân tách/xuất hiện số lượng Shadow tương ứng với tổng số khách hàng trong ngày hôm đó.
-Tổng kết ngày (End Day):
-* Nhận báo cáo tổng kết doanh thu.
-2. CƠ CHẾ SHOP & GÓI THẺ (SHOP & PACKS)
-Mở khóa Shop:
-* Ngày 1: Shop đóng cửa (Người chơi dùng thẻ mặc định hoặc thẻ cho sẵn).
-* Qua Ngày 2: Shop chính thức mở khóa. Xuất hiện vào đầu mỗi ngày.
-Tỉ lệ rớt thẻ (Drop Rate): Áp dụng chung cho thẻ bán lẻ trong Shop và thẻ mở từ Pack:
-* ⚪ Xám (Common): 60%
-* 🟢 Xanh lá (Uncommon): 20%
-* 🔵 Xanh dương (Rare): 15%
-* 🟣 Tím (Epic): 3.5%
-* 🟡 Vàng (Legendary): 1.5%
-Gói Thẻ (Card Pack):
-* Trong Shop có 40% tỉ lệ xuất hiện một vật phẩm là "Gói Thẻ" (Pack) chiếm 1 slot bán hàng.
-* Khi mua và mở Pack: Nhận ngay 5 thẻ ngẫu nhiên theo đúng tỉ lệ drop rate ở trên.
-________________
-
-
-3. CƠ CHẾ LẮP RÁP & CHẠY THỬ (GAMEPLAY RUN/TEST)
-Luật Lắp Ráp:
-* Bắt buộc phải xếp đủ 10 thẻ lên khung xe theo đúng thứ tự luồng khí động học (Slot 1 đến Slot 10). Nếu không đủ 10 thẻ, không cho chạy thử.
-Thanh Nhiệt Độ (Heat Bar):
-* Thanh HP của xe chính là Thanh Heat (0% đến 100%).
-* Thất bại: Nếu Heat đạt hoặc vượt ngưỡng 100%, xe sẽ Nổ Máy. Khách hàng đó lập tức đánh dấu FAILED (chỉ tính thua khách đó, không game over cả run).
-Luật Chạy Thử (Sequential Run):
-1. Bấm "Run/Test". Hệ thống sẽ duyệt từng thẻ một theo đúng thứ tự từ 1 đến 10.
-2. Hiệu ứng duyệt: Mỗi khi duyệt đến 1 thẻ, thẻ đó sẽ sáng lên kèm theo âm thanh (SFX) và hiệu ứng hình ảnh (VFX) riêng biệt.
-3. Cộng/Trừ chỉ số trực tiếp:
-   * Chỉ số Power của thẻ cộng thẳng vào bảng nhiệm vụ.
-   * Chỉ số Heat của thẻ cộng vào Thanh Heat.
-   * Chỉ số Stability của thẻ sẽ trừ trực tiếp vào Thanh Heat hiện tại. (Ví dụ: Thanh Heat đang ở 50%, duyệt đến thẻ có Stability 10% -> Thanh Heat tụt xuống còn 40%).
-Yếu tố giữa các màn chơi: Đưa vào lựa chọn khó khăn như giao dịch với "tay buôn lậu" (mua đồ mạnh nhưng mất tiền sau) hoặc sự kiện ngẫu nhiên như "triển lãm xe" (tăng thưởng nhưng giới hạn thời gian) hoặc "khủng hoảng xăng dầu" (giảm chỉ số thẻ liên quan đến xăng).
-Giá trị chơi lại (Roguelite): Sau mỗi màn (thắng/thua), nhận tiền tệ vĩnh viễn để nâng cấp bàn làm việc (tăng slot crew từ 1 lên tối đa 5) hoặc mở khóa công nghệ mới như "động cơ điện" hoặc "nitrous (NOS)".
-2. TIẾN TRÌNH 50 NGÀY & HỆ THỐNG ENDING (ĐA KẾT CỤC)
-Game có thời lượng chuẩn là 50 Ngày (50 Rounds). Dựa vào kết quả chơi, sẽ rẽ nhánh các Ending sau:
-Các Kết Cục Tiêu Chuẩn:
-1. Wasted Potential (Kẻ Vứt Đi): Xảy ra bất cứ lúc nào nếu bạn làm hỏng quá nhiều xe khiến Thanh Uy Tín (Garage Health) tụt về 0. Game Over lập tức.
-2. Good Ending (Cái Kết Có Hậu): Sống sót và hoàn thành trọn vẹn 50 ngày.
-3. The Absolute Victory (Chiến Thắng Tuyệt Đối): Sống sót 50 ngày KHÔNG FAIL BẤT KỲ KHÁCH NÀO (Tỷ lệ thắng 100%, kể cả Boss). Đây là kết cục vinh quang nhất cho người chơi hệ "Hoàn hảo".
-________________
-
-
-3. TUYẾN TRUYỆN ĐẶC BIỆT: FINAL ROUND
-Nếu người chơi đạt được Good Ending, game không bắt buộc dừng lại mà hiện ra 2 lựa chọn:
-* Lựa chọn 1: Nhận Good Ending, xem Credit, End Game.
-* Lựa chọn 2: Chấp nhận lời thách thức, bước vào Final Round (Vòng Cuối Cùng).
-Luật chơi Final Round:
-* Trên Sofa chỉ có đúng 10 Shadow, tương ứng với 10 Boss khét lẹt nhất game.
-* Vẫn áp dụng cơ chế Click Sofa để chọn Boss ngẫu nhiên.
-* Invictus Ending (Bất Bại): Đánh bại toàn bộ 10 Boss này. Chạm tới đỉnh cao của nghề độ xe.
-* The Missing Percent (Thiếu Đi Một Chút): Chỉ cần Thua/Fail ở BẤT KỲ Boss nào trong chuỗi 10 Boss này -> Nhận ngay kết cục này.
-* Specific Boss Ending (Kết Cục Ẩn): Khi fail ở một số Boss đặc thù (có cốt truyện riêng), game sẽ rẽ sang Ending riêng của Boss đó (sẽ thiết kế sau).
-
-
-I. Cấu Trúc Thẻ Bài (Card System)
-1. Độ hiếm (Rarity): Thể hiện bằng màu viền và số sao.
-   * ⚪ 1 Sao (Common - Xám): Linh kiện cơ bản, chỉ số thấp, dễ nóng máy.
-   * 🟢 2 Sao (Uncommon - Xanh lá): Linh kiện tiêu chuẩn.
-   * 🔵 3 Sao (Rare - Xanh dương): Linh kiện hiệu năng cao.
-   * 🟣 4 Sao (Epic - Tím): Linh kiện cao cấp, có hiệu ứng phụ.
-   * 🟡 5 Sao (Legendary - Vàng): Linh kiện giới hạn, chỉ số cao, hiệu ứng đặc biệt.
-2. Chỉ số (Stats):
-   * 🔥 Sức mạnh (Power): Cộng trực tiếp vào mã lực xe.
-   * 🌡️ Nhiệt độ (Heat): Mức độ làm nóng máy, tăng cao dẫn đến nổ.
-   * ⚖️ Độ ổn định (Stability): Giảm nguy cơ nổ khi nhiệt độ cao.
-II. Giao Diện Và Quy Trình Chơi (UI/UX Và Gameplay Flow)
-1. Mở Cửa Gara & Đăng Nhập (Login)
-
-
-Giao diện: Cửa cuốn gara đóng kín, biển neon "SB-GARA" nhấp nháy, không khí bụi bặm.
-
-
-Thao tác: Nhấn nút "Mở cửa" -> Xác thực tài khoản -> Cửa cuốn kéo lên rầm rầm, để lộ không gian bên trong -> Chuyển vào Sảnh Chờ.
-
-
-2. Sảnh Chờ & Nhận Khách (The Office & Quest)
-
-
-Giao diện: Góc nhìn thứ nhất từ bàn làm việc nhìn ra cửa. Trung tâm là ghế Sofa. Góc trái là nút Shop (mở khóa từ Ngày 2) và Bộ Bài. Góc phải hiển thị Tiền, Uy tín (Garage Health), và Số Ngày hiện tại.
-
-
-Cơ chế Shadow (Khách & Boss): * Mở đầu ngày, số lượng "Shadow" (Bóng đen) bước vào và ngồi kín Sofa tương ứng với số khách hôm đó(mỗi shadow sẽ có những tư thế ngồi ngẫu nhiên).
-
-
-Lưu ý: Cứ mỗi 5 ngày (Ngày 5, 10...), trong đám Shadow này sẽ bị trà trộn 1 Boss.
-
-
-Thao tác: Bắt buộc click vào 1 Shadow trên Sofa(có hiệu ứng nổi khi rê chuột đi qua các shadow). Bóng đen được chọn sẽ zoom cận cảnh, lột xác thành hình ảnh NPC và đưa ra yêu cầu (Ví dụ: "Xe 500 mã lực, ít ồn"). Chọn "Nhận kèo" để vào xưởng.
-
-
-3. Xưởng Độ Xe (The Workshop - Lắp Ráp)
-
-
-Giao diện: * Trung tâm: Khung xe trống với chính xác 10 Slot nối tiếp nhau (đại diện cho luồng khí động học). Có một thanh Heat Bar (0 - 100%) chà bá ngay trên khung xe.
-
-
-Bên trái: Kho thẻ bài chia theo tab (Động cơ, Ống xả...).
-
-
-Bên phải: Slot Crew (Thợ hỗ trợ) hiển thị hình tròn/vuông.
-
-
-Thao tác & Phản hồi: Kéo thẻ từ kho vào lần lượt 10 Slot. Đặt thẻ cạnh nhau đúng combo sẽ phát sáng (VFX). Bắt buộc phải gắn đủ 10 lá mới cho chạy thử.
-
-
-4. Chạy Thử (Sequential Test Run)
-
-
-Giao diện: Sau khi lắp đủ 10 thẻ, nút "KHỞI ĐỘNG" hiện ra.
-
-
-Cơ chế Duyệt Thẻ (Đồng bộ UI): Không ra kết quả ngay. Khi bấm Run, hệ thống bắt đầu "quét" tuần tự từ Slot 1 đến Slot 10.
-
-
-Quét tới thẻ nào: Thẻ đó sáng lên + Âm thanh gầm rú.
-
-
-Chỉ số nảy số realtime: Power cộng dồn. Heat Bar tăng lên (do chỉ số Heat) hoặc tụt xuống (do chỉ số Stability bù trừ).
-
-
-Kết quả: * Thắng: Quét qua đủ 10 lá, Heat Bar < 100%, đạt đủ Power -> Thưởng tiền.
-
-
-Thua (Nổ máy): Đang quét tới thẻ thứ X mà Heat Bar vọt qua 100% -> Màn hình rung lắc, xịt khói đen -> Dòng chữ "FAILED" đóng dấu đỏ -> Khách bỏ đi (Fail) , trừ uy tín .
-
-
-5. Biến Cố & Mở Pack (Dilemma & Shop)
-
-
-Sau màn chơi: Trả về Sảnh Chờ. Lúc này có thể xuất hiện sự kiện ngẫu nhiên: Kẻ buôn lậu gõ cửa (Giao diện tối), hoặc TV chiếu tin tức thời sự ảnh hưởng đến màn sau.
-
-
-Vào Shop: Mở Shop mua thẻ lẻ hoặc "Gói Thẻ" (nhận ngay 5 thẻ ngẫu nhiên theo tỉ lệ rớt: Trắng 60%, Vàng 1.5%...). Dùng tiền nâng cấp slot Crew.
-Giao diện: Kệ hàng bày các Thẻ lẻ (theo tỷ lệ drop rate) và Gói Thẻ (Pack).
-Cơ chế Mở Pack:
-* Mua Pack -> Một animation xé bao bì -> 5 thẻ bay ra.
-* Thẻ lật lên từng cái, viền sáng theo độ hiếm (Xám -> Vàng).
-6. Tổng Kết Ngày & Rẽ Nhánh Kết Cục (End Day & Endings)
-
-
-Cuối ngày: Quét sạch bóng đen trên ghế -> Bảng tổng kết doanh thu và Uy tín.
-
-
-Rẽ nhánh (Day 50):
-
-
-Nếu Uy tín = 0 giữa chừng -> Wasted Potential (Game Over).
-
-
-Sống sót 50 ngày -> Màn hình hiện 2 nút: Lấy Good Ending (Dừng lại) hoặc chọn "Đi tiếp" để vào Final Round.
-
-
-Sống sót 50 ngày không fail ai -> The Absolute Victory.
-
-
-Final Round (Nếu đi tiếp): Giao diện Sofa xuất hiện đúng 10 Shadow, là 10 con Boss mạnh nhất. Thắng hết -> Invictus. Fail dù chỉ 1 Boss -> The Missing Percent.
-
-
-III. Thiết Kế Cơ Sở Dữ Liệu (Database Design)
+   * Ngày 1 đến Ngày 5: min(currentDay, 4) khách → 1, 2, 3, 4, 4.
+   * Ngày 6+: Random theo QuestConfig (dựa vào level người chơi).
+   * Boss: Mỗi 5 ngày (day % 5 === 0) → 1 Boss random từ pool.
+
+═══════════════════════════════════════════════════════════════
+4. HỆ THỐNG THẺ BÀI (CARD SYSTEM)
+═══════════════════════════════════════════════════════════════
+
+4.1. Phân loại thẻ — 11 CardType
+   * ENGINE (Động cơ) — 25 thẻ: Power cao, Heat cao.
+   * TURBO (Tăng áp) — 18 thẻ: Power + Heat cực đoan.
+   * EXHAUST (Ống xả) — 18 thẻ: Power nhẹ, Heat âm (giảm nhiệt).
+   * COOLING (Làm mát) — 19 thẻ: Heat âm mạnh, Stability cao.
+   * FILTER (Lọc gió) — 18 thẻ: Power + Stability cân bằng.
+   * FUEL (Nhiên liệu) — 18 thẻ: Power cao, Heat + Stability rủi ro.
+   * SUSPENSION (Hệ thống treo) — 17 thẻ: Stability rất cao, ít Power.
+   * TIRE (Lốp xe) — 18 thẻ: Stability chính, ít Heat.
+   * NITROUS (NOS) — 17 thẻ: Power bùng nổ, Heat cao, trừ Stability.
+   * TOOL (Dụng cụ) — 17 thẻ: Utility đa dạng.
+   * CREW (Đội ngũ) — 16 thẻ: Buff passive, không lắp lên xe.
+   Tổng: ~201 thẻ (185 linh kiện + 11 crew thường + 5 crew ẩn)
+
+4.2. Hệ thống Rarity (Độ hiếm) — 5 cấp
+   * ★ Common (Xám) — Drop Rate: 60%
+   * ★★ Uncommon (Xanh lá) — Drop Rate: 20%
+   * ★★★ Rare (Xanh dương) — Drop Rate: 15%
+   * ★★★★ Epic (Tím) — Drop Rate: 3.5%
+   * ★★★★★ Legendary (Vàng) — Drop Rate: 1.5%
+
+4.3. Chỉ số thẻ — 3 stat chính
+   * statPower (Mã lực): Cộng dồn → so sánh với requiredPower của quest.
+   * statHeat (Nhiệt độ): Cộng dồn, giá trị âm = giảm nhiệt. Vượt 100 = NỔ MÁY.
+   * statStability (Độ ổn định): Trừ cho Heat mỗi slot: currentHeat = max(0, heat - stability).
+
+4.4. Card Effects — Hiệu ứng đặc biệt (thẻ 4-5★)
+   3 loại trigger:
+   * PASSIVE — Luôn có hiệu lực.
+   * ON_TEST — Chỉ khi chạy thử xe.
+   * ADJACENT — Khi đặt cạnh thẻ phù hợp.
+   3 loại hiệu ứng: BUFF, DEBUFF, UTILITY.
+
+═══════════════════════════════════════════════════════════════
+5. WORKSHOP — CHẠY THỬ XE (CORE GAMEPLAY)
+═══════════════════════════════════════════════════════════════
+
+Luật lắp ráp:
+   * Bắt buộc xếp đủ 10 thẻ lên khung xe (Slot 1→10).
+   * Nếu không đủ 10 thẻ, không cho chạy thử.
+
+Quy trình chạy thử — Sequential Test Run:
+   Slot 1 → Slot 2 → ... → Slot 10 (tuần tự)
+   Mỗi slot:
+     1. Lấy thẻ tại slot
+     2. Tính base stats: powerAdded, heatAdded, stabilityReduced
+     3. Áp dụng buff Moscow (+20% power nếu active)
+     4. Áp dụng hiệu ứng Gấu (Russia boss nếu có)
+     5. Cộng crew buffs (power, heat, stability)
+     6. Check combo với thẻ liền trước (adjacent)
+     7. Check card effects (ON_TEST)
+     8. Cộng dồn: totalPower += powerAdded
+     9. Tính heat: currentHeat += heatAdded - stabilityReduced
+     10. Check boss conditions (during run)
+     11. Check explosion: currentHeat >= 100 → NỔ MÁY, dừng ngay
+
+Kết quả chạy thử:
+   * ✅ Thành công: Không nổ + đạt requiredPower + không fail boss condition.
+   * 💥 Nổ máy: currentHeat >= 100 bất kỳ lúc nào.
+   * ❌ Thiếu Power: totalPower < requiredPower.
+   * ❌ Boss condition fail: Điều kiện boss đặc biệt không đạt.
+
+═══════════════════════════════════════════════════════════════
+6. HỆ THỐNG QUEST & KHÁCH HÀNG
+═══════════════════════════════════════════════════════════════
+
+6.1. Sinh Quest hàng ngày
+   Ngày 1–5 (Fixed): Số khách = min(currentDay, 4).
+   Ngày 6+ (Random): Dựa vào QuestConfig theo level.
+
+   Quest Configs theo level:
+   * Level 1–3: Power 100–250, Gold 100–250, Customers 1–3.
+   * Level 4–7: Power 200–400, Gold 200–500, Customers 2–4.
+   * Level 8–12: Power 350–600, Gold 400–900, Customers 3–5.
+   * Level 13+: Power 500–800, Gold 600–1500, Customers 3–6.
+
+6.2. Boss Day
+   Mỗi 5 ngày (day % 5 === 0) → thêm 1 Boss quest.
+
+6.3. Ngân sách khách hàng
+   customerBudget = baseGold × (2.0 – 4.0) random.
+   Nếu tổng chi phí thẻ < ngân sách khách → giữ lợi nhuận.
+   Thẻ 5★ chỉ tính 50% giá khi tính lợi nhuận.
+
+6.4. Hoàn thành Quest
+   Thành công:
+   * +Gold (có modifier: smuggler -15%, Underworld +50%, Kim Buff x2-x3)
+   * +EXP: 100 (thường) / 300 (boss)
+   * +1 Uy tín (thường) / +5 Uy tín (boss) — tối đa 100
+
+   Thất bại:
+   * -10 Uy tín (thường)
+   * -20 Uy tín (boss)
+
+═══════════════════════════════════════════════════════════════
+7. HỆ THỐNG BOSS — 10 BOSS
+═══════════════════════════════════════════════════════════════
+
+7.1. Danh sách Boss
+
+   1. Ông Hoàng Drift (Power ≥ 400, Gold 800)
+      Điều kiện: DRIFT_KING_CHALLENGE — Cấm SUSPENSION ≥ 3★, Slot chẵn +15% Power nhưng cooling giảm 50%, Stability cuối ≥ 150.
+
+   2. Huyền Thoại F1 (Power ≥ 550, Gold 2200)
+      Điều kiện: NO_COOLING — Cấm dùng thẻ COOLING.
+
+   3. Nhà Sưu Tập (Power ≥ 450, Gold 1500)
+      Điều kiện: MIN_RARITY_3 — Chỉ thẻ ≥ 3★.
+
+   4. Cô Gái Liều Lĩnh (Power ≥ 400, Gold 1800)
+      Điều kiện: DAREDEVIL_DEATH_WISH — Slot 7: +15 Heat đột biến. Heat cuối ≥ 85% (nhưng < 100%).
+
+   5. Kẻ Bí Ẩn (Power ≥ 800, Gold 5000)
+      Không có điều kiện đặc biệt — Pure power check.
+
+   6. Đảo Chủ EP (Power ≥ 500, Gold 2000)
+      Điều kiện: EP_ISLAND_CHOICE — Nhánh YES: -50 Uy tín, Heat ≤ 69%, ≥1 Combo. Nhánh NO: +15 Uy tín, cấm COOLING, cần 1 thẻ 5★ + 1 thẻ 4★, Power ≥ 690.
+      Thắng → Unlock Donald Trump (hasDefeatedEP = true).
+
+   7. Chúa Tể Dầu Em Bé (Power ≥ 420, Gold 2500)
+      Điều kiện: BABY_OIL_CHOICE — Nhánh YES: Cấm FUEL, Heat ≥ 60%, Power ≤ 400. Nhánh NO: Tự động fail → -45% Uy tín.
+
+   8. Chủ Tịch Kim (Power ≥ 500, Gold 3000)
+      Điều kiện: KIM_JONG_UN — Lần đầu: Hỏi "Gia nhập Triều Tiên?". YES → Bắt đầu tuyến truyện NK. NO → BAD ENDING.
+
+   9. Đỗ Nam Trung (Power ≥ 470, Gold 4700)
+      Điều kiện: DONALD_TRUMP — Khóa tất cả thẻ 5★, Heat > 47% VÀ Power > 470.
+      Thắng: +47 Uy tín, giảm 4.7% thuế Shop. Thua: +47% thuế Shop.
+      Chỉ xuất hiện sau khi thắng Đảo Chủ EP.
+
+   10. Nga Đại Đế (Power dynamic, Gold dynamic)
+      Điều kiện: RUSSIA_EMPEROR — Phase 1: Chạy thử bình thường, Heat ≤ 36%. Phase 2: Vodka? YES → Heat max 67%, Gold x2. NO → 3 Gấu tấn công.
+      Thắng cả 2 phase → Buff Hào Quang Moskva (+20% Power ngày mai).
+
+═══════════════════════════════════════════════════════════════
+8. TUYẾN TRUYỆN TRIỀU TIÊN (NORTH KOREA STORYLINE)
+═══════════════════════════════════════════════════════════════
+
+Khi Boss Kim Jong Un xuất hiện (ngày chia hết 5):
+   * YES → Gia nhập Triều Tiên:
+     - Minigame vỗ tay → hasKimBuff (x2-x3 Gold khách NK)
+     - Ngày 1–9 NK: Events Camera (40%) + Kiểm Tra Ảnh (50%)
+       └ Fail Kiểm Tra Ảnh → BAD ENDING
+     - Ngày 10 NK: Event Sát Thủ (100%)
+       ├ Chấp nhận ám sát → Thành công: Thoát NK, +50% lợi nhuận
+       └ Từ chối → BAD ENDING
+   * NO → BAD ENDING: "Bị Tiêu Diệt Bởi Chủ Tịch"
+
+Đặc điểm khi ở Triều Tiên: Khách yếu hơn (Power 150–300, Gold 50–150), có Kim Buff bù Gold, events riêng.
+
+═══════════════════════════════════════════════════════════════
+9. SHOP & KINH TẾ
+═══════════════════════════════════════════════════════════════
+
+9.1. Shop chính (Cơ chế mở khóa Ngày 2)
+   * Trình tự: Không còn nút Shop tự do. Tự động mở ra sau khi "Kết Thúc Ngày" và xem Event (nếu có). Khi đóng lại sẽ chờ đến ngày tiếp theo.
+   * 6 slot random mỗi lần: 50% cơ hội ưu tiên hiển thị từ top 3 loại thẻ người chơi sở hữu ít nhất.
+   * Deal Đặc Biệt & Bundle:
+      - x2 Pack (0.5%): Mua 1 giá Pack, nhận 10 thẻ (gấp đôi).
+      - Cụm thẻ/Bundle: 1★ (cụm 3 thẻ, tỷ lệ 20%), 2★ (cụm 2 thẻ, tỷ lệ 7%), được giảm 10% tổng giá.
+      - Pack Thường (40%): Gói 5 thẻ random.
+      - Thẻ lẻ (Còn lại): Xoay theo gacha rate (không bao gồm CREW).
+   * Hệ thống Pity: Mở đến Gói Thẻ thứ 8 (Pack thứ 8) chắc chắn rớt 1 thẻ 4★ hoặc 5★ ngẫu nhiên.
+   * 1 slot CREW riêng: Random 1 crew chưa sở hữu.
+   * Giá Pack: Scale theo ngày (350g Ngày 2 → 1000g Ngày 20+).
+   * Tax modifier: Bị ảnh hưởng bởi boss Đỗ Nam Trung.
+
+9.2. Smuggler — Tay Buôn Lậu (Chỉ khi event active)
+   * Mua thẻ 3★+ giá 60% (giảm 40%), -5 Uy tín/món.
+   * Bán thẻ bất kỳ giá 50%.
+   * 4 món hiếm random.
+   * Rủi ro: Ngày sau có thể bị Cảnh Sát Triều Tiên kiểm tra (-80 Uy tín nếu bị bắt).
+
+9.3. Nguồn thu nhập Gold
+   * Quest thường: 100–1500g theo level.
+   * Boss thường: 800–5000g tùy boss.
+   * Level up: newLevel² × 100 Gold.
+   * Budget Profit: Tiền khách dư - chi phí thẻ.
+   * Sự kiện: Đua ngầm 800g, Camera NK 1000g, v.v.
+   * Boss đặc biệt: Donald Trump 4700g, Baby Oil 2500g.
+
+═══════════════════════════════════════════════════════════════
+10. HỆ THỐNG SỰ KIỆN NGẪU NHIÊN
+═══════════════════════════════════════════════════════════════
+
+10.1. Events thông thường (7 sự kiện)
+   * Tay Buôn Lậu Gõ Cửa (CHOICE, 30%): Mở Smuggler Shop, -10 Uy tín, -15% Gold ngày sau.
+   * Ánh Trăng Racing (CHOICE, 15%): +800 Gold, -15 Uy tín.
+   * Băng Đảng Xăng Dầu (PASSIVE, 15%): -10% tổng Gold hiện có.
+   * Độ Channel Bốc Phốt (PASSIVE, 10%): +40 Uy tín, -200 Gold.
+   * Đấu Giá Kho Xưởng (CHOICE, 15%): -300 Gold, +500 Tech Points.
+   * Kẻ Chế Tạo Cuồng Tín (CHOICE, 10%): +400 Tech Points, -20 Uy tín.
+   * Cảnh Sát Đột Kích (PASSIVE, 15%): -150 Gold, -10 Uy tín.
+
+10.2. Events Triều Tiên (4 sự kiện, chỉ khi isInNorthKorea = true)
+   * Camera Ngoại Bang (40%): +1000 Gold.
+   * Kiểm Tra Ảnh Cán Bộ (50%): Fail → BAD ENDING.
+   * Sát Thủ Gọi Mời (100% Ngày NK 10): Ám sát Kim hoặc BAD ENDING.
+   * Cảnh Sát Triều Tiên (10%): -80 Uy tín nếu mua Smuggler hôm qua.
+
+Events kéo dài 3 ngày, giảm 1 turn mỗi ngày.
+
+═══════════════════════════════════════════════════════════════
+11. CREW — ĐỘI NGŨ
+═══════════════════════════════════════════════════════════════
+
+Cơ chế: Crew không lắp lên xe, gắn vào crew slots (mặc định 1, tối đa 5). Buff PASSIVE lên toàn xe.
+
+11.1. Crew mua tại Shop (11 crew)
+   * Kỹ Sư Nhiệt (2★, 300g): -10% Heat cho Turbo.
+   * Thợ Sơn (2★, 400g): +15% tiền tip.
+   * Thợ Hàn Ngầm (2★, 350g): EXHAUST +10 Stability.
+   * Thầy Phong Thuỷ (2★, 450g): FILTER+ENGINE+COOLING cùng rarity → +25 Stability.
+   * Kế Toán Trưởng (2★, 500g): Hoàn trả 10% tiền mua linh kiện.
+   * Chuyên Gia Ống Xả (3★, 800g): Ống xả +15 Power.
+   * Bác Sĩ Xăng (3★, 900g): FUEL x2 Power, Heat x1.5.
+   * Tay Lái Thử (3★, 1000g): Ngưỡng nổ +5 điểm (105) khi Heat > 95%.
+   * Chuyên Gia Lốp (3★, 1200g): +20 Stability cho xe > 400 HP.
+   * Thợ Điện Ngầm (4★, 1800g): NITROUS xoá trừ Stability.
+   * Chiến Binh Đêm (4★, 2500g): Ngày 25+: TIRE & TURBO +15 Power.
+
+11.2. Crew ẩn (5 crew, cần Achievement)
+   * Kẻ Đào Tẩu (4★): Bypass mọi điều kiện Boss.
+   * Linh Hồn Gara (5★): 1 lần/màn cứu xe khi nổ.
+   * Chủ Tịch Tập Đoàn (4★): Mượn 1 Legendary/màn.
+   * Hacker Mũ Đen (5★): Đảo ngược Heat ↔ Stability mọi thẻ trên xe.
+   * Huyền Thoại Giải Nghệ (5★): Common/Uncommon → Rare stats.
+
+═══════════════════════════════════════════════════════════════
+12. COMBO — PHẢN ỨNG DÂY CHUYỀN
+═══════════════════════════════════════════════════════════════
+
+Combo kích hoạt khi 2 thẻ đặt cạnh nhau (adjacent slots), check slot i với slot i-1.
+
+Các loại Combo Effect:
+   * MULTIPLY_POWER: Nhân Power thẻ hiện tại.
+   * REDUCE_HEAT: Nhân Heat (< 1.0 = giảm).
+   * BONUS_POWER: Cộng thêm Power cố định.
+   * BONUS_STABILITY: Cộng thêm Stability cố định.
+   * MULTIPLY_STABILITY: Nhân Stability.
+   * NEGATE_HEAT: Xóa Heat.
+   * BONUS_GOLD: Thưởng thêm % Gold.
+   * POWER_TO_STABILITY: Chuyển Power thành Stability.
+
+Tổng: 25 Combo (16 combo linh kiện + 9 combo crew).
+
+═══════════════════════════════════════════════════════════════
+13. HỆ THỐNG NÂNG CẤP & TIẾN TRÌNH
+═══════════════════════════════════════════════════════════════
+
+13.1. Level Up
+   * EXP cần: level × 500.
+   * Gold thưởng: newLevel² × 100.
+   * Level rewards (thẻ miễn phí):
+     Level 2: 2x Động Cơ Xe Máy 50cc
+     Level 3: 2x Ống Xả Tiêu Chuẩn
+     Level 5: 1x Động Cơ 2.0L Turbo
+     Level 7: 1x Turbo Tăng Áp Đôi
+     Level 10: 1x Ống Xả Titan Racing
+     Level 15: 1x V8 Supercharged
+
+13.2. Tech Points
+   * +10 Tech Points mỗi ngày kết thúc.
+   * Dùng để nâng cấp Crew Slots:
+     Slot 1→2: 50 TP | 2→3: 100 TP | 3→4: 200 TP | 4→5: 350 TP
+
+13.3. Uy tín (Garage Health)
+   * Bắt đầu: 100, Tối đa: 100.
+   * Tụt về 0 → BAD ENDING "Wasted Potential".
+   * Tăng: +1 (thắng quest), +5 (thắng boss), +15 (EP nhánh NO), +40 (Bốc Phốt), +47 (thắng Trump).
+   * Giảm: -10 (fail quest), -20 (fail boss), -5/món (smuggler), events khác.
+
+═══════════════════════════════════════════════════════════════
+14. HỆ THỐNG KẾT CỤC (ENDINGS) — 9 ENDINGS
+═══════════════════════════════════════════════════════════════
+
+   1. Good Ending (STANDARD): Sống sót 50 ngày (có ≥1 fail).
+   2. The Absolute Victory (PERFECT): 50 ngày, 0 fail.
+   3. Wasted Potential (STANDARD): Uy tín = 0 bất kỳ lúc nào.
+   4. Invictus (FINAL): Final Round — thắng hết 10 Boss.
+   5. The Missing Percent (FINAL): Final Round — thua bất kỳ boss nào.
+   6. Bóng Ma Tốc Độ (BOSS_HIDDEN): Final Round — thua boss "Kẻ Bí Ẩn".
+   7. Bị Tiêu Diệt Bởi Chủ Tịch (BAD): Từ chối Kim / Fail Kiểm Tra Ảnh.
+   8. Bị Sát Thủ Tiêu Diệt (BAD): Từ chối ám sát / Ám sát thất bại.
+
+Final Round: Sau Ngày 50 khi đạt Good Ending → chọn đi tiếp → 10 Boss, thưởng x2 Gold. Thắng hết → Invictus.
+
+═══════════════════════════════════════════════════════════════
+15. THÀNH TỰU ẨN (HIDDEN ACHIEVEMENTS)
+═══════════════════════════════════════════════════════════════
+
+   * HEAT_SURVIVOR (Kẻ Sống Sót Trong Lửa): Heat > 90% cả run mà không nổ → Crew: The Fugitive.
+   * EXPLOSION_MASTER (Bậc Thầy Nổ Máy): Nổ máy 10 lần tổng → Crew: Ghost Mechanic.
+   * ZERO_COST_WIN (Chiến Thắng Giá 0 Đồng): Thắng chỉ dùng thẻ Common/miễn phí → Crew: The CEO.
+   * MIDNIGHT_HACKER (Hacker Nửa Đêm): Click đồng hồ 13 lần lúc 23h–1h → Crew: Black-Hat.
+   * LEGENDARY_SACRIFICE (Hiến Tế Huyền Thoại): Bán hết Legendary cho Smuggler → Crew: The Legend.
+
+═══════════════════════════════════════════════════════════════
+16. STARTER PERKS — ĐẶC QUYỀN ĐẦU TRẬN
+═══════════════════════════════════════════════════════════════
+
+Khi bắt đầu vòng chơi mới, người chơi chọn 1 Đặc Quyền Duy Nhất:
+
+   1. Quỹ Khởi Nghiệp: +200 Gold. (Mặc định, luôn có sẵn)
+   2. Kho Đồ Cũ: 5 thẻ random 2-3★. (Cần đạt Good Ending 1 lần)
+   3. Bàn Tay Nóng: Ngưỡng nổ 115% thay vì 100%. (Tổng nổ máy ≥ 15 lần)
+   4. Mối Quan Hệ: +1 Crew Slot. (Sở hữu ≥ 8 Crew Cards)
+   5. Thẻ VIP Cửa Hàng: Shop giảm 20% trong 10 ngày đầu. (Shop spent ≥ 10,000g)
+   6. Thiên Tài Cơ Khí: +100 Tech Points. (Từng đạt Level 10)
+
+═══════════════════════════════════════════════════════════════
+17. GIAO DIỆN, HIỆU ỨNG & TÍNH NĂNG ĐỘC ĐÁO (UI/UX & VFX)
+═══════════════════════════════════════════════════════════════
+
+────────────────────────────
+17.1. ĐỒNG HỒ THỜI GIAN THẬT (REAL-TIME CLOCK)
+────────────────────────────
+
+Trên góc giao diện Sảnh Chờ có một chiếc đồng hồ treo tường kiểu gara cũ, hiển thị thời gian thật từ máy của người chơi (JavaScript Date).
+
+Tính năng đặc biệt theo thời gian thật:
+   * Ban đêm (21h–5h): Giao diện tự động chuyển sang tone tối hơn, đèn neon gara sáng rõ hơn, bóng đổ dài. Âm thanh nền chuyển từ tiếng ồn xưởng sang tiếng dế kêu + nhạc lo-fi.
+   * Buổi sáng (5h–8h): Hiệu ứng sương mù nhẹ phủ ngoài cửa gara, ánh nắng vàng xuyên qua khe cửa cuốn.
+   * Giờ cao điểm (12h–13h, 17h–19h): Khách hàng đến nhanh hơn (animation Shadow chạy vào thay vì đi bộ).
+   * Nửa đêm (23h–1h): Easter Egg — Click đồng hồ 13 lần liên tiếp → Achievement "Hacker Nửa Đêm" → Mở khóa Crew ẩn "Hacker Mũ Đen (Black-Hat)". Đồng hồ rung lắc nhẹ khi click, chữ số nhảy lung tung, đến lần thứ 13 thì vỡ tung + glitch effect.
+   * Happy Hour (20h–22h): Biểu tượng đồng hồ đổi màu vàng, tooltip "Happy Hour: Shop giảm 5% giá!".
+
+────────────────────────────
+17.2. MÀN HÌNH ĐĂNG NHẬP — MỞ CỬA GARA
+────────────────────────────
+
+Bối cảnh: Một con hẻm tối, camera nhìn thẳng vào cửa cuốn gara đã đóng kín. Biển neon "SB-GARAGE" nhấp nháy trên đầu (CSS animation: flicker random).
+
+Hiệu ứng chi tiết:
+   * Biển neon: Chữ "SB" sáng ổn định màu xanh cyan. Chữ "GARAGE" nhấp nháy ngẫu nhiên (random flicker 0.5–3s interval), đôi khi tắt hẳn 0.3s rồi bật lại — giống đèn neon cũ sắp hỏng.
+   * Hiệu ứng mưa (tuỳ chọn): Các giọt mưa rơi xiên trước cửa gara (CSS particle animation), tạo vũng nước phản chiếu ánh neon trên mặt đất.
+   * Khói/sương: Lớp sương mỏng trôi ngang (CSS translateX animation loop 20s), tạo cảm giác bí ẩn.
+   * Âm thanh nền: Tiếng mưa nhẹ + tiếng dế + đôi khi tiếng xe chạy ngang (random SFX mỗi 15–30s).
+
+Thao tác đăng nhập:
+   1. Ban đầu: Chỉ hiện nút "GÕ CỬA" (không phải form đăng nhập).
+   2. Click "GÕ CỬA": SFX tiếng gõ cửa sắt 3 cái (knock-knock-knock). Sau 1s, ánh sáng hắt ra từ khe cửa cuốn phía dưới (CSS box-shadow animate).
+   3. Form xác thực trượt lên từ dưới (slide-up animation 0.5s ease-out): Ô nhập Username + Password, nút "Mở cửa" + "Đăng ký".
+   4. Đăng nhập thành công: Cửa cuốn kéo lên (CSS transform: translateY animation 2s) kèm SFX rầm rầm tiếng sắt kéo. Ánh sáng vàng ấm từ bên trong tràn ra dần. Camera tự chuyển vào bên trong → Sảnh Chờ.
+   5. Đăng nhập thất bại: Cửa cuốn rung lắc nhẹ (CSS shake animation), đèn neon nhấp nháy nhanh 3 lần, text lỗi hiện màu đỏ.
+
+────────────────────────────
+17.3. SẢNH CHỜ (THE OFFICE)
+────────────────────────────
+
+Layout tổng thể: Góc nhìn thứ nhất (First Person) từ bàn làm việc nhìn ra cửa gara.
+   * Trung tâm: Bộ ghế Sofa dài (chứa tối đa 8 Shadow) + Bàn coffee nhỏ.
+   * Trên cùng trái: Logo "SB-GARAGE" mini + Ngày hiện tại ("NGÀY 15/50").
+   * Trên cùng phải: Đồng hồ thời gian thật + Gold + Uy tín (thanh bar) + Level.
+   * Góc trái dưới: Nút BỘ BÀI (xem kho thẻ). Không có nút Shop ở sảnh chờ.
+   * Góc phải dưới: Nút KẾT THÚC NGÀY (sáng lên khi hết khách).
+   * Nền tường: Poster xe cũ, kệ dụng cụ, bình chữa cháy — props tĩnh tạo không khí gara.
+   * Cửa sổ (nếu có): Hiển thị trời sáng/tối theo giờ thật từ máy người chơi.
+
+Hiệu ứng đầu ngày — Shadow Animation:
+   1. Camera hướng ra cửa gara (đã mở sẵn). Bên ngoài là con hẻm/đường phố.
+   2. Một bóng đen (lớn, blur, opacity 0.7) bước từ ngoài vào qua cửa (translateX animation 1.5s).
+   3. Bóng đen đi đến Sofa, ngồi xuống (scale animation nhỏ lại + translateY xuống).
+   4. Ngay sau khi ngồi: Hiệu ứng "phân tách" — bóng đen tách thành N bóng nhỏ hơn (N = số khách ngày hôm đó), mỗi bóng trượt sang vị trí ngồi riêng trên Sofa.
+   5. Mỗi Shadow ngồi ở tư thế ngẫu nhiên (random từ 4–5 sprite: ngồi thẳng, khoanh tay, gác chân, cúi đầu, vẫy tay).
+   6. Boss Shadow: Nếu ngày Boss (ngày chia hết 5), boss shadow không khác gì shadow thường 
+
+Tương tác Shadow:
+   * Hover: Shadow nổi lên nhẹ (translateY: -5px, transition 0.3s), viền sáng trắng (box-shadow glow).
+   * Click: Zoom cận cảnh (scale 1→1.5 + blur background). Bóng đen "lột xác" — bóng đen mờ dần, để lộ chân dung NPC (fade-in 0.5s).NPC có sprite/rung nhẹ khi nói và có sfx khi nói chuyện/giao nhiệm vụ 
+   * Bong bóng hội thoại (Speech Bubble) rơi xuống (drop + bounce animation) chứa yêu cầu,ví dụ: "Tôi cần xe 500 HP, ngân sách 2000g".
+   * 2 nút: "NHẬN KÈO ✓" (xanh, pulse) và "TỪ CHỐI ✗" (đỏ, shake khi hover).
+   * Nhận kèo: NPC đi vào xưởng (translateX sang phải) → Chuyển màn Workshop.
+   * Từ chối: NPC tức giận bỏ đi ra cửa → Shadow biến mất.
+
+────────────────────────────
+17.4. XƯỞNG ĐỘ XE (WORKSHOP) — MÀN CHƠI CHÍNH
+────────────────────────────
+
+Layout 3 vùng:
+
+   A) BÊN TRÁI — KHO THẺ BÀI:
+   * 10 tab icon (ENGINE, TURBO, EXHAUST...). Click tab → carousel trượt ngang.
+   * Thẻ hiển thị: Viền màu rarity, tên, 3 stat, số lượng.
+   * Thẻ 5★: Viền vàng + particle sparkle animation loop.
+   * Kéo thẻ (Drag): scale 1.1, opacity 0.8, shadow lớn, trail effect.
+
+   B) TRUNG TÂM — KHUNG XE & 10 SLOT:
+   * Khung xe , 10 ô slot hàng ngang, đánh số 1→10. càng lắp nhiều thẻ thì xe càng hiện rõ đến thẻ số 10 thì xe hiện rõ hoàn chỉnh 
+   , hình ảnh xe hoàn chỉnh tùy theo mức mã lực (<=200 , 350 , ,500 , 750 , 1000+) có 5 hình ảnh xe khác nhau pixel art
+   * Slot trống: Viền nét đứt nhấp nháy (dashed + opacity animation).
+   * Drop thẻ: "Snap" hút vào ô (spring 0.2s), flash trắng, SFX "clank".
+   * Combo: 2 thẻ cạnh nhau tạo combo → glow vàng pulse + đường SVG sáng nối + tooltip combo name.
+   * Heat Bar (thanh ngang trên khung xe):
+     - 0–50%: Gradient xanh lá → xanh dương.
+     - 51–79%: Xanh dương → vàng cam.
+     - 80–99%: Cam → đỏ + shake micro-animation + SFX tích tắc nhanh dần.
+     - 100%: Đỏ rực + CSS fire animation cháy trên thanh.
+   * Preview: Hover thẻ lên slot → chỉ số thay đổi nhảy lên (xanh = tốt, đỏ = nguy hiểm).
+
+   C) BÊN Trên- chính giữa ( giống joker của balatro) — CREW SLOTS:
+   * 1–5 ô ở trên cùng  (tùy crew_slots đã mở khóa).
+   * Slot khóa: Biểu tượng ổ khóa + chain, tooltip "Cần X Tech Points".
+   * Crew gắn:  thẻ crew + hiệu ứng đặc biệt nếu có. Legendary có particle aura. có tooltip mô tả hiệu ứng khi hover.
+
+   D) NÚT HÀNH ĐỘNG:
+   * "KHỞI ĐỘNG": Glow pulse khi đủ 10 thẻ. Xám khi chưa đủ.
+   * "XÓA TẤT CẢ": Reset slot.
+
+────────────────────────────
+17.5. CHẠY THỬ XE — SEQUENTIAL TEST RUN (ANIMATION CHÍNH ~15–25s)
+────────────────────────────
+
+Phase 1 — Khởi động (2s):
+   * Nút "KHỞI ĐỘNG" nổ tung (explode animation).
+   * Khung xe rung nhẹ (vibrate), SFX "rrr-rrr-VROOM".
+   * Background tối 30%, spotlight chiếu Slot 1.
+
+Phase 2 — Quét Slot 1→10 (mỗi slot ~1–1.5s): 
+   * Spotlight di chuyển smooth sang slot tiếp theo.
+   * Thẻ đang quét: Glow rực + scale 1.2x.
+   * 3 chỉ số bay ra (pop-up text, mờ dần):
+     "+45 Power" (xanh lục), "+23 Heat" (đỏ cam), "+10 Stability" (xanh dương).
+   * SFX chung cho tất cả các thẻ: tiếng nổ máy cao dần lên (vd: giống kiểu kill streak trong call of duty) nhưng mà là tiếng nổ máy
+   * Heat Bar transition smooth (0.5s). Vượt 80% → rung lắc liên tục.
+   * Power Counter nhảy số (typewriter tăng dần).
+   * Combo: Tia sáng nối 2 thẻ (lightning arc), text combo bay ra giữa, SFX power-up.
+
+Phase 3 — Kết quả (3s):
+
+   THÀNH CÔNG:
+   * 10 thẻ glow xanh lục đồng loạt.
+   * Text "SUCCESS ✓" bounce vào (scale 0→1), màu vàng gold.
+   * Bảng thưởng slide lên: +Gold, +EXP, Profit.
+
+   NỔ MÁY:
+   * Slot gây nổ chuyển đỏ rực + shake dữ dội.
+   * Heat Bar vỡ tung (shatter animation).
+   * Camera shake mạnh (±10px random, 1s).
+   * Flash trắng 0.1s → khói đen bốc lên → tia lửa bắn ra.
+   * SFX "BOOM" bass + kim loại vỡ.
+   * Text "💥 NỔ MÁY" stamp đỏ (phóng to→thu nhỏ, xoay nhẹ).
+   * NPC xuất hiện: Mặt tức giận, "Xe tôi!!!", bỏ đi.
+
+   THIẾU POWER:
+   * Xe nhấc lên rồi rơi (translateY animation).
+   * Text "THIẾU SỨC MẠNH" xám nhạt.
+   * SFX "pụt-pụt-pụt..." máy chết.
+   * NPC lắc đầu thất vọng.
+
+────────────────────────────
+17.6. SHOP — CỬA HÀNG
+────────────────────────────
+
+Cơ chế mở tự động: Xuất hiện bằng cách trượt từ trên xuống (slide-down) sau khi "Kết Thúc Ngày" và chạy Event (nếu có). Khi ấn "Trở lại Garage", Shop sẽ biến mất về trên và vòng lặp ngày chơi tiếp tục.
+
+Layout:
+   * Kệ gỗ mộc 6 slot thẻ + 1 slot Crew.
+   * Bảng giá neon "SHOP ĐỒ CŨ" trên kệ.
+   * Mỗi thẻ có price tag treo dao động nhẹ. Bundle (cụm thẻ) có dây ruy-băng đỏ ràng chung.
+   * Pack: Hộp loot box dạng toolkit vali, rung nhẹ (tease animation). Nếu là x2 Pack Deal, hộp sẽ to hơn và tỏa hào quang vàng lấp lánh cực hiếm.
+
+Mua thẻ lẻ:
+   * Click thẻ → Modal preview (slide-up): Chi tiết + "MUA" + "HỦY".
+   * MUA: Thẻ bay từ kệ vào túi (translate + scale nhỏ dần), SFX "ka-ching". Gold đếm ngược.
+   * Kx hông đủ: Nút MUA rung + đỏ, tooltip "Không đủ Gold!".
+
+Mở Pack (animation nhấn mạnh — Loot Box Toolkit Vali):
+   1. Click vali Pack → Zoom lên giữa màn hình, vali rung lắc trái-phải (translateX ±5px, 0.5s).
+   2. 2 khóa bật "CLACK-CLACK" (SFX kim loại). Nắp vali trượt lên và mờ dần (translateY -100% + opacity 0, animation 1.5s), ánh sáng rực rỡ chiếu ra từ bên trong (gradient glow trắng-vàng).
+   3. 5 thẻ bay lên từ trong vali (fan-spread, translateY từ dưới lên), úp mặt xuống, xếp hàng.
+   4. Lật từng thẻ (click hoặc auto 0.8s): Thu nhỏ scaleX(0) → đổi ảnh mặt sau sang mặt trước → phóng to scaleX(1) (flip 2D, 0.4s). Viền sáng theo rarity:
+      - Common: Xám nhẹ, không hiệu ứng.
+      - Uncommon: Viền xanh lá glow.
+      - Rare: Xanh dương + sparkle particles.
+      - Epic: Tím + lightning arc + SFX "wow".
+      - Legendary: NỔ TÍM VÀNG (explosion particles) + camera shake + SFX "LEGENDARY!" voice + nhạc fanfare + thẻ hover xoay liên tục.
+   5. "Nhận tất cả" → 5 thẻ bay vào kho (stagger 0.2s/thẻ), nắp vali trượt xuống đóng lại (translateY 0 + opacity 1).
+
+Mở x2 Pack Deal (variant đặc biệt):
+   * Vali to hơn 1.3x, tỏa hào quang vàng lấp lánh liên tục từ đầu.
+   * Bật khóa 2 lần → Nắp trượt lên → 10 thẻ bay ra (2 hàng x 5), hiệu ứng "DOUBLE DEAL!" text flash vàng giữa màn hình.
+   * Lật thẻ và nhận thẻ tương tự Pack thường, nhưng counter hiển thị "5/10" → "10/10".
+
+────────────────────────────
+17.7. SỰ KIỆN NGẪU NHIÊN (EVENT POP-UP)
+────────────────────────────
+
+   * Tay Buôn Lậu: Đèn tắt phụt (fade black). Gõ cửa 3 tiếng. Đèn pin từ khe cửa. NPC mặt hiện dần. 2 nút: "GIAO DỊCH" (vàng) / "ĐUỔI ĐI" (xám).
+   * Đua Ngầm: TV sáng lên (CRT scanline), news ticker chạy ngang.
+   * Boss Kim Jong Un: Nhạc quốc ca NK 8-bit. Background đỏ. Cờ NK phấp phới animation.
+
+────────────────────────────
+17.8. TỔNG KẾT NGÀY (END DAY)
+────────────────────────────
+
+   * Overlay sunset gradient (cam→tím→đen).
+   * Bảng tổng kết (slide-down + bounce): Gold counter animation, Uy tín bar, tick/X cho mỗi khách, EXP bar fill. Level Up → flash vàng + confetti.
+   * SFX nhạc jazz "closing shop".
+   * Nút "NGÀY MỚI →" pulse.
+   * Shadow biến mất → đèn tắt → fade black → Ngày mới.
+
+────────────────────────────
+17.9. MÀN HÌNH ENDING
+────────────────────────────
+
+   * Good Ending: Montage slideshow gara, credit roll, nhạc acoustic ấm.
+   * Wasted Potential: Gara sụp đổ (crumble), neon tắt, text typewriter trắng trên nền đen.
+   * Invictus: Lửa vàng full screen, text "INVICTUS" khắc thép chảy, nhạc epic orchestra.
+   * The Missing Percent: Lửa tắt dần, text "99%" mờ nhạt, nhạc buồn.
+
+────────────────────────────
+17.10. CHI TIẾT ĐỘC ĐÁO KHÁC
+────────────────────────────
+
+
+   B) BIỂN NEON PHẢN ỨNG UY TÍN:
+   * 80–100 HP: Sáng rực xanh cyan.
+   * 50–79: Nhấp nháy, mất 1–2 chữ ("S_-GA_AGE").
+   * 20–49: Nhấp nháy mạnh, tiếng "bzzzt" điện chập.
+   * 0–19: Gần tắt hẳn, khói bốc ra.
+
+   C) HIỆU ỨNG THẺ THEO RARITY:
+   * Common: Tĩnh, giấy nhăn nheo, góc gấp.
+   * Uncommon: Viền glow nhẹ khi hover.
+   * Rare: Holographic (ánh cầu vồng di chuyển theo chuột — CSS gradient shift).
+   * Epic: Holographic + particle mist + micro-animation trên illust (dầu chảy, khói, lửa).
+   * Legendary: Full holographic + golden aura + illust parallax layers + SFX bass khi hover + tự xoay nhẹ idle.
+
+   D) TOAST NOTIFICATIONS:
+   * Xanh lục: Thành công ("+250 Gold!").
+   * Vàng cam: Cảnh báo ("Heat cao!").
+   * Đỏ: Lỗi ("Nổ máy!").
+   * Tím: Đặc biệt ("Achievement mới!").
+   * Slide-in từ phải, tự ẩn sau 3s.
+
+   E) CURSOR TÙY CHỈNH:
+   * Sảnh: Chuột dạng pixel art.
+   * Workshop: Hình cờ lê.
+   * Kéo thẻ: Bàn tay nắm (grab).
+   * Nút nguy hiểm: Đổi đỏ.
+
+   F) LOADING SCREEN:
+   * Cờ lê vặn ốc vít animation (xoay ngược chiều kim đồng hồ, ốc vít xoáy dần ra). Load xong → ốc rớt ra rơi xuống (translateY + bounce nhẹ), SFX "cạch" kim loại.
+   * Text random: "Đang xiết bu-lông...", "Đang kiểm tra dầu máy...", "Đang siết ốc cuối cùng..."
+
+   G) RESPONSIVE:
+   * Desktop-first, hỗ trợ tablet (≥768px).
+   * Mobile: Kho thẻ → bottom drawer (swipe up), 10 slot scrollable ngang, touch drag-drop.
+
+   H) KEYBOARD SHORTCUTS:
+   * [Space]: Chạy thử / Bỏ qua animation.
+   * [1–0]: Chọn nhanh slot.
+   * [R]: Reset slot.
+   * [Esc]: Quay lại / Đóng modal.
+   * [Enter]: Xác nhận.
+
+
+═══════════════════════════════════════════════════════════════
+18. THIẾT KẾ CƠ SỞ DỮ LIỆU
+═══════════════════════════════════════════════════════════════
+
+Kiến trúc: Next.js (App Router) + Prisma ORM + MySQL (MariaDB adapter) + JWT Auth.
+Tổng: 16 bảng chia 3 nhóm.
+
+───────────────────────────────────────
 NHÓM A: DỮ LIỆU NGƯỜI DÙNG (USER DATA)
-Lưu trữ trạng thái, tiến trình sinh tồn và tài sản thay đổi liên tục của người chơi.
+───────────────────────────────────────
+
 1. Bảng users (Hồ sơ & Tiến trình sinh tồn)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID duy nhất của người chơi.
-	username
-	VARCHAR(50)
-	
+   * id (INT, PK, AUTO_INCREMENT) — ID người chơi.
+   * username (VARCHAR 50, UNIQUE) — Tên đăng nhập.
+   * password (VARCHAR 255) — Mật khẩu (bcrypt hash).
+   * gold (BIGINT, default 500) — Tiền vàng hiện tại.
+   * level (INT, default 1) — Cấp độ gara.
+   * exp (BIGINT, default 0) — Điểm kinh nghiệm.
+   * current_day (INT, default 1) — Ngày hiện tại (1–50).
+   * garage_health (INT, default 100) — Uy tín (tối đa 100, 0 = Game Over).
+   * tech_points (BIGINT, default 0) — Tech Points (nâng cấp crew slot).
+   * crew_slots (INT, default 1) — Số slot crew (1–5).
+   * is_final_round (BOOLEAN, default false) — Đang ở Final Round?
+   * total_explosions (INT, default 0) — Tổng lần nổ máy (cho achievement).
+   * smuggler_penalty (FLOAT, default 0) — Phạt Gold từ buôn lậu.
+   * has_defeated_ep (BOOLEAN, default false) — Đã thắng Đảo Chủ EP?
+   * shop_tax_modifier (FLOAT, default 1.0) — Hệ số thuế shop.
+   * shop_tax_expires_at (INT, default 0) — Ngày hết hạn thuế.
+   * is_in_north_korea (BOOLEAN, default false) — Đang ở Triều Tiên?
+   * north_korea_day_count (INT, default 0) — Số ngày ở NK.
+   * has_kim_buff (BOOLEAN, default false) — Có buff Kim (x2-x3 Gold)?
+   * has_underworld_buff (BOOLEAN, default false) — Ám sát Kim thành công (+50% lợi nhuận)?
+   * last_smuggler_buy_day (INT, default 0) — Ngày cuối mua Smuggler.
+   * is_kim_assassinated (BOOLEAN, default false) — Kim đã bị ám sát?
+   * has_defeated_donald_trump (BOOLEAN, default false) — Thắng Donald Trump?
+   * has_moscow_buff (BOOLEAN, default false) — Buff Moskva (+20% Power)?
+   * moscow_buff_day (INT, default 0) — Ngày buff Moscow.
+   * active_perk_code (VARCHAR 50, nullable) — Perk đang dùng.
+   * total_shop_spent (BIGINT, default 0) — Tổng Gold đã tiêu tại Shop.
+   * created_at (TIMESTAMP) — Ngày tạo.
+   * updated_at (TIMESTAMP) — Ngày cập nhật.
 
-	Tên đăng nhập.
-	password
-	VARCHAR(255)
-	
+2. Bảng user_inventory (Kho đồ cá nhân)
+   * id (INT, PK) — ID bản ghi.
+   * user_id (INT, FK → users) — ID người chơi.
+   * card_id (INT, FK → cards) — ID thẻ bài.
+   * quantity (INT, default 1) — Số lượng thẻ sở hữu.
+   * UNIQUE(user_id, card_id).
 
-	Mật khẩu (mã hóa).
-	gold
-	BIGINT
-	
+3. Bảng daily_quests (Khách hàng & Shadow mỗi ngày)
+   * id (INT, PK) — ID bản ghi.
+   * user_id (INT, FK → users) — ID người chơi.
+   * day_number (INT) — Ngày thứ mấy.
+   * is_boss (BOOLEAN, default false) — Là Boss?
+   * boss_config_id (INT, FK → boss_configs, nullable) — ID Boss config.
+   * required_power (INT) — Yêu cầu mã lực.
+   * reward_gold (INT) — Tiền thưởng.
+   * customer_budget (INT, default 0) — Ngân sách khách.
+   * status (ENUM: PENDING, SUCCESS, FAILED) — Trạng thái.
 
-	Tiền vàng hiện tại.
-	level
-	INT
-	
+4. Bảng user_active_events (Sự kiện đang áp dụng)
+   * id (INT, PK) — ID bản ghi.
+   * user_id (INT, FK → users) — ID người chơi.
+   * event_id (INT, FK → game_events) — ID sự kiện.
+   * is_accepted (BOOLEAN, default false) — Chấp nhận sự kiện?
+   * remaining_turns (INT) — Số ngày còn lại.
 
-	Cấp độ gara.
-	exp
-	BIGINT
-	
+5. Bảng user_endings (Bộ sưu tập Kết cục)
+   * id (INT, PK) — ID bản ghi.
+   * user_id (INT, FK → users) — ID người chơi.
+   * ending_id (INT, FK → endings) — ID Ending.
+   * achieved_at (TIMESTAMP) — Thời gian đạt.
+   * UNIQUE(user_id, ending_id).
 
-	Điểm kinh nghiệm tích lũy.
-	current_day
-	INT
-	
+6. Bảng user_achievements (Thành tựu đã đạt)
+   * id (INT, PK) — ID bản ghi.
+   * user_id (INT, FK → users) — ID người chơi.
+   * achievement_id (INT, FK → achievements) — ID thành tựu.
+   * achieved_at (TIMESTAMP) — Thời gian đạt.
+   * UNIQUE(user_id, achievement_id).
 
-	Ngày hiện tại của người chơi trong vòng lặp (1 - 50).
-	garage_health
-	INT
-	
-
-	Thanh Uy Tín (Tối đa 100). Tụt về 0 sẽ Game Over (Wasted Potential).
-	tech_points
-	BIGINT
-	
-
-	Tiền tệ vĩnh viễn (Roguelite currency) dùng nâng cấp gara.
-	crew_slots
-	INT
-	
-
-	Số lượng slot thẻ Crew tối đa (1 đến 5).
-	is_final_round
-	BOOLEAN
-	
-
-	Xác định người chơi có đang ở vòng Final Boss hay không.
-	2. Bảng user_inventory (Kho đồ cá nhân)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID bản ghi.
-	user_id
-	INT
-	FK
-	ID người chơi (Liên kết users).
-	card_id
-	INT
-	FK
-	ID thẻ bài (Liên kết cards).
-	quantity
-	INT
-	
-
-	Số lượng thẻ đang sở hữu.
-	3. Bảng daily_quests (Khách hàng & Shadow mỗi ngày)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID bản ghi.
-	user_id
-	INT
-	FK
-	ID người chơi.
-	day_number
-	INT
-	
-
-	Quest thuộc Ngày thứ mấy của người chơi.
-	is_boss
-	BOOLEAN
-	
-
-	Xác định Shadow này là Boss (True) hay khách thường (False).
-	required_power
-	INT
-	
-
-	Yêu cầu mã lực của đơn hàng.
-	reward_gold
-	INT
-	
-
-	Tiền thưởng nếu hoàn thành.
-	status
-	ENUM
-	
-
-	Trạng thái: 'PENDING', 'SUCCESS', 'FAILED'.
-	4. Bảng user_active_events (Sự kiện đang áp dụng)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID bản ghi.
-	user_id
-	INT
-	FK
-	ID người chơi.
-	event_id
-	INT
-	FK
-	ID sự kiện (Liên kết game_events).
-	is_accepted
-	BOOLEAN
-	
-
-	Chấp nhận sự kiện (Dành cho loại CHOICE).
-	remaining_turns
-	INT
-	
-
-	Số ngày/lượt còn lại của sự kiện.
-	5. Bảng user_endings (Bộ sưu tập Kết cục)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID bản ghi.
-	user_id
-	INT
-	FK
-	ID người chơi.
-	ending_id
-	INT
-	FK
-	ID của Ending người chơi đã đạt được (Liên kết endings).
-	achieved_at
-	TIMESTAMP
-	
-
-	Thời gian đạt được Ending này.
-	________________
-
-
+───────────────────────────────────────
 NHÓM B: DỮ LIỆU TĨNH & CẤU HÌNH (SYSTEM DATA)
-Bách khoa toàn thư của game, dữ liệu cố định do Admin thiết lập.
-6. Bảng cards (Danh mục thẻ bài gốc)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID thẻ bài.
-	name
-	VARCHAR(100)
-	
+───────────────────────────────────────
 
-	Tên thẻ bài.
-	type
-	ENUM
-	
+7. Bảng cards (Danh mục thẻ bài — ~201 thẻ)
+   * id (INT, PK) — ID thẻ.
+   * name (VARCHAR 100) — Tên thẻ.
+   * type (ENUM: ENGINE, TURBO, EXHAUST, COOLING, FILTER, FUEL, SUSPENSION, TIRE, NITROUS, TOOL, CREW) — Loại thẻ.
+   * rarity (INT) — Độ hiếm (1–5 sao).
+   * stat_power (INT, default 0) — Chỉ số Power.
+   * stat_heat (INT, default 0) — Chỉ số Heat.
+   * stat_stability (INT, default 0) — Chỉ số Stability.
+   * image_url (VARCHAR 255, nullable) — Ảnh minh họa.
+   * description (TEXT, nullable) — Mô tả thẻ.
+   * cost (INT, default 100) — Giá mua trong shop.
+   * unlock_type (VARCHAR 20, nullable) — Cách mở khóa (SHOP, QUEST, ACHIEVEMENT, null).
 
-	Loại thẻ ('ENGINE', 'EXHAUST', 'COOLING', 'CREW', 'TOOL').
-	rarity
-	INT
-	
+8. Bảng card_effects (Hiệu ứng đặc biệt thẻ 4-5★)
+   * id (INT, PK) — ID bản ghi.
+   * card_id (INT, FK → cards) — ID thẻ.
+   * effect_type (ENUM: BUFF, DEBUFF, UTILITY) — Loại hiệu ứng.
+   * trigger_condition (ENUM: PASSIVE, ON_TEST, ADJACENT) — Điều kiện kích hoạt.
+   * target_stat (VARCHAR 50) — Chỉ số bị tác động (POWER, HEAT, STABILITY, GOLD, HEAT_STABILITY_SWAP).
+   * effect_value (FLOAT) — Giá trị (VD: 2.0 = x2, -15 = trừ 15, 25 = +25).
+   * description (TEXT, nullable) — Mô tả hiệu ứng.
 
-	Độ hiếm (1 đến 5 sao).
-	stat_power
-	INT
-	
+9. Bảng card_combos (Phản ứng dây chuyền — 25 combo)
+   * id (INT, PK) — ID combo.
+   * card_id_1 (INT, FK → cards) — ID thẻ 1.
+   * card_id_2 (INT, FK → cards) — ID thẻ 2.
+   * effect_type (VARCHAR 50) — Loại tương tác (VD: MULTIPLY_POWER).
+   * effect_value (FLOAT) — Giá trị.
+   * name (VARCHAR 100) — Tên combo.
+   * description (TEXT, nullable) — Mô tả combo.
 
-	Chỉ số sức mạnh (mã lực).
-	stat_heat
-	INT
-	
+10. Bảng boss_configs (10 Boss)
+   * id (INT, PK) — ID Boss.
+   * name (VARCHAR 100) — Tên Boss.
+   * description (TEXT, nullable) — Lời thoại.
+   * special_condition (VARCHAR 50, nullable) — Mã điều kiện đặc biệt.
+   * required_power (INT) — Mã lực yêu cầu.
+   * reward_gold (INT, default 1000) — Gold thưởng.
+   * image_url (VARCHAR 255, nullable) — Ảnh Boss.
 
-	Chỉ số làm nóng máy.
-	stat_stability
-	INT
-	
+11. Bảng game_events (11 sự kiện ngẫu nhiên)
+   * id (INT, PK) — ID sự kiện.
+   * name (VARCHAR 100) — Tên sự kiện.
+   * description (TEXT, nullable) — Mô tả.
+   * type (ENUM: PASSIVE, CHOICE) — Loại sự kiện.
+   * target_attribute (VARCHAR 50, nullable) — Thuộc tính tác động.
+   * effect_value (FLOAT, default 0) — Hệ số/giá trị.
+   * probability (FLOAT, default 0.1) — Xác suất (0.0–1.0).
 
-	Chỉ số độ ổn định/bù trừ nhiệt.
-	image_url
-	VARCHAR(255)
-	
+12. Bảng endings (9 kết cục)
+   * id (INT, PK) — ID kết cục.
+   * name (VARCHAR 100) — Tên (VD: "Invictus").
+   * type (ENUM: STANDARD, PERFECT, FINAL, BOSS_HIDDEN, BAD) — Loại.
+   * description (TEXT, nullable) — Điều kiện + text kết phim.
 
-	Đường dẫn ảnh minh họa.
-	description
-	TEXT
-	
+───────────────────────────────────────
+NHÓM C: GAME RULES (LOGIC GAME)
+───────────────────────────────────────
 
-	Mô tả chung của thẻ.
-	7. Bảng card_effects (Hiệu ứng phụ/Đặc biệt của thẻ 4-5 sao)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID bản ghi.
-	card_id
-	INT
-	FK
-	ID thẻ bài sở hữu hiệu ứng (Liên kết cards).
-	effect_type
-	ENUM
-	
+13. Bảng quest_configs (Công thức sinh khách random)
+   * id (INT, PK) — ID cấu hình.
+   * min_level / max_level (INT) — Phạm vi cấp độ.
+   * min_power_req / max_power_req (INT) — Random yêu cầu mã lực.
+   * min_gold_reward / max_gold_reward (INT) — Random tiền thưởng.
+   * min_customers / max_customers (INT) — Số lượng khách.
 
-	Loại hiệu ứng ('BUFF', 'DEBUFF', 'UTILITY').
-	trigger_condition
-	ENUM
-	
+14. Bảng level_rewards (Quà thăng cấp)
+   * id (INT, PK) — ID bản ghi.
+   * level (INT) — Mốc cấp độ.
+   * card_id (INT, FK → cards) — ID thẻ được tặng.
+   * quantity (INT, default 1) — Số lượng.
 
-	Điều kiện kích hoạt ('PASSIVE', 'ON_TEST', 'ADJACENT').
-	target_stat
-	VARCHAR(50)
-	
+15. Bảng achievements (5 thành tựu ẩn)
+   * id (INT, PK) — ID thành tựu.
+   * code (VARCHAR 50, UNIQUE) — Mã code.
+   * name (VARCHAR 100) — Tên thành tựu.
+   * description (TEXT, nullable) — Mô tả.
+   * condition_type (VARCHAR 50) — Loại điều kiện.
+   * condition_value (INT, default 0) — Giá trị điều kiện.
+   * reward_crew_id (INT, FK → cards, nullable) — Crew thưởng.
+   * is_hidden (BOOLEAN, default false) — Ẩn?
 
-	Chỉ số bị tác động ('POWER', 'HEAT', 'STABILITY').
-	effect_value
-	FLOAT
-	
+16. Bảng starter_perks (6 đặc quyền đầu trận)
+   * id (INT, PK) — ID perk.
+   * code (VARCHAR 50, UNIQUE) — Mã code.
+   * name (VARCHAR 100) — Tên perk.
+   * description (TEXT, nullable) — Mô tả.
+   * effect_type (VARCHAR 50) — Loại hiệu ứng.
+   * effect_value (FLOAT) — Giá trị.
+   * unlock_condition (VARCHAR 100, nullable) — Điều kiện mở khóa.
+   * is_default (BOOLEAN, default false) — Mặc định?
 
-	Giá trị thực thi (VD: 2.0 = x2, -15 = trừ 15 nhiệt).
-	description
-	TEXT
-	
+═══════════════════════════════════════════════════════════════
+19. KIẾN TRÚC KỸ THUẬT
+═══════════════════════════════════════════════════════════════
 
-	Mô tả hiệu ứng (hiển thị trên thẻ).
-	8. Bảng card_combos (Phản ứng dây chuyền)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID combo.
-	card_id_1
-	INT
-	FK
-	ID thẻ thứ nhất.
-	card_id_2
-	INT
-	FK
-	ID thẻ thứ hai đặt liền kề.
-	effect_type
-	VARCHAR(50)
-	
+19.1. Tech Stack
+   * Frontend: Next.js (App Router)
+   * Backend: Next.js API Routes (18 endpoints)
+   * Database: MySQL (MariaDB adapter)
+   * ORM: Prisma
+   * Auth: JWT (Bearer token), bcrypt password hashing
 
-	Loại tương tác (VD: 'MULTIPLY_POWER').
-	effect_value
-	FLOAT
-	
+19.2. API Endpoints — 34 Endpoints (26 Routes)
+   * POST /api/auth/register — Đăng ký tài khoản.
+   * POST /api/auth/login — Đăng nhập.
+   * GET /api/user/profile — Thông tin user.
+   * GET /api/user/inventory — Kho đồ (tất cả thẻ).
+   * GET /api/user/crew — Crew đang sở hữu + crew slots.
+   * GET /api/cards — Danh sách thẻ (filter type/rarity).
+   * GET /api/cards/[id] — Chi tiết thẻ (effects + combos).
+   * GET /api/cards/combos — Danh sách 25 combo (filter cardId).
+   * GET /api/quest/daily — Lấy quest hàng ngày.
+   * POST /api/quest/daily — Sinh quest mới.
+   * POST /api/quest/[id]/complete — Hoàn thành quest.
+   * GET /api/shop/items — Xem shop (6 slot + 1 crew).
+   * POST /api/shop/items — Mua thẻ/pack.
+   * POST /api/workshop/test — Chạy thử xe (core gameplay).
+   * GET /api/boss/configs — Danh sách/Chi tiết Boss.
+   * GET /api/game/end-day — Xem tổng kết ngày.
+   * POST /api/game/end-day — Kết thúc ngày.
+   * POST /api/game/upgrade — Nâng cấp crew slot.
+   * GET /api/game/final-round — Xem trạng thái Final Round.
+   * POST /api/game/final-round — Bắt đầu Final Round.
+   * POST /api/game/reset — Reset game.
+   * GET /api/game/perks — Danh sách starter perks.
+   * POST /api/game/perks — Chọn perk cho vòng chơi.
+   * GET /api/game/stats — Thống kê tổng hợp (quest/boss/collection).
+   * GET /api/game/leaderboard — Bảng xếp hạng (sort level/gold/day).
+   * GET /api/game/endings — Bộ sưu tập kết cục (ẩn nếu chưa unlock).
+   * GET /api/game/config — Game constants & configs (public).
+   * GET /api/events/random — Roll sự kiện ngẫu nhiên.
+   * POST /api/events/random — Phản hồi sự kiện (chấp nhận/từ chối).
+   * GET /api/events/smuggler — Xem Smuggler shop.
+   * POST /api/events/smuggler — Mua/Bán tại Smuggler.
+   * GET /api/achievements — Xem achievements đã đạt.
+   * POST /api/achievements — Kiểm tra & mở khóa achievement.
+   * POST /api/achievements/secret — Easter egg (midnight clock).
 
-	Giá trị tương tác.
-	9. Bảng boss_configs (Cấu hình Boss 5 ngày/lần)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID Boss.
-	name
-	VARCHAR(100)
-	
+═══════════════════════════════════════════════════════════════
+20. HẰNG SỐ GAME (GAME CONSTANTS)
+═══════════════════════════════════════════════════════════════
 
-	Tên Boss.
-	description
-	TEXT
-	
-
-	Lời thoại hoặc mô tả Boss.
-	special_condition
-	VARCHAR(50)
-	
-
-	Mã điều kiện ngặt nghèo (VD: 'NO_EXHAUST', 'MAX_HEAT_50').
-	required_power
-	INT
-	
-
-	Mã lực yêu cầu để thắng Boss.
-	10. Bảng game_events (Danh sách sự kiện ngẫu nhiên)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID sự kiện.
-	name
-	VARCHAR(100)
-	
-
-	Tên sự kiện.
-	description
-	TEXT
-	
-
-	Mô tả hậu quả hoặc bối cảnh.
-	type
-	ENUM
-	
-
-	Loại sự kiện ('PASSIVE', 'CHOICE').
-	target_attribute
-	VARCHAR(50)
-	
-
-	Thuộc tính bị tác động.
-	effect_value
-	FLOAT
-	
-
-	Hệ số hoặc giá trị thay đổi.
-	probability
-	FLOAT
-	
-
-	Xác suất xuất hiện (0.0 đến 1.0).
-	11. Bảng endings (Danh mục Đa Kết Cục)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID kết cục.
-	name
-	VARCHAR(100)
-	
-
-	Tên kết cục (VD: "Invictus").
-	type
-	ENUM
-	
-
-	Loại ('STANDARD', 'PERFECT', 'FINAL', 'BOSS_HIDDEN').
-	description
-	TEXT
-	
-
-	Điều kiện đạt được và text kết phim.
-	________________
-
-
-NHÓM C: LOGIC GAME (GAME RULES)
-Bộ công thức sinh tự động nội dung, quà tặng.
-12. Bảng quest_configs (Công thức sinh khách random)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID cấu hình.
-	min_level
-	INT
-	
-
-	Cấp độ tối thiểu áp dụng.
-	max_level
-	INT
-	
-
-	Cấp độ tối đa áp dụng.
-	min_power_req
-	INT
-	
-
-	Random yêu cầu mã lực (Min).
-	max_power_req
-	INT
-	
-
-	Random yêu cầu mã lực (Max).
-	min_gold_reward
-	INT
-	
-
-	Random tiền thưởng (Min).
-	max_gold_reward
-	INT
-	
-
-	Random tiền thưởng (Max).
-	13. Bảng level_rewards (Quà thăng cấp cố định)
-Column Name
-	Data Type
-	Khóa
-	Description
-	id
-	INT (AUTO_INCREMENT)
-	PK
-	ID bản ghi.
-	level
-	INT
-	
-
-	Mốc cấp độ nhận quà.
-	card_id
-	INT
-	FK
-	ID thẻ bài được tặng.
-	quantity
-	INT
-	
-
-	Số lượng thẻ.
+   MAX_DAY = 50                    // Số ngày chơi
+   MAX_GARAGE_HEALTH = 100         // Uy tín tối đa
+   MAX_CREW_SLOTS = 5              // Tối đa crew slots
+   SLOTS_PER_CAR = 10              // Số slot trên xe
+   HEAT_THRESHOLD = 100            // Ngưỡng nổ máy
+   BOSS_INTERVAL = 5               // Boss mỗi 5 ngày
+   FIXED_QUEST_DAYS = 5            // 5 ngày đầu quest cố định
+   FINAL_ROUND_BOSSES = 10         // Số boss Final Round
+   SHOP_UNLOCK_DAY = 2             // Shop mở Ngày 2
+   PACK_CARDS_COUNT = 5            // Số thẻ trong pack
+   PACK_CHANCE_IN_SHOP = 0.4       // 40% pack trong shop
+   SHOP_ITEMS_COUNT = 6            // Số slot shop
+   FAIL_HEALTH_PENALTY = 10        // -10 uy tín fail quest
+   BOSS_FAIL_HEALTH_PENALTY = 20   // -20 uy tín fail boss
+   SUCCESS_EXP = 100               // EXP thắng quest
+   BOSS_SUCCESS_EXP = 300          // EXP thắng boss
+   SUCCESS_HEALTH_BONUS = 1        // +1 uy tín thắng quest
+   BOSS_SUCCESS_HEALTH_BONUS = 5   // +5 uy tín thắng boss
+   TECH_POINTS_PER_DAY = 10        // Tech points mỗi ngày
+   CREW_SLOT_COSTS = [0, 50, 100, 200, 350]
+   DROP_RATES = { 1: 60%, 2: 20%, 3: 15%, 4: 3.5%, 5: 1.5% }
