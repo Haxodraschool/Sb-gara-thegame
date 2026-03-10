@@ -430,7 +430,7 @@ export default function LoginScreen() {
           <div
             className="absolute -inset-8 rounded-lg opacity-50 blur-lg"
             style={{
-              background: 'radial-gradient(ellipse, rgba(0,229,255,0.2) 0%, rgba(168,85,247,0.1) 50%, transparent 80%)',
+              background: 'radial-gradient(ellipse, rgba(255,45,85,0.25) 0%, rgba(0,229,255,0.15) 50%, transparent 80%)',
             }}
           />
 
@@ -439,41 +439,45 @@ export default function LoginScreen() {
             <NeonSpark />
           </div>
 
-          {/* "SB" - stable cyan + "GARAGE" - flickering */}
+          {/* "SB-" stable purple neon + "GARAGE" flickering cyan neon */}
           <div className="flex items-center justify-center gap-0 text-[clamp(3rem,8vw,7rem)] leading-none tracking-[0.15em]">
+            {/* "SB" — red neon, always on */}
             <span
               className="relative"
               style={{
-                color: '#00e5ff',
+                color: '#ff2d55',
                 textShadow: `
-                  0 0 8px rgba(0,229,255,0.9),
-                  0 0 20px rgba(0,229,255,0.6),
-                  0 0 40px rgba(0,229,255,0.3),
-                  0 0 80px rgba(0,229,255,0.15)
+                  0 0 8px rgba(255,45,85,0.9),
+                  0 0 20px rgba(255,45,85,0.7),
+                  0 0 40px rgba(255,45,85,0.4),
+                  0 0 80px rgba(255,45,85,0.2)
                 `,
+                WebkitTextStroke: '1px rgba(255,45,85,0.3)',
                 imageRendering: 'pixelated',
               }}
             >
               SB
             </span>
+            {/* "-" — vivid purple neon */}
             <span
-              className="mx-1"
+              className="relative mx-0"
               style={{
-                color: '#00e5ff',
-                textShadow: '0 0 8px rgba(0,229,255,0.9), 0 0 20px rgba(0,229,255,0.6)',
+                color: '#c026d3',
+                textShadow: `
+                  0 0 8px rgba(192,38,211,0.9),
+                  0 0 20px rgba(192,38,211,0.7),
+                  0 0 40px rgba(192,38,211,0.4),
+                  0 0 80px rgba(192,38,211,0.2)
+                `,
+                imageRendering: 'pixelated',
               }}
             >
               -
             </span>
-            {/* "GARAGE" - flickering */}
+            {/* "GARAGE" — cyan neon with flicker (outline always visible) */}
             <motion.span
               className="relative"
               animate={{
-                opacity: garageFlicker ? 1 : 0.08,
-              }}
-              transition={{ duration: 0.05 }}
-              style={{
-                color: garageFlicker ? '#00e5ff' : '#0a3a3d',
                 textShadow: garageFlicker
                   ? `
                     0 0 8px rgba(0,229,255,0.9),
@@ -481,7 +485,14 @@ export default function LoginScreen() {
                     0 0 40px rgba(0,229,255,0.3),
                     0 0 80px rgba(0,229,255,0.15)
                   `
-                  : 'none',
+                  : '0 0 2px rgba(0,229,255,0.05)',
+              }}
+              transition={{ duration: 0.05 }}
+              style={{
+                color: garageFlicker ? '#00e5ff' : '#0a2a30',
+                WebkitTextStroke: garageFlicker
+                  ? '0px transparent'
+                  : '1px rgba(0,229,255,0.25)',
                 imageRendering: 'pixelated',
               }}
             >
