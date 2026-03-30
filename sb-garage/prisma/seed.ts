@@ -710,7 +710,7 @@ async function main() {
 
   await Promise.all([
     prisma.bossConfig.create({
-      data: { name: 'Ông Hoàng Drift', description: '"Nghệ thuật Drift! Cấm dùng phuộc xịn (SUSPENSION ≥ 3★). Tổng Stability cuối cùng ≥ 150!"', specialCondition: 'DRIFT_KING_CHALLENGE', requiredPower: 400, rewardGold: 800 },
+      data: { name: 'Ông Hoàng Drift', description: '"Nghệ thuật Drift! Cấm dùng phuộc xịn (SUSPENSION ≥ 3★). Tổng Stability cuối cùng ≥ 150!"', specialCondition: 'DRIFT_KING_CHALLENGE', requiredPower: 400, rewardGold: 1200 },
     }),
     prisma.bossConfig.create({
       data: { name: 'Đảo chủ EP', description: '"Có đồng ý lên đảo của ta tham gia cuộc thi không?"', specialCondition: 'EP_ISLAND_CHOICE', requiredPower: 500, rewardGold: 2000 },

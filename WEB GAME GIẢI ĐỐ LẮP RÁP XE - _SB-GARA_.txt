@@ -1,4 +1,4 @@
-﻿TÊN ĐỀ TÀI: WEB GAME GIẢI ĐỐ LẮP RÁP XE - "SB-GARAGE"
+TÊN ĐỀ TÀI: WEB GAME GIẢI ĐỐ LẮP RÁP XE - "SB-GARAGE"
 
 ═══════════════════════════════════════════════════════════════
 1. LÝ DO CHỌN ĐỀ TÀI
@@ -161,7 +161,7 @@ Kết quả chạy thử:
 
 7.1. Danh sách Boss
 
-   1. Ông Hoàng Drift (Power ≥ 400, Gold 800)
+   1. Ông Hoàng Drift (Power ≥ 400, Gold 1200)
       Điều kiện: DRIFT_KING_CHALLENGE — Cấm SUSPENSION ≥ 3★, Slot chẵn +15% Power nhưng cooling giảm 50%, Stability cuối ≥ 150.
 
    2. Huyền Thoại F1 (Power ≥ 550, Gold 2200)
@@ -173,7 +173,7 @@ Kết quả chạy thử:
    4. Cô Gái Liều Lĩnh (Power ≥ 400, Gold 1800)
       Điều kiện: DAREDEVIL_DEATH_WISH — Slot 7: +15 Heat đột biến. Heat cuối ≥ 85% (nhưng < 100%).
 
-   5. Kẻ Bí Ẩn (Power ≥ 800, Gold 5000)
+   5. Kẻ Bí Ẩn (Power ≥ 800, Gold 5000) — Chỉ xuất hiện sau ngày 10.
       Không có điều kiện đặc biệt — Pure power check.
 
    6. Đảo Chủ EP (Power ≥ 500, Gold 2000)
@@ -435,6 +435,20 @@ Tương tác Shadow:
    * 2 nút: "NHẬN KÈO ✓" (xanh, pulse) và "TỪ CHỐI ✗" (đỏ, shake khi hover).
    * Nhận kèo: NPC đi vào xưởng (translateX sang phải) → Chuyển màn Workshop.
    * Từ chối: NPC tức giận bỏ đi ra cửa → Shadow biến mất.
+
+Giao diện KHO THẺ (OVERLAY INVENTORY):
+   * Kích hoạt: Click vào nút BỘ BÀI (góc trái dưới). Âm thanh SFX "xoạch" (tiếng lục lọi ngăn kéo sắt hoặc tiếng mở kẹp hồ sơ).
+   * Hiệu ứng xuất hiện: Giao diện kho thẻ bung ngang ra như một cuốn "Sổ Tay Kỹ Thuật" khổng lồ, che lấp toàn bộ màn hình sảnh chờ (overlay). Background sảnh chờ phía sau tự động bị làm mờ mạnh (blur 10px) và tối đi (darken 60%) để không phân tán sự chú ý, làm cho kho thẻ Pixel Art hiện lên sắc nét, tách biệt hẳn với hậu cảnh.
+   * Thiết kế Layout (Phong cách Pixel Art - Retro Cơ khí):
+      - Khung Viền UI: Bo viền lớn dạng viền thép tấm / nhôm xước (brushed aluminum), gắn đinh tán ở các góc. Ở viền có các vệt rỉ sét hoặc bụi dầu máy, style dieselpunk / cyberpunk mộc mạc.
+      - Thanh Tabs (Bộ Lọc): Dải nằm ngang trên cùng. Gồm các icon đồ họa Pixel thể hiện 11 loại thẻ (Động cơ, Turbo, Phuộc Ống Xả, Mâm Lốp, Crew...). Khi click đổi Tab, ô icon nhún sâu xuống (push button effect), đồng thời viền sáng rực màu neon kèm SFX "clack" cơ học đanh gọn.
+      - Lưới Hiển Thị Thẻ (Card Grid): Nằm ở trung tâm, với thanh cuộn dọc (scrollbar) rỉ sét. Nền phía sau là lưới thép gai đục lỗ vuông nhỏ. Các lá bài Pixel Art xếp đều tăm tắp. Ở góc mỗi thẻ sáng hiển thị bộ đếm số lượng sở hữu (vd: x1, x15, x99).
+      - Thẻ chưa sở hữu (Missing Slots): Thẻ nào chưa có trong game sẽ bị biến thành thẻ Placeholder, thôi thúc tính sưu tầm của người chơi.
+      - Tương tác với Thẻ: Di chuyển chuột (hover) vào thẻ sẽ làm thẻ phình to lên nhẹ (scale 1.05) và có quầng sáng (glow) đồng màu với độ hiếm (rarity: lam, lam nhạt, tím, cam hoàng kim).
+   * Bảng Chi Tiết (Side Panel Blueprint):
+      - Click chuột vào một thẻ đang sở hữu → Phân nửa bên phải màn hình (side panel) mở rộng ra, nền chuyển màu xanh biển nhạt có kẻ ô caro trắng (Mô phỏng bản thiết kế kỹ thuật Blueprint).
+      - Nội dung bảng Blueprint: Hình của thẻ phóng cực to: Tên thẻ, và hiển thị rõ 3 thanh chỉ số cơ bản (Power, Heat, Stability). Dưới cùng là mô tả tác dụng Combo nếu có.
+   * Nút Thoát: Có nút [X] siêu to khổng lồ dưới dạng hai cái cờ lê vắt chéo nhau (hoặc nút to bự ghi "QUAY LẠI GARA") nằm ở góc trên/dưới. Click vào thì màn hình kho thẻ trượt sập xuống và cảnh Sảnh Chờ phía sau sáng sủa, nét lại như cũ.
 
 ────────────────────────────
 17.4. XƯỞNG ĐỘ XE (WORKSHOP) — MÀN CHƠI CHÍNH
@@ -807,7 +821,7 @@ NHÓM C: GAME RULES (LOGIC GAME)
    * ORM: Prisma
    * Auth: JWT (Bearer token), bcrypt password hashing
 
-19.2. API Endpoints — 34 Endpoints (26 Routes)
+19.2. API Endpoints — 35 Endpoints (27 Routes)
    * POST /api/auth/register — Đăng ký tài khoản.
    * POST /api/auth/login — Đăng nhập.
    * GET /api/user/profile — Thông tin user.
@@ -842,6 +856,7 @@ NHÓM C: GAME RULES (LOGIC GAME)
    * GET /api/achievements — Xem achievements đã đạt.
    * POST /api/achievements — Kiểm tra & mở khóa achievement.
    * POST /api/achievements/secret — Easter egg (midnight clock).
+   * POST /api/dev/cheat — Công cụ hỗ trợ phát triển (Cheat tool).
 
 ═══════════════════════════════════════════════════════════════
 20. HẰNG SỐ GAME (GAME CONSTANTS)

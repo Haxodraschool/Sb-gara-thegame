@@ -5,6 +5,7 @@
 | Thư viện                              | Mục đích                                                                                      | Dùng ở công đoạn |
 | ------------------------------------- | --------------------------------------------------------------------------------------------- | ---------------- |
 | **phaser**                            | Game engine 2D: particle effects, sprite animation, canvas rendering (nổ, lửa, khói, tia sét) | 5, 6, 8, 9       |
+| **tailwindcss**                       | Utility-first CSS framework, styling nhanh, pixel art theme, responsive                       | 1–10             |
 | **framer-motion**                     | Animation chuyên nghiệp (slide, fade, spring, keyframes, layout animation)                    | 1–10             |
 | **@dnd-kit/core + @dnd-kit/sortable** | Drag & Drop thẻ bài vào slot xe                                                               | 4                |
 | **zustand**                           | State management nhẹ (Gold, inventory, quest, game state)                                     | 1–10             |

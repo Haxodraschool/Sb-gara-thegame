@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "@types/jimp": "^0.2.1",
+    "jimp": "^1.6.0"
+  }
+}

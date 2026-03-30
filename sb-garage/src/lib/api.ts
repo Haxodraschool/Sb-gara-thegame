@@ -169,3 +169,5 @@ export const api = {
       request<Record<string, unknown>>(`/boss/configs${id ? `?id=${id}` : ''}`),
   },
 };
+
+export const apiCall = request;

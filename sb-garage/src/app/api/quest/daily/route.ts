@@ -151,6 +151,11 @@ export async function POST(request: NextRequest) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         bosses = bosses.filter((b: any) => b.specialCondition !== 'KIM_JONG_UN');
       }
+      // Kẻ Bí Ẩn chỉ xuất hiện sau ngày 10
+      if (user.currentDay <= 10) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        bosses = bosses.filter((b: any) => b.name !== 'Kẻ Bí Ẩn');
+      }
       if (bosses.length > 0) {
         // Tăng tỉ lệ xuất hiện của Chủ Tịch Kim 20%
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useGameStore } from '@/stores/useGameStore';
@@ -8,20 +8,86 @@ import { useInterval } from 'react-use';
 import { format } from 'date-fns';
 import { useTheme } from 'next-themes';
 import * as Progress from '@radix-ui/react-progress';
+import { ShadowManager } from '@/components';
+import type { QuestData } from '@/components/ShadowCustomer/ShadowCustomer';
 
 /* ─── Inline SVG Icons ─── */
 const ClockIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10" />
-    <polyline points="12 6 12 12 16 14" />
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" className={className} shapeRendering="crispEdges">
+    {/* Outer border */}
+    <rect x="5" y="1" width="6" height="1" fill="currentColor" />
+    <rect x="5" y="14" width="6" height="1" fill="currentColor" />
+    <rect x="3" y="2" width="2" height="1" fill="currentColor" />
+    <rect x="11" y="2" width="2" height="1" fill="currentColor" />
+    <rect x="3" y="13" width="2" height="1" fill="currentColor" />
+    <rect x="11" y="13" width="2" height="1" fill="currentColor" />
+    <rect x="2" y="3" width="1" height="2" fill="currentColor" />
+    <rect x="13" y="3" width="1" height="2" fill="currentColor" />
+    <rect x="2" y="11" width="1" height="2" fill="currentColor" />
+    <rect x="13" y="11" width="1" height="2" fill="currentColor" />
+    <rect x="1" y="5" width="1" height="6" fill="currentColor" />
+    <rect x="14" y="5" width="1" height="6" fill="currentColor" />
+
+    {/* Inner background dim */}
+    <rect x="5" y="2" width="6" height="1" fill="currentColor" fillOpacity="0.2" />
+    <rect x="4" y="3" width="8" height="1" fill="currentColor" fillOpacity="0.2" />
+    <rect x="3" y="4" width="10" height="1" fill="currentColor" fillOpacity="0.2" />
+    <rect x="2" y="5" width="12" height="6" fill="currentColor" fillOpacity="0.2" />
+    <rect x="3" y="11" width="10" height="1" fill="currentColor" fillOpacity="0.2" />
+    <rect x="4" y="12" width="8" height="1" fill="currentColor" fillOpacity="0.2" />
+    <rect x="5" y="13" width="6" height="1" fill="currentColor" fillOpacity="0.2" />
+
+    {/* Clock Hands */}
+    <rect x="7" y="4" width="2" height="5" fill="currentColor" />
+    <rect x="7" y="7" width="5" height="2" fill="currentColor" />
   </svg>
 );
 
 const CoinIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <circle cx="12" cy="12" r="10" fill="#EAB308" />
-    <circle cx="12" cy="12" r="7" fill="#FDE047" />
-    <rect x="10" y="8" width="4" height="8" fill="#CA8A04" />
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" className={className} shapeRendering="crispEdges">
+    {/* Outer border dark #784800 */}
+    <rect x="5" y="1" width="6" height="1" fill="#784800" />
+    <rect x="5" y="14" width="6" height="1" fill="#784800" />
+    <rect x="3" y="2" width="2" height="1" fill="#784800" />
+    <rect x="11" y="2" width="2" height="1" fill="#784800" />
+    <rect x="3" y="13" width="2" height="1" fill="#784800" />
+    <rect x="11" y="13" width="2" height="1" fill="#784800" />
+    <rect x="2" y="3" width="1" height="2" fill="#784800" />
+    <rect x="13" y="3" width="1" height="2" fill="#784800" />
+    <rect x="2" y="11" width="1" height="2" fill="#784800" />
+    <rect x="13" y="11" width="1" height="2" fill="#784800" />
+    <rect x="1" y="5" width="1" height="6" fill="#784800" />
+    <rect x="14" y="5" width="1" height="6" fill="#784800" />
+
+    {/* Bright edge top left #fef08a */}
+    <rect x="5" y="2" width="6" height="1" fill="#fef08a" />
+    <rect x="3" y="3" width="2" height="1" fill="#fef08a" />
+    <rect x="3" y="4" width="1" height="1" fill="#fef08a" />
+    <rect x="2" y="5" width="1" height="6" fill="#fef08a" />
+    <rect x="4" y="3" width="1" height="1" fill="#fef08a" />
+
+    {/* Shadow edge bottom right #b45309 */}
+    <rect x="5" y="13" width="6" height="1" fill="#b45309" />
+    <rect x="11" y="12" width="2" height="1" fill="#b45309" />
+    <rect x="12" y="11" width="1" height="1" fill="#b45309" />
+    <rect x="13" y="5" width="1" height="6" fill="#b45309" />
+    <rect x="11" y="13" width="1" height="1" fill="#b45309" />
+    
+    <rect x="11" y="3" width="2" height="1" fill="#d97706" />
+    <rect x="13" y="4" width="1" height="1" fill="#d97706" />
+
+    {/* Gold Base #facc15 & mid #f59e0b */}
+    <rect x="4" y="4" width="8" height="8" fill="#facc15" />
+    <rect x="5" y="3" width="6" height="1" fill="#facc15" />
+    <rect x="5" y="12" width="6" height="1" fill="#f59e0b" />
+    <rect x="4" y="12" width="1" height="1" fill="#f59e0b" />
+    <rect x="11" y="12" width="1" height="1" fill="#f59e0b" />
+    <rect x="3" y="5" width="1" height="6" fill="#facc15" />
+    <rect x="12" y="5" width="1" height="6" fill="#f59e0b" />
+
+    {/* Inner detail (the slit/dash) */}
+    <rect x="7" y="5" width="2" height="6" fill="#d97706" />
+    <rect x="7" y="5" width="1" height="5" fill="#784800" />
   </svg>
 );
 
@@ -72,12 +138,53 @@ const SunIcon = ({ className }: { className?: string }) => (
 /* ─── Component ─── */
 export default function LobbyScreen() {
   const user = useGameStore((state) => state.user);
+  const token = useGameStore((state) => state.token);
   const { setTheme } = useTheme();
 
   const [time, setTime] = useState(new Date());
   const [mounted, setMounted] = useState(false);
+  const [quests, setQuests] = useState<QuestData[]>([]);
+
+  const setScreen = useGameStore((s) => s.setScreen);
+  const setActiveQuest = useGameStore((s) => s.setActiveQuest);
 
   useEffect(() => { setMounted(true); }, []);
+
+  // Fetch daily quests — get full quest data
+  useEffect(() => {
+    if (!mounted || !token) return;
+
+    const fetchQuests = async () => {
+      try {
+        const res = await fetch('/api/quest/daily', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        
+        if (data.quests && data.quests.length > 0) {
+          setQuests(data.quests);
+        } else if (res.ok && data.quests && data.quests.length === 0) {
+          // If 0 quests, generate for the day
+          const postRes = await fetch('/api/quest/daily', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (postRes.ok) {
+            // Re-fetch to get full quest data
+            const res2 = await fetch('/api/quest/daily', {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data2 = await res2.json();
+            if (data2.quests) setQuests(data2.quests);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching quests:', err);
+      }
+    };
+
+    fetchQuests();
+  }, [mounted, token, user?.currentDay]);
 
   // Update clock every second
   useInterval(() => setTime(new Date()), 1000);
@@ -95,6 +202,19 @@ export default function LobbyScreen() {
   const gold = user?.gold || 1250;
   const prestigePoints = user?.garageHealth || 75;
   const maxPrestige = 100;
+
+  const [isBurning, setIsBurning] = useState(false);
+  const prevPrestigeRef = useRef(prestigePoints);
+
+  useEffect(() => {
+    if (mounted && prestigePoints < prevPrestigeRef.current) {
+      setIsBurning(true);
+      const timer = setTimeout(() => setIsBurning(false), 2000);
+      prevPrestigeRef.current = prestigePoints;
+      return () => clearTimeout(timer);
+    }
+    prevPrestigeRef.current = prestigePoints;
+  }, [prestigePoints, mounted]);
 
   const timeStr = mounted ? format(time, 'hh:mm a') : '00:00 --';
 
@@ -114,14 +234,47 @@ export default function LobbyScreen() {
 
       {/* Game container — locked to 16:9 aspect ratio, always shows full image */}
       <div
-        className="relative z-10 w-full h-full max-w-[177.78vh] max-h-[56.25vw] bg-center bg-no-repeat bg-cover shadow-[0_0_40px_rgba(0,0,0,1)] flex flex-col justify-between"
+        className="relative z-10 w-full h-full max-w-[177.78vh] max-h-[56.25vw] bg-center bg-no-repeat bg-cover shadow-[0_0_40px_rgba(0,0,0,1)] flex flex-col justify-between overflow-hidden"
         style={{
           backgroundImage: 'url("/bg-lobby.jpg")',
           imageRendering: 'pixelated',
         }}
       >
-        {/* HUD overlay */}
-        <div className="absolute inset-0 pointer-events-none p-2 sm:p-4 md:p-6 lg:p-8 flex flex-col justify-between">
+        {/* Shadow Customer System — ShadowManager handles the full animation flow */}
+        {mounted && quests.length > 0 && (
+          <ShadowManager
+            quests={quests}
+            onQuestAccepted={(quest) => {
+              setActiveQuest(quest.id);
+              setScreen('workshop');
+            }}
+          />
+        )}
+
+        {/* 
+          Foreground Table Overlay 
+          Chỉ cần chỉnh 'width' (độ to), 'left' (trái/phải) và 'top' (lên/xuống). 
+          Chiều cao sẽ tự động tính toán theo tỷ lệ gốc để không bị bóp méo!
+        */}
+        <div
+          className="absolute pointer-events-none z-[20]"
+          style={{
+            backgroundImage: 'url("/table.png")',
+            backgroundSize: '100% 100%',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            imageRendering: 'pixelated',
+            // Tweak width, left, top here:
+            aspectRatio: '1280 / 697', 
+            height: 'auto',
+            width: '37.8%',     
+            left: '33.2%',      
+            top: '47.8%',       
+          }}
+        />
+
+        {/* HUD TOP overlay (z-index 120 — above NPC portrait and chat box) */}
+        <div className="absolute inset-0 pointer-events-none p-2 sm:p-4 md:p-6 lg:p-8 flex flex-col justify-start z-[120]">
 
           {/* ═══ TOP ROW ═══ */}
           <div className="flex justify-between items-start w-full">
@@ -214,44 +367,143 @@ export default function LobbyScreen() {
             <div className="flex flex-col gap-3 items-end w-[280px] pointer-events-auto">
 
               {/* Clock */}
-              <motion.div className="flex items-center gap-3 bg-zinc-800/90 border-[3px] border-zinc-900 rounded p-2 w-full justify-start shadow-lg backdrop-blur-sm" whileHover={{ scale: 1.02 }}>
-                <div className="bg-zinc-700 p-1 rounded-sm">
-                  <ClockIcon className="w-6 h-6 text-white" />
+              <motion.div 
+                className="relative flex items-center justify-between gap-3 bg-[#080810]/80 backdrop-blur-md rounded-md p-[10px] w-full overflow-hidden border border-[#00e5ff]/30 shadow-[0_0_15px_rgba(0,229,255,0.05),inset_0_0_10px_rgba(0,229,255,0.05)] cursor-default group" 
+                whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(0,229,255,0.3), inset 0 0 15px rgba(0,229,255,0.2)" }}
+              >
+                {/* Tech Background Pattern */}
+                <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#00e5ff 1px, transparent 1px)', backgroundSize: '8px 8px' }} />
+                
+                {/* Animated Edge Line */}
+                <motion.div className="absolute top-0 left-0 h-[1px] bg-gradient-to-r from-transparent via-[#00e5ff] to-transparent w-full pointer-events-none" animate={{ x: ['-100%', '100%'] }} transition={{ duration: 2, repeat: Infinity, ease: 'linear' }} />
+
+                {/* Tech UI Corners */}
+                <div className="absolute top-0 left-0 w-2 h-2 border-t-[2px] border-l-[2px] border-[#00e5ff] bg-transparent opacity-70 pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-b-[2px] border-r-[2px] border-[#00e5ff] bg-transparent opacity-70 pointer-events-none" />
+
+                <div className="flex items-center gap-3 z-10 w-full">
+                  <div className="relative bg-[#12141c] border border-[#00e5ff]/50 shadow-[0_0_8px_rgba(0,229,255,0.3)] p-[6px] rounded-sm flex items-center justify-center group-hover:bg-[#00e5ff]/10 transition-colors">
+                    <ClockIcon className="w-6 h-6 sm:w-7 sm:h-7 text-[#00e5ff]" />
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_5px_rgba(239,68,68,0.8)]" />
+                  </div>
+
+                  <div className="flex flex-col items-start leading-none mt-1 justify-center h-full">
+                    <span className="text-[#e2e8f0] text-xl sm:text-[24px] drop-shadow-[1px_1px_0_rgba(0,0,0,1)] tracking-widest" style={{ imageRendering: 'pixelated' }}>
+                      {timeStr}
+                    </span>
+                  </div>
                 </div>
-                <span className="text-white text-2xl sm:text-3xl drop-shadow-[1px_1px_0_rgba(0,0,0,1)] mt-1">
-                  {timeStr}
-                </span>
+
+                {/* Decorative bars */}
+                <div className="flex flex-col gap-1 items-end z-10 w-8">
+                  <div className="h-[2px] w-full bg-[#00e5ff]/40 rounded-full" />
+                  <div className="h-[2px] w-2/3 bg-[#00e5ff]/40 rounded-full" />
+                  <div className="h-[2px] w-[90%] bg-[#00e5ff]/80 rounded-full animate-pulse" />
+                </div>
               </motion.div>
 
               {/* Gold */}
-              <motion.div className="flex items-center gap-3 bg-zinc-800/90 border-[3px] border-zinc-900 rounded p-2 w-full justify-between shadow-lg backdrop-blur-sm" whileHover={{ scale: 1.02 }}>
-                <div className="bg-zinc-700 p-1 rounded-sm flex items-center justify-center">
-                  <CoinIcon className="w-6 h-6" />
+              <motion.div 
+                className="relative flex items-center justify-between gap-3 bg-[#080810]/80 backdrop-blur-md rounded-md p-[10px] w-full overflow-hidden border border-[#fca100]/30 shadow-[0_0_15px_rgba(252,161,0,0.05),inset_0_0_10px_rgba(252,161,0,0.05)] cursor-default group" 
+                whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(252,161,0,0.3), inset 0 0 15px rgba(252,161,0,0.2)" }}
+              >
+                {/* Tech Background Pattern */}
+                <div className="absolute inset-0 opacity-[0.06] pointer-events-none" style={{ background: 'linear-gradient(45deg, transparent 25%, #fca100 25%, #fca100 50%, transparent 50%, transparent 75%, #fca100 75%, #fca100 100%)', backgroundSize: '8px 8px' }} />
+
+                {/* Animated Edge Line */}
+                <motion.div className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-transparent via-[#fca100] to-transparent w-full pointer-events-none" animate={{ x: ['100%', '-100%'] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'linear' }} />
+
+                {/* Tech UI Corners */}
+                <div className="absolute top-0 right-0 w-2 h-2 border-t-[2px] border-r-[2px] border-[#fca100] bg-transparent opacity-70 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-2 h-2 border-b-[2px] border-l-[2px] border-[#fca100] bg-transparent opacity-70 pointer-events-none" />
+
+                <div className="flex items-center gap-3 z-10 w-full mt-1">
+                  <div className="relative bg-[#12141c] border border-[#fca100]/50 shadow-[0_0_8px_rgba(252,161,0,0.3)] p-[6px] rounded-sm flex items-center justify-center group-hover:bg-[#fca100]/10 transition-colors">
+                    <CoinIcon className="w-6 h-6 sm:w-7 sm:h-7" />
+                    <motion.div className="absolute inset-0 bg-yellow-400/20" animate={{ opacity: [0, 1, 0] }} transition={{ duration: 1.5, repeat: Infinity }} />
+                  </div>
+
+                  <div className="flex flex-col items-start leading-none flex-grow justify-center h-full">
+                     <span className="text-[#fca100] text-xl sm:text-[24px] drop-shadow-[0_0_8px_rgba(252,161,0,0.6)] tracking-wider" style={{ imageRendering: 'pixelated' }}>
+                       {gold.toLocaleString()} G
+                     </span>
+                  </div>
                 </div>
-                <span className="text-yellow-400 text-2xl sm:text-3xl drop-shadow-[1px_1px_0_rgba(0,0,0,1)] mt-1">
-                  {gold.toLocaleString()} G
-                </span>
               </motion.div>
 
               {/* Prestige bar */}
-              <motion.div className="bg-zinc-800/90 border-[3px] border-zinc-900 rounded p-3 w-full flex flex-col gap-1 shadow-lg backdrop-blur-sm" whileHover={{ scale: 1.02 }}>
-                <div className="flex justify-between items-center w-full">
-                  <span className="text-white text-xl sm:text-2xl drop-shadow-[1px_1px_0_rgba(0,0,0,1)]">UY TÍN</span>
-                  <span className="text-white text-xl sm:text-2xl drop-shadow-[1px_1px_0_rgba(0,0,0,1)]">LEVEL {currentLevel}</span>
+              <motion.div 
+                className={`relative bg-[#080810]/80 backdrop-blur-md rounded-md p-3 w-full flex flex-col gap-2 overflow-hidden border cursor-default group ${
+                  isBurning
+                    ? 'border-[#ef4444] shadow-[0_0_20px_rgba(239,68,68,0.6),inset_0_0_15px_rgba(239,68,68,0.4)]'
+                    : 'border-[#a855f7]/30 shadow-[0_0_15px_rgba(168,85,247,0.05),inset_0_0_10px_rgba(168,85,247,0.05)]'
+                }`}
+                animate={isBurning ? { x: [-3, 3, -3, 3, -2, 2, 0], backgroundColor: ['rgba(8,8,16,0.8)', 'rgba(60,10,10,0.9)', 'rgba(8,8,16,0.8)'] } : {}}
+                transition={{ duration: 0.5, repeat: isBurning ? Infinity : 0 }}
+                whileHover={{ scale: 1.02, boxShadow: isBurning ? "0 0 30px rgba(239,68,68,0.9), inset 0 0 20px rgba(239,68,68,0.7)" : "0 0 20px rgba(168,85,247,0.3), inset 0 0 15px rgba(168,85,247,0.2)" }}
+              >
+                {/* Tech Background Pattern */}
+                <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: isBurning ? 'linear-gradient(#ef4444 1px, transparent 1px), linear-gradient(90deg, #ef4444 1px, transparent 1px)' : 'linear-gradient(rgba(168,85,247,1) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,1) 1px, transparent 1px)', backgroundSize: '10px 10px' }} />
+
+                {/* Animated Edge Line */}
+                <motion.div className="absolute top-0 right-0 w-[1px] h-full pointer-events-none" 
+                  style={{ backgroundImage: isBurning ? 'linear-gradient(to bottom, transparent, #ef4444, transparent)' : 'linear-gradient(to bottom, transparent, #a855f7, transparent)' }}
+                  animate={{ y: ['-100%', '100%'] }} transition={{ duration: isBurning ? 0.3 : 2, repeat: Infinity, ease: 'linear' }} />
+
+                {/* Tech UI Corners */}
+                <div className={`absolute top-0 left-0 w-2 h-2 border-t-[2px] border-l-[2px] bg-transparent opacity-70 pointer-events-none ${isBurning ? 'border-[#ef4444]' : 'border-[#a855f7]'}`} />
+                <div className={`absolute bottom-0 right-0 w-2 h-2 border-b-[2px] border-r-[2px] bg-transparent opacity-70 pointer-events-none ${isBurning ? 'border-[#ef4444]' : 'border-[#a855f7]'}`} />
+
+                <div className="flex justify-between items-end w-full z-10 mb-1">
+                  <div className="flex flex-col leading-none gap-1 justify-end h-full">
+                    <span className={`text-lg lg:text-xl drop-shadow-[1px_1px_0_rgba(0,0,0,1)] tracking-widest ${isBurning ? 'text-[#fca5a5] animate-pulse' : 'text-[#d8b4fe]'}`} style={{ imageRendering: 'pixelated' }}>UY TÍN</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-[2px]">
+                       <motion.div className="w-1 h-3 bg-[#a855f7]/40 transform skew-x-[-20deg]" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1, repeat: Infinity, delay: 0 }} />
+                       <motion.div className="w-1 h-3 bg-[#a855f7]/70 transform skew-x-[-20deg]" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1, repeat: Infinity, delay: 0.2 }} />
+                       <motion.div className="w-1 h-3 bg-[#c026d3] transform skew-x-[-20deg]" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1, repeat: Infinity, delay: 0.4 }} />
+                    </div>
+                    <span className="text-white text-lg lg:text-xl drop-shadow-[1px_1px_0_rgba(0,0,0,1)] tracking-widest" style={{ imageRendering: 'pixelated' }}>LV <span className="text-[#ff79c6]">{currentLevel}</span></span>
+                  </div>
                 </div>
-                <Progress.Root className="relative w-full h-6 sm:h-8 bg-zinc-950 border-[3px] border-zinc-900 overflow-hidden" value={prestigePoints}>
+                
+                <Progress.Root className={`relative w-full h-5 bg-[#0f111a] border rounded-sm overflow-hidden shadow-[inset_0_4px_6px_rgba(0,0,0,0.6)] z-10 p-[2px] ${isBurning ? 'border-[#ef4444]/60' : 'border-[#a855f7]/40'}`} value={prestigePoints}>
+                  {/* Neon Glow beneath indicator */}
+                  <div className={`absolute top-0 left-0 h-full blur-md opacity-60 pointer-events-none ${isBurning ? 'bg-[#ef4444]' : 'bg-[#c026d3]'}`} style={{ width: `${(prestigePoints / maxPrestige) * 100}%` }} />
+                  
                   <Progress.Indicator
-                    className="h-full bg-lime-400 transition-all duration-500 ease-in-out border-r-[2px] border-lime-200"
-                    style={{ width: `${(prestigePoints / maxPrestige) * 100}%` }}
-                  />
-                  <span className="absolute inset-0 flex items-center justify-center text-zinc-900 font-bold text-lg sm:text-xl drop-shadow-[0_1px_0_rgba(255,255,255,0.4)] z-10 pointer-events-none">
-                    {prestigePoints}/{maxPrestige}
+                    className="relative h-full transition-all duration-500 ease-in-out border-r-[2px] border-white rounded-[1px] overflow-hidden"
+                    style={{ 
+                      width: `${(prestigePoints / maxPrestige) * 100}%`,
+                      background: isBurning 
+                        ? 'linear-gradient(90deg, #b91c1c 0%, #ef4444 100%)'
+                        : 'linear-gradient(90deg, rgba(168,85,247,0.8) 0%, rgba(217,70,239,1) 100%)',
+                      boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.3)'
+                    }}
+                  >
+                     {/* Moving glint on the progress bar */}
+                     <motion.div className="absolute top-0 bottom-0 left-0 w-full overflow-hidden">
+                        <motion.div className="w-[30px] h-full bg-white/30 transform skew-x-[-30deg]" animate={{ x: ['-200px', '400px'] }} transition={{ duration: 2, repeat: Infinity, ease: 'linear' }} />
+                     </motion.div>
+                  </Progress.Indicator>
+                  
+                  {/* Scanline overlay for the bar */}
+                  <div className="absolute inset-0 pointer-events-none opacity-30" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(0,0,0,0.4) 4px, rgba(0,0,0,0.4) 8px)' }} />
+
+                  <span className="absolute inset-0 flex items-center justify-center text-white/90 text-[13px] drop-shadow-[0_2px_2px_rgba(0,0,0,1)] z-10 pointer-events-none tracking-widest" style={{ WebkitTextStroke: '0.5px rgba(0,0,0,0.8)', imageRendering: 'pixelated' }}>
+                    {prestigePoints} / {maxPrestige}
                   </span>
                 </Progress.Root>
               </motion.div>
 
             </div>
           </div>
+        </div>
+        {/* end HUD TOP overlay */}
+
+        {/* HUD BOTTOM overlay (z-index 30 — BELOW NPC portrait at z-101, so buttons hide behind NPC) */}
+        <div className="absolute inset-0 pointer-events-none p-2 sm:p-4 md:p-6 lg:p-8 flex flex-col justify-end z-[30]">
 
           {/* ═══ BOTTOM ROW ═══ */}
           <div className="flex justify-between items-end w-full">
@@ -277,31 +529,27 @@ export default function LobbyScreen() {
 
             {/* Bottom-Right: End Day */}
             <motion.button
-              className="bg-[#1e1e21] border-[3px] border-[#101010] p-1 sm:p-[6px] rounded-[12px] shadow-[0_5px_0_rgba(0,0,0,0.8)] pointer-events-auto active:translate-y-1 active:shadow-none transition-all group min-w-[200px] sm:min-w-[240px]"
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              className={`bg-[#1e1e21] rounded-[12px] shadow-[0_5px_0_rgba(0,0,0,0.8)] pointer-events-auto transition-all group min-w-[200px] sm:min-w-[240px] ${true ? "active:translate-y-1 active:shadow-none cursor-pointer" : "cursor-not-allowed opacity-80"}`}
+              whileHover={true ? { y: -2 } : {}}
+              whileTap={true ? { scale: 0.95 } : {}}
+              // TODO: Change 'true' to condition determining if all tasks are done (e.g. quests.length === 0)
             >
-              <div className="bg-[#32353c] border-[3px] border-[#484b52] group-hover:border-[#5a5e66] rounded-md p-2 sm:p-3 flex items-center justify-center gap-4 w-full h-full transition-colors">
-                <div className="relative flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fca100" className="w-10 h-10 sm:w-14 sm:h-14 drop-shadow-[2px_3px_0_#111] group-hover:brightness-110 transition-colors" style={{ strokeWidth: 4, strokeLinecap: 'square' }}>
-                    <polyline points="4 13 9 18 20 6" />
-                  </svg>
-                </div>
-                <div className="flex flex-col items-center justify-center leading-none gap-2 mt-1">
-                  <span className="text-[#fca100] text-2xl sm:text-[32px] drop-shadow-[1px_2px_0_#111] font-bold tracking-widest" style={{ WebkitTextStroke: '1px #333' }}>
-                    KẾT THÚC
-                  </span>
-                  <span className="text-[#fca100] text-2xl sm:text-[32px] drop-shadow-[1px_2px_0_#111] font-bold tracking-widest" style={{ WebkitTextStroke: '1px #333' }}>
-                    NGÀY
-                  </span>
-                </div>
+              <div className="rounded-md w-full h-full transition-colors relative flex items-center justify-center">
+                  {/* Using true for placeholder. Replace true with actual boolean state for canEndDay */}
+                  <img 
+                    src={true ? "/enddaybutton.jpg" : "/endaybuttongrayout.jpg"} 
+                    alt="End Day Button" 
+                    className="w-[200px] sm:w-[240px] object-contain drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] group-hover:brightness-110 transition-all duration-300 rounded-[12px]"
+                    style={{ imageRendering: 'pixelated' }}
+                  />
+                  {/* Glow effect when active and hovered */}
+                  <div className={`absolute -inset-2 bg-yellow-500/0 ${true ? "group-hover:bg-yellow-500/10 blur-xl" : ""} rounded-full transition-all duration-300 pointer-events-none`} />
               </div>
             </motion.button>
 
           </div>
-
         </div>
-        {/* end HUD overlay */}
+        {/* end HUD BOTTOM overlay */}
       </div>
       {/* end game container */}
     </motion.div>

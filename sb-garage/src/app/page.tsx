@@ -1,8 +1,8 @@
-﻿'use client';
+'use client';
 
 import { useEffect } from "react";
 import { useGameStore } from "@/stores/useGameStore";
-import { LoginScreen, LobbyScreen } from "@/components";
+import { LoginScreen, LobbyScreen, DevTool } from "@/components";
 
 export default function Home() {
   const currentScreen = useGameStore((state) => state.currentScreen);
@@ -19,6 +19,9 @@ export default function Home() {
       {currentScreen === 'login' && <LoginScreen />}
       
       {currentScreen === 'lobby' && <LobbyScreen />}
+
+      {/* Dev / Cheat Tool (renders its own visibility checking) */}
+      <DevTool />
 
       {/* Các màn hình khác sẽ gắn vào đây ở các công đoạn sau */}
     </main>

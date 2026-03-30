@@ -81,7 +81,7 @@ description: Tổng hợp toàn bộ nội dung, cơ chế, cách hoạt động
 | `TOOL`       | Dụng cụ       | Utility đa dạng                        | 17     |
 | `CREW`       | Đội ngũ       | Buff passive, không lắp lên xe         | 16     |
 
-**Tổng: ~196 thẻ** (185 linh kiện + 11 crew thường + 5 crew ẩn)
+**Tổng: 201 thẻ** (185 linh kiện + 11 crew thường + 5 crew ẩn)
 
 ### 2.2 Hệ thống Rarity (Độ hiếm) — 5 cấp
 
@@ -224,11 +224,11 @@ Mỗi slot:
 
 | Boss                  | Điều kiện đặc biệt                                     | Power yêu cầu | Thưởng Gold |
 | --------------------- | ------------------------------------------------------ | ------------- | ----------- |
-| **Ông Hoàng Drift**   | `DRIFT_KING_CHALLENGE` — Trượt ly tâm, Stability ≥ 150 | 400           | 800         |
+| **Ông Hoàng Drift**   | `DRIFT_KING_CHALLENGE` — Trượt ly tâm, Stability ≥ 150 | 400           | 1200        |
 | **Huyền Thoại F1**    | `NO_COOLING` — Cấm dùng thẻ COOLING                    | 550           | 2200        |
 | **Nhà Sưu Tập**       | `MIN_RARITY_3` — Chỉ thẻ ≥ 3★                          | 450           | 1500        |
 | **Cô Gái Liều Lĩnh**  | `DAREDEVIL_DEATH_WISH` — Bơm Heat tử thần, Đáy 85%     | 400           | 1800        |
-| **Kẻ Bí Ẩn**          | Không có — Pure power check 800                        | 800           | 5000        |
+| **Kẻ Bí Ẩn**          | Không có — Pure power check 800. **Chỉ xuất hiện sau ngày 10** | 800           | 5000        |
 | **Đảo Chủ EP**        | `EP_ISLAND_CHOICE` — Nhánh lựa chọn                    | 500           | 2000        |
 | **Chúa Tể Dầu Em Bé** | `BABY_OIL_CHOICE` — Nhánh lựa chọn                     | 420           | 2500        |
 | **Chủ Tịch Kim**      | `KIM_JONG_UN` — Storyline Triều Tiên                   | 500           | 3000        |
@@ -644,23 +644,22 @@ GAME_CONSTANTS = {
 - **ORM**: Prisma
 - **Auth**: JWT (Bearer token), bcrypt password hashing
 
-### 15.2 Database Schema — 13 Tables
+### 15.2 Database Schema — 16 Tables
 
 **Group A: User Data (Dữ liệu người dùng)**
 
 - `users` — Hồ sơ & tiến trình (gold, level, exp, day, health, buffs, flags)
-- `user_inventory` — Kho thẻ bài (userId + cardId + quantity)
-- `daily_quests` — Quest mỗi ngày (userId + dayNumber + power/gold + status)
-- `user_active_events` — Events đang hoạt động (remainingTurns)
-- `user_endings` — Bộ sưu tập kết cục
 - `user_achievements` — Thành tựu đã đạt
+- `user_inventory` — Kho thẻ bài
+- `user_active_events` — Sự kiện đang hoạt động
+- `user_endings` — Bộ sưu tập kết thúc
 
 **Group B: System Data (Cấu hình tĩnh)**
 
-- `cards` — 196 thẻ bài (11 types, 5 rarities, 3 stats)
+- `cards` — 201 thẻ bài (11 types, 5 rarities, 3 stats)
 - `card_effects` — Hiệu ứng đặc biệt thẻ 4-5★
 - `card_combos` — 25 combo phản ứng dây chuyền
-- `boss_configs` — 10 boss + điều kiện đặc biệt
+- `boss_configs` — 11 boss + điều kiện đặc biệt
 - `game_events` — 11 sự kiện ngẫu nhiên
 - `endings` — 9 kết cục
 
@@ -669,8 +668,9 @@ GAME_CONSTANTS = {
 - `quest_configs` — Công thức sinh quest theo level
 - `level_rewards` — Thẻ thưởng khi lên cấp
 - `achievements` — 5 thành tựu ẩn
+- `starter_perks` — 6 đặc quyền đầu trận (Roguelite progression)
 
-### 15.3 API Endpoints — 34 Endpoints (26 Routes)
+### 15.3 API Endpoints — 35 Endpoints (27 Routes)
 
 | Route                      | Method | Mô tả                    |
 | -------------------------- | ------ | ------------------------ |
@@ -708,6 +708,7 @@ GAME_CONSTANTS = {
 | `/api/achievements`        | GET    | Xem achievements         |
 | `/api/achievements`        | POST   | Kiểm tra & mở khóa       |
 | `/api/achievements/secret` | POST   | Easter egg (midnight)    |
+| `/api/dev/cheat`          | POST   | Công cụ hỗ trợ (Cheat)   |
 
 ### 15.4 User Flags quan trọng (trong bảng users)
 
