@@ -17,6 +17,15 @@ interface UserProfile {
   activePerkCode: string | null;
 }
 
+// Boss-specific choice data passed from dialog to workshop
+export interface BossChoiceData {
+  epIslandChoice?: 'YES' | 'NO';
+  babyOilChoice?: 'YES' | 'NO';
+  kimChoice?: 'YES' | 'NO';
+  russiaPhase?: number;
+  vodkaChoice?: 'YES' | 'NO';
+}
+
 interface GameState {
   // Auth
   token: string | null;
@@ -29,6 +38,7 @@ interface GameState {
   currentScreen: 'login' | 'lobby' | 'workshop' | 'testrun' | 'shop' | 'event' | 'endday' | 'ending';
   isLoading: boolean;
   activeQuestId: number | null;
+  bossChoice: BossChoiceData | null; // Stores boss-specific choices for workshop
 
   // Actions
   initializeStore: () => void;
@@ -37,6 +47,7 @@ interface GameState {
   setScreen: (screen: GameState['currentScreen']) => void;
   setLoading: (loading: boolean) => void;
   setActiveQuest: (questId: number | null) => void;
+  setBossChoice: (choice: BossChoiceData | null) => void;
   updateGold: (gold: number) => void;
   updateGarageHealth: (health: number) => void;
   logout: () => void;
@@ -50,6 +61,7 @@ export const useGameStore = create<GameState>((set) => ({
   currentScreen: 'login',
   isLoading: false,
   activeQuestId: null,
+  bossChoice: null,
 
   // Actions
   initializeStore: () => {
@@ -74,6 +86,7 @@ export const useGameStore = create<GameState>((set) => ({
   setLoading: (loading) => set({ isLoading: loading }),
 
   setActiveQuest: (questId) => set({ activeQuestId: questId }),
+  setBossChoice: (choice) => set({ bossChoice: choice }),
 
   updateGold: (gold) => set((state) => ({
     user: state.user ? { ...state.user, gold } : null,

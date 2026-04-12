@@ -354,7 +354,15 @@ export async function POST(request: NextRequest) {
 
           if (effect.targetStat === 'POWER') {
             if (effect.effectType === 'BUFF') {
-              powerAdded += effect.effectValue;
+              // KERS Faster Faster: +5 Power per card scanned before this card, max 9 stacks
+              if (effect.description.includes('KERS')) {
+                const stacks = Math.min(i, 9); // i = number of cards scanned before this one
+                const kersBonus = stacks * effect.effectValue;
+                powerAdded += kersBonus;
+                effectDescription = `${effect.description} (${stacks} stack${stacks !== 1 ? 's' : ''} = +${kersBonus} Power)`;
+              } else {
+                powerAdded += effect.effectValue;
+              }
             } else {
               powerAdded -= effect.effectValue;
             }
