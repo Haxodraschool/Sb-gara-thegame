@@ -84,7 +84,9 @@ export default function QuestDialog({ quest, onAccept, onReject, onClose, penalt
   const [rejectionLine, setRejectionLine] = useState('');
   const [showReputationLoss, setShowReputationLoss] = useState(false);
 
-  // 2. Determine NPC Image
+  // 2. Determine NPC Image — only map to files that actually exist
+  // Available: npc1-npc15 EXCEPT npc3 is missing
+  const AVAILABLE_NPC_INDICES = [1,2,4,5,6,7,8,9,10,11,12,13,14,15];
   const npcImage = useMemo(() => {
     if (quest.isBoss && quest.bossConfig?.name) {
       const name = quest.bossConfig.name;
@@ -101,11 +103,13 @@ export default function QuestDialog({ quest, onAccept, onReject, onClose, penalt
       return quest.bossConfig.imageUrl || '/gamebossimg/mysteriousmanboss.png';
     }
     if (isInNorthKorea) {
+      // Available NK: npc1NK-npc5NK
       const index = (quest.id % 5) + 1;
       return `/gamenpcimg/npc${index}NK.png`;
     } else {
-      const index = (quest.id % 15) + 1;
-      return `/gamenpcimg/npc${index}.png`;
+      // Map to available indices only (skip 3)
+      const safeIndex = AVAILABLE_NPC_INDICES[quest.id % AVAILABLE_NPC_INDICES.length];
+      return `/gamenpcimg/npc${safeIndex}.png`;
     }
   }, [quest, isInNorthKorea]);
 
@@ -130,7 +134,7 @@ export default function QuestDialog({ quest, onAccept, onReject, onClose, penalt
   // 6. Typewriter Effect Logic
   const questDescription = quest.isBoss && quest.bossConfig?.description
     ? quest.bossConfig.description
-    : `"Tôi cần lắp cho mình một con xe có sức chứa cỡ ${quest.requiredPower} HP. Các cậu có thể làm được không?"`;
+    : `"Tôi cần một con xe có mã lực cỡ ${quest.requiredPower} HP. Các cậu có thể làm được không?"`;
     
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(true);

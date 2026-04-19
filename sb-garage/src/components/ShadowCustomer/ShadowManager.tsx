@@ -72,6 +72,8 @@ export default function ShadowManager({ quests, onQuestAccepted }: Props) {
   const user = useGameStore((s) => s.user);
   const setBossChoice = useGameStore((s) => s.setBossChoice);
   const setScreen = useGameStore((s) => s.setScreen);
+  const skipShadowIntro = useGameStore((s) => s.skipShadowIntro);
+  const setSkipShadowIntro = useGameStore((s) => s.setSkipShadowIntro);
 
   // Show quests that are PENDING or currently in 'leaving' animation
   const visibleQuests = quests.filter(
@@ -82,8 +84,18 @@ export default function ShadowManager({ quests, onQuestAccepted }: Props) {
   );
 
   // ═══ Phase 1: Start the big shadow walking after mount ═══
+  // Nếu skipShadowIntro = true (quay lại từ workshop) → bỏ qua toàn bộ intro
+  // và spawn cá nhân ngay lập tức.
   useEffect(() => {
     if (pendingQuests.length === 0) return;
+
+    if (skipShadowIntro) {
+      setPhase('spawningInteractive');
+      setShowIndividuals(true);
+      setSpawnedCount(pendingQuests.length); // Hiện tất cả cùng lúc, không delay
+      setSkipShadowIntro(false); // reset cờ
+      return;
+    }
 
     const timer = setTimeout(() => {
       setPhase('bigWalking');

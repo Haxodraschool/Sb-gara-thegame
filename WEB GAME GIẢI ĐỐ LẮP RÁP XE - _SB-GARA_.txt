@@ -444,7 +444,7 @@ Giao diện KHO THẺ (OVERLAY INVENTORY):
       - Thanh Tabs (Bộ Lọc): Dải nằm ngang trên cùng. Gồm các icon đồ họa Pixel thể hiện 11 loại thẻ (Động cơ, Turbo, Phuộc Ống Xả, Mâm Lốp, Crew...). Khi click đổi Tab, ô icon nhún sâu xuống (push button effect), đồng thời viền sáng rực màu neon kèm SFX "clack" cơ học đanh gọn.
       - Lưới Hiển Thị Thẻ (Card Grid): Nằm ở trung tâm, với thanh cuộn dọc (scrollbar) rỉ sét. Nền phía sau là lưới thép gai đục lỗ vuông nhỏ. Các lá bài Pixel Art xếp đều tăm tắp. Ở góc mỗi thẻ sáng hiển thị bộ đếm số lượng sở hữu (vd: x1, x15, x99).
       - Thẻ chưa sở hữu (Missing Slots): Thẻ nào chưa có trong game sẽ bị biến thành thẻ Placeholder, thôi thúc tính sưu tầm của người chơi.
-      - Tương tác với Thẻ: Di chuyển chuột (hover) vào thẻ sẽ làm thẻ phình to lên nhẹ (scale 1.05) và có quầng sáng (glow) đồng màu với độ hiếm (rarity: lam, lam nhạt, tím, cam hoàng kim).
+      - Tương tác với Thẻ: Di chuyển chuột (hover) vào thẻ trong kho sẽ phóng to thẻ lên rõ rệt (có thể dùng scale lớn hoặc popup nổi) để người chơi có thể nhìn thật rõ thiết kế thẻ gốc, chỉ số và thông tin kỹ năng mà không lo bị nhỏ/khó nhìn. Không vẽ thêm khung UI bằng css, chỉ để glow sáng phía sau.
    * Bảng Chi Tiết (Side Panel Blueprint):
       - Click chuột vào một thẻ đang sở hữu → Phân nửa bên phải màn hình (side panel) mở rộng ra, nền chuyển màu xanh biển nhạt có kẻ ô caro trắng (Mô phỏng bản thiết kế kỹ thuật Blueprint).
       - Nội dung bảng Blueprint: Hình của thẻ phóng cực to: Tên thẻ, và hiển thị rõ 3 thanh chỉ số cơ bản (Power, Heat, Stability). Dưới cùng là mô tả tác dụng Combo nếu có.
@@ -456,33 +456,30 @@ Giao diện KHO THẺ (OVERLAY INVENTORY):
 
 Layout 3 vùng:
 
-   A) BÊN TRÁI — KHO THẺ BÀI:
-   * 10 tab icon (ENGINE, TURBO, EXHAUST...). Click tab → carousel trượt ngang.
-   * Thẻ hiển thị: Viền màu rarity, tên, 3 stat, số lượng.
-   * Thẻ 5★: Viền vàng + particle sparkle animation loop.
+   A) BÊN TRÁI — KHO THẺ BÀI LẮP RÁP:
+   * Chứa các linh kiện để kéo thả vào xe. Tab chuyển đổi các hệ (ENGINE, TURBO, v.v.).
+   * Thẻ hiển thị: Tuyệt đối không vẽ thêm khung bằng CSS cho thẻ vì đã có khung thiết kế gốc. Giữ nguyên nét ảnh thẻ thật, chỉ dùng quầng sáng (glow/box-shadow) chiếu phía sau để báo hiệu độ hiếm (rarity).
    * Kéo thẻ (Drag): scale 1.1, opacity 0.8, shadow lớn, trail effect.
 
-   B) TRUNG TÂM — KHUNG XE & 10 SLOT:
-   * Khung xe , 10 ô slot hàng ngang, đánh số 1→10. càng lắp nhiều thẻ thì xe càng hiện rõ đến thẻ số 10 thì xe hiện rõ hoàn chỉnh 
-   , hình ảnh xe hoàn chỉnh tùy theo mức mã lực (<=200 , 350 , ,500 , 750 , 1000+) có 5 hình ảnh xe khác nhau pixel art
-   * Slot trống: Viền nét đứt nhấp nháy (dashed + opacity animation).
-   * Drop thẻ: "Snap" hút vào ô (spring 0.2s), flash trắng, SFX "clank".
-   * Combo: 2 thẻ cạnh nhau tạo combo → glow vàng pulse + đường SVG sáng nối + tooltip combo name.
-   * Heat Bar (thanh ngang trên khung xe):
+   B) TRUNG TÂM — KHUNG XE, 10 SLOT & NHIỆT KẾ (HEAT BAR):
+   * Khung xe: Đặt ở giữa màn hình bên dưới. Càng lắp nhiều thẻ thì xe càng hiện rõ, đến thẻ 10 thì hoàn chỉnh theo mức hp pixel art (<=200, 350, 500, 750, 1000+).
+   * 10 ô slot: Đặt theo hàng ngang NẰM PHÍA TRÊN CỦA khung xe (ví dụ khung xe ở dưới, 10 slot dàn hàng ngang ở phía trên nó). 
+   * Nhiệt kế (Heat Bar): Đặt NẰM BÊN TRÊN đường ngắm của 10 ô slot.
      - 0–50%: Gradient xanh lá → xanh dương.
      - 51–79%: Xanh dương → vàng cam.
      - 80–99%: Cam → đỏ + shake micro-animation + SFX tích tắc nhanh dần.
      - 100%: Đỏ rực + CSS fire animation cháy trên thanh.
-   * Preview: Hover thẻ lên slot → chỉ số thay đổi nhảy lên (xanh = tốt, đỏ = nguy hiểm).
 
-   C) BÊN Trên- chính giữa ( giống joker của balatro) — CREW SLOTS:
-   * 1–5 ô ở trên cùng  (tùy crew_slots đã mở khóa).
-   * Slot khóa: Biểu tượng ổ khóa + chain, tooltip "Cần X Tech Points".
-   * Crew gắn:  thẻ crew + hiệu ứng đặc biệt nếu có. Legendary có particle aura. có tooltip mô tả hiệu ứng khi hover.
+   C) BÊN TRÊN CHÍNH GIỮA — CREW SLOTS:
+   * 1–5 ô ở trên cùng (giống chức năng Joker của Balatro).
+   * Crew gắn: Dùng ảnh gốc của crew, Legendary có particle aura đằng sau. Tooltip mô tả hiệu ứng.
 
-   D) NÚT HÀNH ĐỘNG:
+   D) BÊN PHẢI (HOẶC GÓC TRÊN) — BẢNG QUEST KHÁCH HÀNG:
+   * Nằm ở vị trí trực quan giúp người chơi vừa lắp bài vừa nhìn đối chiếu. Hiển thị Avatar Bóng đen NPC, thông điệp "Tôi cần xe 500 HP", Budget, và điều kiện (như Boss condition).
+
+   E) NÚT HÀNH ĐỘNG (DƯỚI BẢNG QUEST):
    * "KHỞI ĐỘNG": Glow pulse khi đủ 10 thẻ. Xám khi chưa đủ.
-   * "XÓA TẤT CẢ": Reset slot.
+   * "XÓA TẤT CẢ": Reset toàn bộ slot trên xe.
 
 ────────────────────────────
 17.5. CHẠY THỬ XE — SEQUENTIAL TEST RUN (ANIMATION CHÍNH ~15–25s)
